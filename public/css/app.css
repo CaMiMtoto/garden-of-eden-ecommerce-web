@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+html, body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 13px !important;
+}
+
+.flat {
+    border-radius: 0 !important;
+}
+
+.div-hide {
+    display: none;
+}
+
+.user-account .user-photo {
+    height: 50px;
+}
+
+.product_image {
+    height: 30px !important;
+}
+
+.form-control {
+    border-width: 2px !important;
+}
+
+.form-control, .btn, .alert, .modal-content, .sweet-alert button, .sweet-alert, .nav-pills > li > a, .img-thumbnail {
+    border-radius: 0 !important;
+}

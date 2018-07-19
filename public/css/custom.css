@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+html, body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 15px !important;
+}
+
+.header-search form .input-select,.header-search form .search-btn {
+    border-radius: 0!important;
+}
+
+.shop:before {
+    width: 50%;
+    transform: skewX(-0deg);
+}
+
+.main-nav>li>a:hover, .main-nav>li>a:focus, .main-nav>li.active>a {
+   /* color: #FFF;
+    background-color: transparent;*/
+}
+.main-nav>li>a:after {
+    background-color: #fff;
+}
+
+.flat{
+    border-radius: 0!important;
+}
+
+.product .add-to-cart .add-to-cart-btn:hover {
+    background-color: inherit;
+    color: #D10024;
+    border-color: #D10024;
+}
+.padding-left-20{
+    padding-left: 20px;
+}
+#bottom-footer {
+    /*background: #f3f3f3;*/
+}
+
+.shop .shop-img {
+    background-color: transparent;
+    border: 1px solid #e6e6e4;
+}
