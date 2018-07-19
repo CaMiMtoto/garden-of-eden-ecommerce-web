@@ -7,19 +7,20 @@
         <div class="user-account">
             <img src="{{ asset('img/user.png') }}" class="img-responsive img-circle user-photo" alt="User Profile Picture">
             <div class="dropdown">
-                <a href="#" class="dropdown-toggle user-name" data-toggle="dropdown">Hello, <strong>CaMi</strong> <i class="fa fa-caret-down"></i></a>
+                <a href="#" class="dropdown-toggle user-name" data-toggle="dropdown">
+                    Hello, <strong>{{ \Illuminate\Support\Facades\Auth::user()->name  }}
+                    </strong> <i class="fa fa-caret-down"></i></a>
                 <ul class="dropdown-menu dropdown-menu-right account">
                     <li><a href="#">My Profile</a></li>
-                    <li><a href="#">Messages</a></li>
                     <li><a href="#">Settings</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="{{ route('logout') }}">Logout</a></li>
                 </ul>
             </div>
         </div>
         <nav id="left-sidebar-nav" class="sidebar-nav">
             <ul id="main-menu" class="metismenu">
-                <li class="">
+                <li class="nav-dahboard">
                     <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="nav-categories">
@@ -38,7 +39,7 @@
                     </a>
                 </li>
                 <li class="nav-users">
-                    <a href="{{ route('category.index') }}">
+                    <a href="{{ route('users.index') }}">
                         <i class="fa fa-cog"></i> <span>Users</span>
                     </a>
                 </li>

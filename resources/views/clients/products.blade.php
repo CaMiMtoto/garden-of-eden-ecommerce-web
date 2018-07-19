@@ -32,6 +32,7 @@
                                             <h5 style="color: #FFFFFF;">{{ $product->category->name }}</h5>
                                             <h5 style="color: #FFFFFF;">
                                                 {{ number_format($product->price,1) }}
+                                                <small style="color: white">Rwf</small>
                                                 /
                                                 <small style="color: white">{{ $product->measure }}</small>
                                             </h5>

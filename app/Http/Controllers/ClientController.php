@@ -17,7 +17,8 @@ class ClientController extends Controller
         } else {
             $search = $request->input('search');
 
-            $products = Product::where('name', 'LIKE', "%{$search}%")
+            $products = Product::with('category')
+                ->where('name', 'LIKE', "%{$search}%")
                 ->orWhere('price', 'LIKE', "%{$search}%")
                 ->orderBy("id", "desc")
                 ->paginate(10);

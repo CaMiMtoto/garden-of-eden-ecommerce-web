@@ -4,6 +4,14 @@
     <div class="section">
         <!-- container -->
         <div class="container">
+
+            <div class="jumbotron text-center flat">
+                <h1>Garden of eden produce</h1>
+                <p>
+
+                </p>
+            </div>
+
             @if(Session::has('message'))
                 <div class="row">
                     <div class="col-sm-12">
@@ -27,12 +35,14 @@
                         <div class="col-md-4 col-xs-6">
                             <div class="shop">
                                 <div class="shop-img" style="overflow-x: hidden">
-                                    <img src="{{ asset("uploads/products/" . $product->image) }}" alt=""  style="height: 247px;width: auto!important;">
+                                    <img src="{{ asset("uploads/products/" . $product->image) }}" alt=""
+                                         style="height: 247px;width: auto!important;">
                                 </div>
                                 <div class="shop-body">
                                     <h2 style="color: #FFFFFF;">{{ $product->name }}</h2>
                                     <h3>
                                         {{ number_format($product->price,1) }}
+                                        <small style="color: white">Rwf</small>
                                         /
                                         <small style="color: white">{{ $product->measure }}</small>
                                     </h3>
@@ -45,7 +55,8 @@
                                     </a>
                                     <br>
                                     <br>
-                                    <a href="{{ asset("uploads/products/" . $product->image) }}" target="_blank" class="btn btn-danger flat">
+                                    <a href="{{ asset("uploads/products/" . $product->image) }}" target="_blank"
+                                       class="btn btn-danger flat">
                                         <i class="fa fa-eye"></i>
                                         View full image
                                     </a>
@@ -55,7 +66,7 @@
                         <!-- /shop -->
                     @endforeach
                 </div>
-        @endforeach
+            @endforeach
 
         </div>
         <!-- /container -->
@@ -79,16 +90,16 @@
                         </form>
                         <ul class="newsletter-follow">
                             <li>
-                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="https://www.facebook.com/MtotoCaMi" target="_blank"><i
+                                            class="fa fa-facebook"></i></a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="https://twitter.com/JeanByiringiro" target="_blank"><i
+                                            class="fa fa-twitter"></i></a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                                <a href="https://www.instagram.com/jean_paul_camy/" target="_blank"><i
+                                            class="fa fa-instagram"></i></a>
                             </li>
                         </ul>
                     </div>

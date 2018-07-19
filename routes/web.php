@@ -11,9 +11,12 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/admin/login', 'UsersController@login')->name('login');
+Route::post('/admin/login', 'UsersController@postLogin')->name('post.login');
 Route::get('/getProduct', 'ClientController@getProductPage')->name('getProduct');
 
 
@@ -51,9 +54,10 @@ Route::post('/checkOut', [
 ]);
 
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin','middleware' => ['auth']], function () {
 
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+    Route::get('/', 'HomeController@dashboard')->name('dashboard');
 
     //categories routes
     Route::get('/categories', 'CategoryController@index')->name('category.index');
@@ -76,5 +80,19 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/orders/{id}', 'OrderController@show')->name('orders.show');
     Route::post('/orders/all', 'OrderController@all')->name('orders.all');
     Route::put('/orders/mark', 'OrderController@mark')->name('orders.mark');
+
+    Route::get('/logOut', 'UsersController@logOut')->name('logout');
+
+    //users routes
+    Route::get('/users', 'UsersController@index')->name('users.index');
+    Route::post('/users/all', 'UsersController@all')->name('users.all');
+    Route::delete('/users/destroy/{id}', 'UsersController@destroy')->name('users.destroy');
+    Route::post('/users/store', 'UsersController@store')->name('users.store');
+    Route::put('/users/update', 'UsersController@update')->name('users.update');
+    Route::get('/users/show/{id}', 'UsersController@show')->name('users.show');
+
 });
 
+
+
+Route::get('/home', 'HomeController@index')->name('home');

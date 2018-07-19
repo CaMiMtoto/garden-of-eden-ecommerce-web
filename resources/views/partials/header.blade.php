@@ -4,10 +4,10 @@
     <div id="top-header">
         <div class="container">
             <ul class="header-links pull-left">
-                <li><a href="tel:+250780661813"><i class="fa fa-phone"></i> +250780661813</a></li>
+                <li><a href="tel:+250780661813"><i class="fa fa-phone"></i> +250 784 929 046</a></li>
                 <li><a href="mailto:jeanpaulcami@live.com">
-                        <i class="fa fa-envelope-o"></i>jeanpaulcami@live.com</a></li>
-                <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+                        <i class="fa fa-envelope-o"></i>frankuwuzuyinema@yahoo.fr</a></li>
+                <li><a href="#"><i class="fa fa-map-marker"></i>J.Lynn's Kagugu , Rouge Hotel KG 414</a></li>
             </ul>
             <ul class="header-links pull-right">
                 <li><a href="javascript:void(0);">RWF</a></li>
@@ -26,8 +26,7 @@
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="{{ route('home') }}" class="logo" style="color: #F0FFDF;">
-                            {{--<img src="./img/logo.png" alt="">--}}
-                           <b> FShop</b>
+                            <img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="Garden Of Eden Produce" style="width: 70px">
                         </a>
                     </div>
                 </div>

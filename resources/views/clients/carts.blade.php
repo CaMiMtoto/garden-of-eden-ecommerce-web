@@ -62,7 +62,10 @@ use \Gloudemans\Shoppingcart\Facades\cart;
                                         <h4><a href="">{{ $cartItem->name }}</a></h4>
                                     </td>
                                     <td>
-                                        <p>{{ number_format($cartItem->price) }}</p>
+                                        <p>
+                                            {{ number_format($cartItem->price) }}
+                                            <small>Rwf</small>
+                                        </p>
                                     </td>
                                     <td>
                                         <div class="btn-group">
@@ -82,7 +85,10 @@ use \Gloudemans\Shoppingcart\Facades\cart;
                                     </td>
                                     <td>{{ $product->measure }}</td>
                                     <td>
-                                        <p>{{ number_format($cartItem->subtotal) }}</p>
+                                        <p>
+                                            {{ number_format($cartItem->subtotal) }}
+                                            <small>Rwf</small>
+                                        </p>
                                     </td>
 
                                     <td>
