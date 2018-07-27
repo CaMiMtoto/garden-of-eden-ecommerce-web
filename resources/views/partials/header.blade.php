@@ -45,10 +45,9 @@
 
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
-                    <div class="header-ctn">
-
+                    <div class="header-ctn" style="float: left">
                         <!-- Cart -->
-                        <div class="">
+                        <div>
                             <a href="{{ route('cart.shoppingCart') }}">
                                 <i class="fa fa-shopping-basket"></i>
                                 <span>My Basket</span>
@@ -57,18 +56,21 @@
                                 </div>
                             </a>
                         </div>
+                        <div class="clearfix"></div>
                         <!-- /Cart -->
 
                         <!-- Menu Toogle -->
-                        <div class="menu-toggle">
+                 {{--       <div class="menu-toggle">
                             <a href="#">
                                 <i class="fa fa-bars"></i>
                                 <span>Menu</span>
                             </a>
-                        </div>
+                        </div>--}}
                         <!-- /Menu Toogle -->
                     </div>
+                    <div class="clearfix"></div>
                 </div>
+
                 <!-- /ACCOUNT -->
             </div>
             <!-- row -->

@@ -41,6 +41,10 @@ html, body {
     background-color: transparent;
     border: 1px solid #e6e6e4;
 }
-.form-control{
-    border-width: 2px!important;
+.header-search form .input {
+    width: calc(100% - 100px);
+    margin-right: -4px;
+}
+.header-search form .search-btn {
+    border:1px solid #D10024!important;
 }

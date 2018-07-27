@@ -11,7 +11,7 @@
                         <p>
                             We are an agro-based firm that supply 100% organic vegetables,and fruits at affordable price in
                             Kigali with more than 25 years of working experience.This online market is useful for
-                            hotel,restaurants,for new residents and for new residents and all other people in general.
+                            hotel,restaurants,for new residents  and all other people in general.
 
                         </p>
                         <p>
