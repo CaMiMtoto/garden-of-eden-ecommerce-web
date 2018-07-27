@@ -5,11 +5,19 @@
         <div class="container">
             <!-- row -->
             <div class="row">
-                <div class="col-md-3 col-xs-6">
+                <div class="col-md-6 col-xs-6">
                     <div class="footer">
                         <h3 class="footer-title">About Us</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                            ut.</p>
+                        <p>
+                            We are an agro-based firm that supply 100% organic vegetables,and fruits at affordable price in
+                            Kigali with more than 25 years of working experience.This online market is useful for
+                            hotel,restaurants,for new residents and for new residents and all other people in general.
+
+                        </p>
+                        <p>
+                            Products are delivered 2 hours or less after ordering ,and payment is made after having received
+                            the products.
+                        </p>
                         <ul class="footer-links">
                             <li><a href="#"><i class="fa fa-map-marker"></i>J.Lynn's Kagugu , Rouge Hotel KG 414</a></li>
                             <li><a href="#"><i class="fa fa-phone"></i> +250 784 929 046</a></li>
@@ -25,10 +33,9 @@
                             @foreach(\App\Category::limit(10)->get() as $item)
                                 @if($item->products->count() > 0)
                                     <li>
-                                        <a href="/getProduct?cat&search={{ $item->id }}">{{ $item->name }}</a>
+                                        <a href="/getProduct?cat={{ $item->id }}">{{ $item->name }}</a>
                                     </li>
                                 @endif
-
 
                             @endforeach
                         </ul>
@@ -41,25 +48,13 @@
                     <div class="footer">
                         <h3 class="footer-title">Information</h3>
                         <ul class="footer-links">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Orders </a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="{{ route('cart.shoppingCart') }}">View Basket</a></li>
+                            <li><a href="javascript:void(0)">Contact Us</a></li>
+                            <li><a href="javascript:void(0)">Terms & Conditions</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="col-md-3 col-xs-6">
-                    <div class="footer">
-                        <h3 class="footer-title">Service</h3>
-                        <ul class="footer-links">
-                            <li><a href="#">View Basket</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help</a></li>
-                        </ul>
-                    </div>
-                </div>
             </div>
             <!-- /row -->
         </div>

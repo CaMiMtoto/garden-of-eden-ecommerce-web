@@ -78,6 +78,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth']], function () {
     //orders routes
     Route::get('/orders', 'OrderController@index')->name('orders.index');
     Route::get('/orders/{id}', 'OrderController@show')->name('orders.show');
+    Route::get('/orders/print/{id}', 'OrderController@printOrder')->name('orders.printOrder');
     Route::post('/orders/all', 'OrderController@all')->name('orders.all');
     Route::put('/orders/mark', 'OrderController@mark')->name('orders.mark');
 
@@ -90,6 +91,12 @@ Route::group(['prefix' => 'admin','middleware' => ['auth']], function () {
     Route::post('/users/store', 'UsersController@store')->name('users.store');
     Route::put('/users/update', 'UsersController@update')->name('users.update');
     Route::get('/users/show/{id}', 'UsersController@show')->name('users.show');
+    //events routes
+    Route::get('/events', 'EventController@index')->name('events.index');
+    Route::post('/events/all', 'EventController@all')->name('events.all');
+
+    Route::put('/events/update', 'EventController@update')->name('events.update');
+    Route::get('/events/show/{id}', 'EventController@show')->name('events.show');
 
 });
 

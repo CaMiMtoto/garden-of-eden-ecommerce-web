@@ -88,6 +88,16 @@ class OrderController extends Controller
         return view("admins.orderDetails", ['order' => $obj]);
     }
 
+    public function printOrder($id)
+    {
+        //
+        $obj = Order::with("orderItems")->find($id);
+        if (!$obj) {
+            return \response()->json(["message" => "Not found"], 404);
+        }
+        return view("admins.printOrder", ['order' => $obj]);
+    }
+
 
     public function mark(Request $request)
     {
@@ -106,24 +116,13 @@ class OrderController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

@@ -4,12 +4,27 @@
     <div class="section">
         <!-- container -->
         <div class="container">
-
+            @if(\App\Event::where('active',true)->count()>0)
+                <div>
+                    @foreach(\App\Event::all() as $event)
+                        <marquee>
+                            <div class="alert alert-info alert-dismissible flat" role="alert">
+                                <h4><i class="fa fa-info-circle"></i> {{ $event->name }}</h4>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    {{--<span aria-hidden="true">×</span>--}}
+                                </button>
+                                <p>
+                                    {{ $event->description }}
+                                    <br>
+                                    <span>This will start on </span><strong>{{ date('D j M Y', strtotime($event->date))  }}</strong>
+                                </p>
+                            </div>
+                        </marquee>
+                    @endforeach
+                </div>
+            @endif
             <div class="jumbotron text-center flat">
                 <h1>Garden of eden produce</h1>
-                <p>
-
-                </p>
             </div>
 
             @if(Session::has('message'))
@@ -83,11 +98,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="newsletter">
-                        <p>Sign Up for the <strong>NEWSLETTER</strong></p>
-                        <form>
-                            <input class="input flat" type="email" placeholder="Enter Your Email">
-                            <button class="newsletter-btn flat"><i class="fa fa-envelope"></i> Subscribe</button>
-                        </form>
+                        <p>Tell others</p>
+
                         <ul class="newsletter-follow">
                             <li>
                                 <a href="https://www.facebook.com/MtotoCaMi" target="_blank"><i

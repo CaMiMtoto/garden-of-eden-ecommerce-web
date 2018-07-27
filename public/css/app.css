@@ -28,3 +28,17 @@ html, body {
 .form-control, .btn, .alert, .modal-content, .sweet-alert button, .sweet-alert, .nav-pills > li > a, .img-thumbnail {
     border-radius: 0 !important;
 }
+
+.ct-series-a .ct-area, .ct-series-a .ct-slice-donut-solid, .ct-series-a .ct-slice-pie {
+    fill: #0e9be2!important;
+}
+.ct-series-b .ct-area, .ct-series-b .ct-slice-donut-solid, .ct-series-b .ct-slice-pie {
+    fill: #ab7df6!important;
+}
+.ct-series-c .ct-area, .ct-series-c .ct-slice-donut-solid, .ct-series-c .ct-slice-pie {
+    fill: #7cac25!important;
+}
+.ct-label {
+    font-size: 13px!important;
+    font-weight: bolder!important;
+}

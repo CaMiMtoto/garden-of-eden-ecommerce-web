@@ -80,6 +80,7 @@ class CartController extends Controller
         $order = new Order();
         $order->clientPhone = $request->input('phoneNumber');
         $order->clientName = $request->input('clientName');
+//        $order->total_paid = Cart::subtotal();
         $order->status="Pending";
         $order->save();
         foreach ($cart as $cartItem) {

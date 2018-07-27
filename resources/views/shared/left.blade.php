@@ -5,14 +5,14 @@
     </button>
     <div class="sidebar-scroll">
         <div class="user-account">
-            <img src="{{ asset('img/user.png') }}" class="img-responsive img-circle user-photo" alt="User Profile Picture">
+    {{--        <img src="{{ asset('img/user.png') }}"  alt="User Profile Picture">--}}
+            <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive  user-photo" alt="Garden Of Eden Produce" style="width: 100px;height: 100px">
             <div class="dropdown">
                 <a href="#" class="dropdown-toggle user-name" data-toggle="dropdown">
                     Hello, <strong>{{ \Illuminate\Support\Facades\Auth::user()->name  }}
                     </strong> <i class="fa fa-caret-down"></i></a>
                 <ul class="dropdown-menu dropdown-menu-right account">
-                    <li><a href="#">My Profile</a></li>
-                    <li><a href="#">Settings</a></li>
+                    <li><a href="{{ route('users.index') }}">Users</a></li>
                     <li class="divider"></li>
                     <li><a href="{{ route('logout') }}">Logout</a></li>
                 </ul>
@@ -43,14 +43,9 @@
                         <i class="fa fa-cog"></i> <span>Users</span>
                     </a>
                 </li>
-                <li class="nav-reports">
-                    <a href="{{ route('category.index') }}">
-                        <i class="fa fa-print"></i> <span>Reports</span>
-                    </a>
-                </li>
-                <li class="nav-settings">
-                    <a href="{{ route('category.index') }}">
-                        <i class="fa fa-wrench"></i> <span>Settings</span>
+                <li class="nav-events">
+                    <a href="{{ route('events.index') }}">
+                        <i class="fa fa-clock-o"></i> <span>Event</span>
                     </a>
                 </li>
             </ul>

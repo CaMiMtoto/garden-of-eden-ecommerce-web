@@ -115,7 +115,7 @@ class UsersController extends Controller
         $obj->name = $request['name'];
         $obj->email = $request['email'];
         if(!empty($request->input('password'))){
-            $obj->email = $request['password'];
+            $obj->password = bcrypt($request['password']);
         }
         $obj->role = $request['role'];
         $obj->update();

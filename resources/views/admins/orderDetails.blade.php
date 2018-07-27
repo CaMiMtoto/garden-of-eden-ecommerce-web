@@ -1,63 +1,96 @@
 <style>
     .billing-history tbody > tr > td {
-         padding:10px;
+        padding: 10px;
     }
+
 </style>
 
-<table class="table billing-history">
-    <thead class="sr-only">
-    <tr>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>
+
+
+<div>
+    <a target="_blank" href="{{ route('orders.printOrder',['id'=>$order->id]) }}" class="btn btn-primary btn-sm pull-right">
+        <i class="fa fa-print"></i>
+        Print order
+    </a>
+</div>
+
+<div id="printOrder">
+    <table class="table billing-history">
+        <thead class="sr-only">
+        <tr>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
             <span>
                 <b>Oder date</b>
             </span>
-        </td>
-        <td> : {{ date('j M Y h:i a', strtotime($order->created_at)) }}</td>
-    </tr>
-    <tr>
-        <td>
+            </td>
+            <td> : {{ date('j M Y h:i a', strtotime($order->created_at)) }}</td>
+        </tr>
+        <tr>
+            <td>
             <span>
                 <b>Client name</b>
             </span>
-        </td>
-        <td> : {{ $order->clientName }}</td>
-    </tr>
-    <tr>
-        <td>
+            </td>
+            <td> : {{ $order->clientName }}</td>
+        </tr>
+        <tr>
+            <td>
             <span>
             <b>Client phone</b>
             </span>
-        </td>
-        <td> : {{ $order->clientPhone }}</td>
-    </tr>
-    </tbody>
-</table>
-
-<h4 class="text-info">Products ordered</h4>
-<table class="table table-bordered table-responsive table-striped">
-    <thead>
-    <tr>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Qty</th>
-        <th>Total</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($order->orderItems as $orderItem)
-        <tr>
-            <td>{{ $orderItem->product->name }}</td>
-            <td>{{ number_format($orderItem->price) }}</td>
-            <td>{{ $orderItem->qty }}</td>
-            <td>{{ number_format($orderItem->sub_total) }}</td>
+            </td>
+            <td> : {{ \App\MyFunc::format_phone_us($order->clientPhone) }}</td>
         </tr>
-    @endforeach
-    </tbody>
-</table>
+        </tbody>
+    </table>
+
+    <h4 class="text-info">Products ordered</h4>
+    <table class="table table-bordered table-responsive table-striped">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($order->orderItems as $orderItem)
+            <tr>
+                <td>{{ $orderItem->product->name }}</td>
+                <td>{{ number_format($orderItem->price) }}</td>
+                <td>{{ $orderItem->qty }}</td>
+                <td>{{ number_format($orderItem->sub_total) }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+
+
+    <table class="table billing-history">
+        <thead class="sr-only">
+        <tr>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td>
+            <span>
+                <b>Total amount to Pay</b>
+            </span>
+            </td>
+            <td> : <b>{{ number_format($order->orderItems->sum('sub_total')) }} Rwf</b></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
 {{ csrf_field() }}
 <input type="hidden" value="{{ $order->id }}" name="id">
 <div class="form-group">
