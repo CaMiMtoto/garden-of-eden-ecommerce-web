@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->string("minStock");
             $table->longText("description");
             $table->string("image");
+            $table->tinyInteger("isFeatured")->default(false);
             $table->timestamps();
         });
     }

@@ -4,7 +4,8 @@
     <div id="top-header">
         <div class="container">
             <ul class="header-links pull-left">
-                <li><a href="tel:+250780661813"><i class="fa fa-phone"></i> +250 784 929 046</a></li>
+                <li><a href="tel:+250784929046"><i class="fa fa-phone"></i>{{ \App\MyFunc::format_phone_us("0 784 929 046") }}</a></li>
+                <li><a href="tel:+250728177613"><i class="fa fa-whatsapp"></i>{{ \App\MyFunc::format_phone_us("0728177613") }}</a></li>
                 <li><a href="mailto:jeanpaulcami@live.com">
                         <i class="fa fa-envelope-o"></i>frankuwuzuyinema@yahoo.fr</a></li>
                 <li><a href="#"><i class="fa fa-map-marker"></i>J.Lynn's Kagugu , Rouge Hotel KG 414</a></li>

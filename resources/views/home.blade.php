@@ -41,46 +41,52 @@
 
             @foreach($categories as $category)
                 <br>
-                <div class="row" style="padding: 10px;">
-                    <h4 class="padding-left-20">
-                        <a href=""><i class="fa fa-cutlery"></i> {{ $category->name }}</a>
-                    </h4>
-                @foreach($category->products->take(3) as $product)
-                    <!-- shop -->
-                        <div class="col-md-4 col-xs-6">
-                            <div class="shop">
-                                <div class="shop-img" style="overflow-x: hidden">
-                                    <img src="{{ asset("uploads/products/" . $product->image) }}" alt=""
-                                         style="height: 247px;width: auto!important;">
-                                </div>
-                                <div class="shop-body">
-                                    <h2 style="color: #FFFFFF;">{{ $product->name }}</h2>
-                                    <h3>
-                                        {{ number_format($product->price,1) }}
-                                        <small style="color: white">Rwf</small>
-                                        /
-                                        <small style="color: white">{{ $product->measure }}</small>
-                                    </h3>
-                                    <br>
+                @if($category->products()->count()>0)
+                    <div class="row" style="padding: 10px;">
+                        <h4 class="padding-left-20">
+                            <a  href="/getProduct?cat={{ $category->id }}">
+                                <i class="fa fa-cutlery"></i> {{ $category->name }}
 
-                                    <a href="{{ route('cart.addToCart',['id'=>$product->id]) }}"
-                                       class="btn btn-success flat">
-                                        <i class="fa fa-shopping-basket"></i>
-                                        Add To Basket
-                                    </a>
-                                    <br>
-                                    <br>
-                                    <a href="{{ asset("uploads/products/" . $product->image) }}" target="_blank"
-                                       class="btn btn-danger flat">
-                                        <i class="fa fa-eye"></i>
-                                        View full image
-                                    </a>
+                                <small class="pull-right">View more <i class="fa fa-arrow-circle-right"></i> </small>
+                            </a>
+                        </h4>
+                    @foreach($category->products->take(6) as $product)
+                        <!-- shop -->
+                            <div class="col-md-4 col-xs-6">
+                                <div class="shop">
+                                    <div class="shop-img" style="overflow-x: hidden">
+                                        <img src="{{ asset("uploads/products/" . $product->image) }}" alt=""
+                                             style="height: 247px;width: auto!important;">
+                                    </div>
+                                    <div class="shop-body">
+                                        <h3 style="color: #FFFFFF;">{{ $product->name }}</h3>
+                                        <h3>
+                                            {{ number_format($product->price,1) }}
+                                            <small style="color: white">Rwf</small>
+                                            /
+                                            <small style="color: white">{{ $product->measure }}</small>
+                                        </h3>
+                                        <br>
+
+                                        <a href="{{ route('cart.addToCart',['id'=>$product->id]) }}"
+                                           class="btn btn-success flat">
+                                            <i class="fa fa-shopping-basket"></i>
+                                            Add To Basket
+                                        </a>
+                                        <br>
+                                        <br>
+                                        <a href="{{ asset("uploads/products/" . $product->image) }}" target="_blank"
+                                           class="btn btn-danger flat">
+                                            <i class="fa fa-eye"></i>
+                                            View full image
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- /shop -->
-                    @endforeach
-                </div>
+                            <!-- /shop -->
+                        @endforeach
+                    </div>
+                @endif
             @endforeach
 
         </div>

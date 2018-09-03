@@ -9,9 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::limit(4)
-            ->orderBy("id", "desc")
-            ->get();;
+        $categories = Category::orderBy("id", "desc")->get();
         return view('home', ['categories' => $categories]);
     }
 

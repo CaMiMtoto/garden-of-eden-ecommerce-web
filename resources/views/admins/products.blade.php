@@ -117,6 +117,14 @@
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
+                            <label for="isFeatured" class="col-sm-4 control-label"></label>
+                            <label class="col-sm-1 control-label">: </label>
+                            <div class="col-sm-7">
+                                <input type="text"  class="form-control" id="addmeasure"
+                                       placeholder="Unit measure" name="measure" autocomplete="off" required>
+                            </div>
+                        </div> <!-- /form-group-->
+                        <div class="form-group">
                             <label for="addminStock" class="col-sm-4 control-label">Min stock</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">

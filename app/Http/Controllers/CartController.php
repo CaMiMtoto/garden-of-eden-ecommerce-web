@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendMail;
 use App\Order;
 use App\OrderItem;
 use App\Product;
+use App\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {
@@ -81,7 +84,7 @@ class CartController extends Controller
         $order->clientPhone = $request->input('phoneNumber');
         $order->clientName = $request->input('clientName');
 //        $order->total_paid = Cart::subtotal();
-        $order->status="Pending";
+        $order->status = "Pending";
         $order->save();
         foreach ($cart as $cartItem) {
             $orderItem = new OrderItem();
@@ -92,6 +95,11 @@ class CartController extends Controller
             $order->orderItems()->save($orderItem);
         }
 
+        $data = ['message' => $order];
+        $users = User::all()->each(function ($user) {
+            return $user->email;
+        });
+        Mail::to($users)->send(new SendMail($data));
 
         Cart::destroy();
         return redirect()->route('home')->with('message', " You successfully placed orders");
