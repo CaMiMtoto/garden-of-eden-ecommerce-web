@@ -44,18 +44,20 @@
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form  class="form-horizontal validate-form" method="post" id="editForm" action="{{ route('orders.mark') }}" enctype="multipart/form-data" novalidate>
+                <form class="form-horizontal validate-form" method="post" id="editForm"
+                      action="{{ route('orders.mark') }}" enctype="multipart/form-data" novalidate>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title"><i class="glyphicon glyphicon-pencil"></i>
-                        Order details
+                            Order details
                         </h4>
                     </div>
                     <div class="modal-body">
                         <div id="edit-messages"></div>
-                        <div class="modal-loading div-hide" style="width: 50px;margin: auto;padding-top: 50px;padding-bottom: 50px;">
+                        <div class="modal-loading div-hide"
+                             style="width: 50px;margin: auto;padding-top: 50px;padding-bottom: 50px;">
                             <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -100,7 +102,15 @@
                 },
                 columns: [
                     {data: 'created_at', 'sortable': true},
-                    {data: 'clientName', 'sortable': true},
+                    {
+                        data: 'clientName', 'sortable': true,
+                        render: function (data, type, row) {
+                            if (row.user) {
+                                return row.user.name;
+                            }
+                            return data;
+                        }
+                    },
                     {
                         data: 'clientPhone', 'sortable': true,
                         render: function (data) {
@@ -110,9 +120,9 @@
                     {
                         data: 'status', 'sortable': true,
                         render: function (data) {
-                            if(data==="Pending"){
+                            if (data === "Pending") {
                                 return "<a class='label label-warning'><i class='fa fa-shopping-cart'></i> " + data + "</a>";
-                            }else if(data==="Processing"){
+                            } else if (data === "Processing") {
                                 return "<a class='label label-info'><i class='fa fa-spinner'></i> " + data + "</a>";
                             }
                             return "<a class='label label-success'><i class='fa fa-check-circle-o'></i> " + data + "</a>";

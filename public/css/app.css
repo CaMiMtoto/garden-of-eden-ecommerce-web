@@ -2,11 +2,7 @@
 
 html, body {
     font-family: 'Source Sans Pro', sans-serif;
-    /*font-size: 15px !important;*/
-}
-
-.flat {
-    border-radius: 0 !important;
+    font-size: 13px !important;
 }
 
 .div-hide {
@@ -21,12 +17,8 @@ html, body {
     height: 30px !important;
 }
 
-.form-control {
-    border-width: 2px !important;
-}
-
 .form-control, .btn, .alert, .modal-content, .sweet-alert button, .sweet-alert, .nav-pills > li > a, .img-thumbnail {
-    border-radius: 0 !important;
+    border-radius: 2px !important;
 }
 
 .ct-series-a .ct-area, .ct-series-a .ct-slice-donut-solid, .ct-series-a .ct-slice-pie {
@@ -41,4 +33,15 @@ html, body {
 .ct-label {
     font-size: 13px!important;
     font-weight: bolder!important;
+}
+.auth-box {
+   max-width: 400px;
+}
+@media screen and(max-width: 992px) {
+    .auth-box {
+        width: 50%!important;
+    }
+}
+.flat {
+    border-radius: 0 !important;
 }

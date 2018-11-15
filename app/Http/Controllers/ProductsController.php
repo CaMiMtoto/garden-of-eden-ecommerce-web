@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Product;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class ProductsController extends Controller
 {
@@ -33,8 +37,8 @@ class ProductsController extends Controller
 
         $limit = $request->input('length');
         $start = $request->input('start');
-        $order = $columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
+        $order = 'id';
+        $dir = 'desc';
 
         if (empty($request->input('search.value'))) {
             $products = Product::with('category')
@@ -178,10 +182,27 @@ class ProductsController extends Controller
         }
         $path = public_path() . '/uploads/products/' . $obj->image;
 
-        if (File::exists($path)) {
-            File::delete($path);
-        }
         $obj->delete();
+
+        $obj = Product::find($id);
+        if (!$obj) {
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        }
+        return \response()->json(["message" => "Data deleted"], 200);
+    }
+
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('ids');
+        foreach ($ids as $id) {
+            try {
+                $this->destroy($id);
+            } catch (Exception $exception) {
+//                echo $exception->getMessage().'<br>';
+            }
+        }
         return \response()->json(["message" => "Data deleted"], 200);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -22,7 +23,7 @@ class UsersController extends Controller
             2 => 'role'
         );
 
-        $totalData = User::count();
+        $totalData = User::where('role', '!=', 'Client')->count();
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
@@ -31,14 +32,15 @@ class UsersController extends Controller
         $dir = $request->input('order.0.dir');
 
         if (empty($request->input('search.value'))) {
-            $users = User::offset($start)
+            $users = User::where('role', '!=', 'Client')->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
         } else {
             $search = $request->input('search.value');
 
-            $users = User::where('email', 'LIKE', "%{$search}%")
+            $users = User::where('role', '!=', 'Client')
+                ->orWhere('email', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->orWhere('role', 'LIKE', "%{$search}%")
                 ->offset($start)
@@ -46,7 +48,8 @@ class UsersController extends Controller
                 ->orderBy($order, $dir)
                 ->get();
 
-            $totalFiltered = User::where('id', 'LIKE', "%{$search}%")
+            $totalFiltered = User::where('role', '!=', 'Client')
+                ->where('id', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->count();
         }
@@ -78,6 +81,7 @@ class UsersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+//            'user_name' => 'required|unique:users',
             'email' => 'required|unique:users',
             'role' => 'required',
             'password' => 'required|min:4'
@@ -85,6 +89,7 @@ class UsersController extends Controller
 
         $user = new User();
         $user->name = $request['name'];
+        $user->user_name = $request['email'];
         $user->email = $request['email'];
         $user->role = $request['role'];
         $user->password = bcrypt($request['password']);
@@ -103,23 +108,38 @@ class UsersController extends Controller
         return \response()->json($obj, 200);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request)
     {
 
         $this->validate($request, [
             'name' => 'required',
+//            'user_name' => 'required',
             'email' => 'required',
             'role' => 'required'
         ]);
-        $obj = User::find($request->input('id'));
+
+        $email = $request['email'];
+        $password = $request->input('password');
+        $id = $request->input('id');
+
+        $obj = User::find($id);
+        if(!$obj)  return response()->json(['message'=>'Not found'], 404);
+
         $obj->name = $request['name'];
-        $obj->email = $request['email'];
-        if(!empty($request->input('password'))){
-            $obj->password = bcrypt($request['password']);
+        $obj->user_name = $email;
+        $obj->email = $email;
+
+        if (!empty($password)) {
+            $obj->password = bcrypt($password);
         }
+
         $obj->role = $request['role'];
         $obj->update();
-        return response()->json($obj, 204);
+        return response()->json($obj, 200);
     }
 
     public function destroy($id)
@@ -135,28 +155,35 @@ class UsersController extends Controller
 
     public function login()
     {
-        return view("admins.login");
+        return view("auth.login");
     }
 
     public function postLogin(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|email',
+            'user_name' => 'required',
             'password' => 'required|min:4'
         ]);
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('user_name', 'password');
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->route('dashboard');
+            if (Auth::user()->role === 'Admin') {
+                return redirect()->route('dashboard');
+            }
+            return redirect()->home();
         }
-        return redirect()->route('login')->with('message', 'Incorrect email or password');
+        return redirect()->back()->with('message', 'Incorrect email or password');
     }
 
     public function logOut()
     {
+        if (Auth::user()->role === 'Client') {
+            Auth::logout();
+            return redirect()->route('home');
+        }
         Auth::logout();
-        return view('admins.login');
+        return view('auth.login');
     }
 
 }

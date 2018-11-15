@@ -59,6 +59,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   color: #333;
+
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -788,8 +789,8 @@ textarea.input {
 #hot-deal.section {
   padding: 60px 0px;
   margin: 30px 0px;
-  background-color: #E4E7ED;
-  background-image: url('../img/hotdeal.png');
+  background-color: transparent;
+  background-image: url('../img/uploaded-file.jpg');
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -862,8 +863,8 @@ textarea.input {
 }
 
 .product:hover {
-  -webkit-box-shadow: 0px 0px 6px 0px #E4E7ED, 0px 0px 0px 2px #D10024;
-  box-shadow: 0px 0px 6px 0px #E4E7ED, 0px 0px 0px 2px #D10024;
+  /*-webkit-box-shadow: 0px 0px 6px 0px #E4E7ED, 0px 0px 0px 2px #D10024;*/
+  /*box-shadow: 0px 0px 1px 0px #E4E7ED, 0px 0px 0px 1px #D10024;*/
 }
 
 .product .product-img {
@@ -1039,8 +1040,7 @@ textarea.input {
 .product .add-to-cart .add-to-cart-btn {
   position: relative;
   border: 2px solid transparent;
-  height: 40px;
-  padding: 0 30px;
+  padding: 10px;
   background-color: #ef233c;
   color: #FFF;
   text-transform: uppercase;
@@ -1066,7 +1066,7 @@ textarea.input {
   background-color: #FFF;
   color: #D10024;
   border-color: #D10024;
-  padding: 0px 30px 0px 50px;
+  padding: 10px 30px 10px 50px;
 }
 
 .product .add-to-cart .add-to-cart-btn:hover>i {

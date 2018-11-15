@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property mixed $order
  * @property mixed $product
+ * @property int product_id
+ * @property double price
+ * @property int qty
+ * @property double sub_total
  */
 class OrderItem extends Model
 {

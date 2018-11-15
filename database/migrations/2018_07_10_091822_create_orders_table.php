@@ -17,8 +17,9 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('clientName');
             $table->string('clientPhone');
+            $table->unsignedInteger('user_id');
             $table->string('status');
-//            $table->decimal('total_paid');
+            $table->string('shipping_address');
             $table->timestamps();
         });
     }

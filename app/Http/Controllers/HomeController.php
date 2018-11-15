@@ -7,13 +7,12 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
     public function index()
     {
-        $categories = Category::orderBy("id", "desc")->get();
-        return view('home', ['categories' => $categories]);
+        return view('home',['categories'=>Category::all()]);
     }
-
-    public function dashboard()
+    public function dashboard ()
     {
         return view('admins.dashboard');
     }

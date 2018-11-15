@@ -27,18 +27,19 @@ class OrderController extends Controller
 
         $limit = $request->input('length');
         $start = $request->input('start');
-        $order = $columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
-
+        /*$order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');*/
+        $order='created_at';
+        $dir='desc';
         if (empty($request->input('search.value'))) {
-            $orders = Order::with('orderItems')
+            $orders = Order::with('user')
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
         } else {
             $search = $request->input('search.value');
-            $orders = Order::with('orderItems')
+            $orders = Order::with('user')
                 ->where('clientName', 'LIKE', "%{$search}%")
                 ->orWhere('clientPhone', 'LIKE', "%{$search}%")
                 ->orWhere('created_at', 'LIKE', "%{$search}%")
@@ -63,6 +64,7 @@ class OrderController extends Controller
                 $nestedData['clientName'] = $order->clientName;
                 $nestedData['clientPhone'] = $order->clientPhone;
                 $nestedData['status'] = $order->status;
+                $nestedData['user'] = $order->user;
                 $nestedData['created_at'] = date('j M Y h:i a', strtotime($order->created_at));
                 $data[] = $nestedData;
 
@@ -111,20 +113,4 @@ class OrderController extends Controller
     }
 
 
-    public function edit($id)
-    {
-        //
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-
-    public function destroy($id)
-    {
-        //
-    }
 }

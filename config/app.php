@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'FShop'),
+    'name' => env('APP_NAME', 'Garden Of Eden Produce'),
 
     /*
     |--------------------------------------------------------------------------

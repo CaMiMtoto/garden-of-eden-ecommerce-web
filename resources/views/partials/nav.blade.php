@@ -6,7 +6,12 @@
         <div id="responsive-nav">
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="{{ route('home') }}">Home</a></li>
+                <li class=""><a href="{{ route('home') }}">
+                        <i class="fa fa-home"></i>
+                        Home</a></li>
+                <li class=""><a href="{{ route('getProduct') }}">
+                        <i class="fa fa-product-hunt"></i>
+                        Products</a></li>
             </ul>
             <!-- /NAV -->
         </div>

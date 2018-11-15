@@ -27,15 +27,15 @@ use \Gloudemans\Shoppingcart\Facades\cart;
 
                 <div class="">
                     @if(count($cart))
-                        <h1>
+                        <h1 class="color-primary">
                             <i class="fa fa-shopping-bag"></i> My shopping basket</h1>
-
                         <hr>
 
-                        <table class="table table-hover table-condensed">
+                        <table class="table table-hover table-condensed table-striped">
                             <thead>
                             <tr class="">
-                                <th colspan="2">Product</th>
+                                <th class="hidden-xs">Image</th>
+                                <th>Product</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Measure</th>
@@ -50,16 +50,16 @@ use \Gloudemans\Shoppingcart\Facades\cart;
                                 $product = \App\Product::find($cartItem->id);
                                 ?>
                                 <tr>
-                                    <td>
+                                    <td class="hidden-xs">
                                         <h4>
                                             <a href="{{ asset("uploads/products/" .$product->image ) }}">
                                                 <img src="{{ asset("uploads/products/" .$product->image ) }}" alt=""
-                                                     class="img-responsive img-circle" style="height: 50px ;">
+                                                     class="img-responsive img-thumbnail flat" style="height: 50px ;">
                                             </a>
                                         </h4>
                                     </td>
                                     <td>
-                                        <h4><a href="">{{ $cartItem->name }}</a></h4>
+                                        <h5>{{ $cartItem->name }}</h5>
                                     </td>
                                     <td>
                                         <p>
@@ -68,20 +68,16 @@ use \Gloudemans\Shoppingcart\Facades\cart;
                                         </p>
                                     </td>
                                     <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-default btn-sm flat"
-                                               href="{{ route('cart.increment',['id'=>$cartItem->rowId]) }}">
-                                                <i class="fa fa-plus"></i>
-                                            </a>
-                                            <a href="" class="btn btn-info btn-sm">
-                                                {{ $cartItem->qty}}
-                                            </a>
-                                            {{--<input type="number"  value="{{ $cartItem->qty}}" name="qty" class="qty form-control" min="1" />--}}
-                                            <a class="btn btn-default btn-sm flat"
-                                               href="{{ route('cart.decrement',['id'=>$cartItem->rowId]) }}">
-                                                <i class="fa fa-minus"></i>
-                                            </a>
-                                        </div>
+                                        <form class="form-inline" action="{{ route('cart.increment',['id'=>$cartItem->rowId]) }}">
+                                            <div class="form-group form-group-sm">
+                                                <label>
+                                                    <input name="qty" placeholder="Quantity" style="width: 80px" value="<?php print (int) $cartItem->qty; ?>" type="number" min="1" class="form-control flat">
+                                                </label>
+
+                                                <button type="submit" class="btn btn-cart btn-sm flat" title="Click here to update Quantity."  data-toggle="tooltip" data-placement="right"><i class="fa fa-refresh"></i></button>
+                                            </div>
+                                        </form>
+
                                     </td>
                                     <td>{{ $product->measure }}</td>
                                     <td>
@@ -92,74 +88,47 @@ use \Gloudemans\Shoppingcart\Facades\cart;
                                     </td>
 
                                     <td>
-                                        <a class="cart_quantity_delete"
-                                           href="{{ route('cart.removeItem',['id'=>$cartItem->rowId]) }}"><i
-                                                    class="fa fa-times"></i></a>
+                                        <a class="cart-remove-btn" title="Click here to remove Item."  data-toggle="tooltip" data-placement="left"
+                                           href="{{ route('cart.removeItem',['id'=>$cartItem->rowId]) }}"><i class="fa fa-times"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
                             <tr>
                                 <td colspan="8">
-                                    <a class="btn btn-default flat btn-lg"
+                                    <a class="btn btn-default flat btn-sm"
                                        href="{{route('cart.removeAll')}}">
                                         <i class="fa fa-remove"></i>
                                         Remove all from basket</a>
+
+                                    <a href="{{ route('cart.get.checkout') }}"
+                                       class="btn btn-green btn-sm flat">
+                                        <i class="fa fa-shopping-bag"></i>
+                                        Go to check out
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
 
                         <section id="do_action">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm-6 col-sm-offset-3">
-                                        <div class="total_area">
-                                            <div>
-                                                <h3>
-                                                    Total amount to pay
-                                                    <span class="label label-info">
-                                                        {{ Cart::subtotal()  }} Rwf
-                                               </span>
-                                                </h3>
-                                            </div>
-                                            <br>
-                                            <form action="{{ route('cart.checkOut') }}" class="form-horizontal"
-                                                  method="post">
-                                                {{ csrf_field() }}
-                                                <div class="form-group  {{ $errors->has('clientName')?'has-error':''}} ">
-                                                    <div>
-                                                        <input type="text" required placeholder="Full name"
-                                                               value="{{Request::old('clientName')}}" max="10" min="10"
-                                                               class="form-control flat"
-                                                               name="clientName" id="clientName">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group  {{ $errors->has('phoneNumber')?'has-error':''}}">
-                                                    <div>
-                                                        <input type="text" required
-                                                               placeholder="Enter your phone number"
-                                                               value="{{Request::old('phoneNumber')}}" max="10"
-                                                               class="form-control flat"
-                                                               name="phoneNumber" id="phoneNumber">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div>
-                                                        <button type="submit" class="btn btn-primary flat btn-block"
-                                                                href="{{route('cart.checkOut')}}">
-                                                            <i class="fa fa-thumbs-up"></i>
-                                                            Confirm your order
-                                                        </button>
-
-                                                    </div>
-                                                </div>
-
-
-                                            </form>
-
-                                        </div>
+                            <div class="container  hidden-xs hidden-sm">
+                                <div class="row text-center">
+                                    <div class="col-sm-4">
+                                        <span class="color-primary" style="font-size: 100px;padding: 50px">
+                                            <i class="fa fa-shopping-bag"></i>
+                                        </span>
                                     </div>
+                                    <div class="col-sm-4">
+                                        <span class="text-success" style="font-size: 100px;padding: 50px">
+                                            <i class="fa fa-shopping-basket"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span class="color-primary" style="font-size: 100px;padding: 50px">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </span>
+                                    </div>
+
                                 </div>
                             </div>
                         </section><!--/#do_action-->
@@ -177,4 +146,10 @@ use \Gloudemans\Shoppingcart\Facades\cart;
     </div>
     <br>
     <br>
+
+    <style>
+        td{
+            vertical-align: middle!important;
+        }
+    </style>
 @endsection

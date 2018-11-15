@@ -39,10 +39,10 @@
         <tr>
             <td>
             <span>
-                <b>Client name</b>
+                <b>Client</b>
             </span>
             </td>
-            <td> : {{ $order->clientName }}</td>
+            <td> : {{ $order->user===null ? $order->clientName:$order->user->name }}</td>
         </tr>
         <tr>
             <td>
@@ -51,6 +51,14 @@
             </span>
             </td>
             <td> : {{ \App\MyFunc::format_phone_us($order->clientPhone) }}</td>
+        </tr>
+        <tr>
+            <td>
+            <span>
+            <b>Shipping address</b>
+            </span>
+            </td>
+            <td> : {{ $order->shipping_address}}</td>
         </tr>
         </tbody>
     </table>

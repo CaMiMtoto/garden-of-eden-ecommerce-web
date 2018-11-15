@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessOrder;
 use App\Mail\SendMail;
 use App\Order;
 use App\OrderItem;
@@ -9,22 +10,27 @@ use App\Product;
 use App\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {
 
-    public function getAddToCart($id)
+    public function getAddToCart(Request $request, $id)
     {
         $product = Product::find($id);
+        $qty = $request->input('qty');
+        if (!$qty) {
+            $qty = 1;
+        }
         $cartItem = Cart::add([
             'id' => $product->id,
             'name' => $product->name,
-            'qty' => 1,
+            'qty' => $qty,
             'price' => $product->price
         ]);
         $cartItem->associate('Product');
-//        dd($cartItem);
+
         return redirect()->back();
     }
 
@@ -34,14 +40,18 @@ class CartController extends Controller
         return view('clients.carts', ['cart' => $cart]);
     }
 
-    public function getIncrement($id)
+    public function getIncrement(Request $request, $id)
     {
+        $qty = $request->input('qty');
+        if (!$qty) {
+            $qty = 1;
+        }
         $cartItem = Cart::get($id);
-        Cart::update($id, $cartItem->qty + 1);
+        Cart::update($id, $qty);
         return redirect()->route('cart.shoppingCart');
     }
 
-    public function getDecrement($id)
+    public function getDecrement(Request $request, $id)
     {
         $cartItem = Cart::get($id);
         Cart::update($id, $cartItem->qty - 1);
@@ -67,13 +77,22 @@ class CartController extends Controller
         return redirect()->route('cart.shoppingCart');
     }
 
+    public function checkOut()
+    {
+        if (Cart::count() == 0) {
+            return redirect()->route('cart.shoppingCart');
+        }
+
+        return view('clients.check-out');
+    }
 
     public function postCheckOut(Request $request)
     {
         $this->validate($request, [
             'phoneNumber' => 'required| min:10',
-            'clientName' => 'required'
+            'shipping_address' => 'required'
         ]);
+
 
         if (Cart::count() == 0) {
             return redirect()->back();
@@ -82,10 +101,11 @@ class CartController extends Controller
         $cart = Cart::content();
         $order = new Order();
         $order->clientPhone = $request->input('phoneNumber');
-        $order->clientName = $request->input('clientName');
+        $order->shipping_address = $request->input('shipping_address');
 //        $order->total_paid = Cart::subtotal();
         $order->status = "Pending";
-        $order->save();
+        Auth::user()->orders()->save($order);
+//        $order->save();
         foreach ($cart as $cartItem) {
             $orderItem = new OrderItem();
             $orderItem->product_id = $cartItem->id;
@@ -95,13 +115,10 @@ class CartController extends Controller
             $order->orderItems()->save($orderItem);
         }
 
-        $data = ['message' => $order];
-        $users = User::all()->each(function ($user) {
-            return $user->email;
-        });
-        Mail::to($users)->send(new SendMail($data));
+        //Send email to all users in background
+        ProcessOrder::dispatch($order);
 
         Cart::destroy();
-        return redirect()->route('home')->with('message', " You successfully placed orders");
+        return redirect()->route('my.orders')->with('message', " You successfully placed orders");
     }
 }

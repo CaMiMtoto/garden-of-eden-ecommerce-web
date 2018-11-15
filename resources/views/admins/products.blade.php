@@ -11,7 +11,6 @@
                 <div class="panel-heading flat">
                     <h4 class="panel-title">
                         <i class="fa fa-square"></i> Manage products
-
                         <button data-toggle="modal" data-target="#addModal" type="button"
                                 class="btn btn-default pull-right btn-sm flat">
                             <i class="fa fa-plus icon-collapsed"></i>
@@ -19,12 +18,24 @@
                         </button>
                         <span class="clearfix"></span>
                     </h4>
+                    <button data-url="{{ route('products.delete.selected') }}"
+                            class="btn btn-danger btn-sm" id="btnDeleteSelected">
+                        <i class="fa fa-trash"></i> Delete selected
+                    </button>
                 </div>
-                <div class="panel-body panel-content">
-                    <table class="table table-condensed table-responsive table-hover"
+                <div class="panel-body panel-content table-responsive ">
+                    <table class="table table-condensed  table-hover"
                            id="manageTable">
                         <thead>
                         <tr>
+                            <th>
+                                <label class="fancy-checkbox element-left">
+                                    <input type="checkbox">
+                                    <span>
+                                        <small></small>
+                                    </span>
+                                </label>
+                            </th>
                             <th>Image</th>
                             <th>Name</th>
                             <th>Category</th>
@@ -97,7 +108,8 @@
                             <label for="addcatgory" class="col-sm-4 control-label">Price</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="addprice" placeholder="Price" name="price" autocomplete="off" required>
+                                <input type="text" class="form-control" id="addprice" placeholder="Price" name="price"
+                                       autocomplete="off" required>
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
@@ -112,18 +124,11 @@
                             <label for="addmeasure" class="col-sm-4 control-label">Unit measure</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <input type="text"  class="form-control" id="addmeasure"
+                                <input type="text" class="form-control" id="addmeasure"
                                        placeholder="Unit measure" name="measure" autocomplete="off" required>
                             </div>
                         </div> <!-- /form-group-->
-                        <div class="form-group">
-                            <label for="isFeatured" class="col-sm-4 control-label"></label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
-                                <input type="text"  class="form-control" id="addmeasure"
-                                       placeholder="Unit measure" name="measure" autocomplete="off" required>
-                            </div>
-                        </div> <!-- /form-group-->
+
                         <div class="form-group">
                             <label for="addminStock" class="col-sm-4 control-label">Min stock</label>
                             <label class="col-sm-1 control-label">: </label>
@@ -136,17 +141,19 @@
                             <label for="addescription" class="col-sm-4 control-label">Description</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <textarea required name="description" placeholder="Description" id="addescription" class="form-control"></textarea>
+                                <textarea required name="description" placeholder="Description" id="addescription"
+                                          class="form-control"></textarea>
                             </div>
                         </div> <!-- /form-group-->
 
                     </div> <!-- /modal-body -->
                     <div class="modal-footer">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-default flat" data-dismiss="modal"><i
                                         class="glyphicon glyphicon-remove-sign"></i> Close
                             </button>
-                            <button type="submit" class="btn btn-primary" id="createBtn" data-loading-text="Loading...">
+                            <button type="submit" class="btn btn-primary flat" id="createBtn"
+                                    data-loading-text="Loading...">
                                 <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
                             </button>
                         </div>
@@ -161,7 +168,8 @@
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form  class="form-horizontal validate-form" method="post" id="editProductForm" action="{{ route('products.update') }}" enctype="multipart/form-data" novalidate>
+                <form class="form-horizontal validate-form" method="post" id="editProductForm"
+                      action="{{ route('products.update') }}" enctype="multipart/form-data" novalidate>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -169,7 +177,8 @@
                         <h4 class="modal-title"><i class="glyphicon glyphicon-pencil"></i> Edit product</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="modal-loading div-hide" style="width: 50px;margin: auto;padding-top: 50px;padding-bottom: 50px;">
+                        <div class="modal-loading div-hide"
+                             style="width: 50px;margin: auto;padding-top: 50px;padding-bottom: 50px;">
                             <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -190,27 +199,32 @@
                                         <label for="productImage" class="col-sm-4 control-label">Product Image</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7" style="max-height: 300px;">
-                                            <img src="" alt="Image " class="img-thumbnail img-responsive product-img" style="overflow: scroll">
+                                            <img src="" alt="Image " class="img-thumbnail img-responsive product-img"
+                                                 style="overflow: scroll">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="productImage" class="col-sm-4 control-label">Select Image</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7">
-                                            <button type="button" class="btn btn-info btn-sm btn-block btn-upload-photo" > <i class="fa fa-folder"></i>
-                                                Choose Photo</button>
+                                            <button type="button"
+                                                    class="btn btn-info btn-sm btn-block btn-upload-photo"><i
+                                                        class="fa fa-folder"></i>
+                                                Choose Photo
+                                            </button>
                                             <input type="file" name="image" class="sr-only filePhoto">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="tab-pane fade" id="productInfo">
-                                 {{ csrf_field() }}
+                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <label for="editName" class="col-sm-4 control-label">Product Name</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" id="editName" placeholder="Product Name"
+                                            <input type="text" class="form-control" id="editName"
+                                                   placeholder="Product Name"
                                                    name="name" autocomplete="off" required>
                                         </div>
                                     </div>
@@ -230,7 +244,8 @@
                                         <label for="editPrice" class="col-sm-4 control-label">Price</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" id="editPrice" placeholder="Price" name="price" autocomplete="off" required>
+                                            <input type="text" class="form-control" id="editPrice" placeholder="Price"
+                                                   name="price" autocomplete="off" required>
                                         </div>
                                     </div> <!-- /form-group-->
                                     <div class="form-group">
@@ -246,22 +261,26 @@
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7">
                                             <input type="text" class="form-control" id="editMeasure"
-                                                   placeholder="Unit measure" name="measure" autocomplete="off" required>
+                                                   placeholder="Unit measure" name="measure" autocomplete="off"
+                                                   required>
                                         </div>
                                     </div> <!-- /form-group-->
                                     <div class="form-group">
                                         <label for="editMinStock" class="col-sm-4 control-label">Min stock</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7">
-                                            <input type="number" min="1" max="100" class="form-control" id="editMinStock"
-                                                   placeholder="Minimum stock alert" name="minStock" autocomplete="off" required>
+                                            <input type="number" min="1" max="100" class="form-control"
+                                                   id="editMinStock"
+                                                   placeholder="Minimum stock alert" name="minStock" autocomplete="off"
+                                                   required>
                                         </div>
                                     </div> <!-- /form-group-->
                                     <div class="form-group">
                                         <label for="editDescription" class="col-sm-4 control-label">Description</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7">
-                                            <textarea required name="description" placeholder="Description" id="editDescription" class="form-control"></textarea>
+                                            <textarea required name="description" placeholder="Description"
+                                                      id="editDescription" class="form-control"></textarea>
                                         </div>
                                     </div> <!-- /form-group-->
                                 </div>
@@ -287,8 +306,6 @@
     <!-- /  -->
 
 
-
-
     <script>
 
         var defaultUrl = "{{ route('products.all')  }}";
@@ -307,27 +324,36 @@
                 },
                 columns: [
                     {
-                        data: 'image', 'sortable': false,
-                        render:function (data,type,row) {
-                            return "<img src='"+data+"' class='img-responsive product_image img-thumbnail'/>"
+                        data: 'id', 'sortable': false,
+                        render: function (data, type, row) {
+                            return '<label class="fancy-checkbox element-left"> ' +
+                                '<input type="checkbox" name="products" value="' + data + '"> ' +
+                                '<span></span> ' +
+                                '</label>';
                         }
                     },
-                    {data: 'name', 'sortable': true},
+                    {
+                        data: 'image', 'sortable': false,
+                        render: function (data, type, row) {
+                            return "<img src='" + data + "' class='img-responsive product_image img-thumbnail'/>"
+                        }
+                    },
+                    {data: 'name', 'sortable': false},
                     {data: 'category', 'sortable': false},
-                    {data: 'measure', 'sortable': true},
-                    {data: 'price', 'sortable': true},
-                    {data: 'qty', 'sortable': true},
-                    {data: 'minStock', 'sortable': true},
+                    {data: 'measure', 'sortable': false},
+                    {data: 'price', 'sortable': false},
+                    {data: 'qty', 'sortable': false},
+                    {data: 'minStock', 'sortable': false},
                     {data: 'description', 'sortable': false},
                     {
                         data: 'id',
                         'sortable': false,
                         render: function (data, type, row) {
-                            return "<div class='btn-group btn-group-sm'>" +
-                                "<button class='btn btn-default btn-sm flat js-edit' " +
+                            return "<div class='btn-group btn-group-xs flat'>" +
+                                "<button class='btn btn-default btn-xs flat js-edit' " +
                                 "data-url='/admin/products/show/" + row.id + "' data-id='" + row.id + "'> " +
                                 "<i class='glyphicon glyphicon-edit'></i></button>" +
-                                "<button class='btn btn-warning  btn-sm flat js-delete' data-id='" + data +
+                                "<button class='btn btn-danger  btn-xs flat js-delete' data-id='" + data +
                                 "' data-url='/admin/products/destroy/" + row.id + "'> " +
                                 "<i class='glyphicon glyphicon-trash'></i>" +
                                 "</button>" +
@@ -383,8 +409,8 @@
                     $("#editDescription").val(response.description);
                     $("#editMinStock").val(response.minStock);
                     // set the form value to be updated
-                    var src='/uploads/products/'+response.image;
-                    $('.product-img').attr("src",src);
+                    var src = '/uploads/products/' + response.image;
+                    $('.product-img').attr("src", src);
                     // add the products id
                     footer.after('<input type="hidden" name="id" id="id" value="' + response.id + '" />');
                 }).fail(function (error) {
@@ -477,6 +503,58 @@
                     $("#editBtn").button('reset');
                 });
             });
+
+            ///
+
+            $('#btnDeleteSelected').click(function () {
+                deleteData($(this).attr('data-url'));
+            });
+
+            function deleteData(deleteUrl) {
+                var confirmButton = $('button.confirm');
+                swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this data!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#007B00",
+                    confirmButtonText: "Ok!",
+                    closeOnConfirm: false
+                }, function () {
+                    confirmButton.button('loading');
+                    var allVals = [];
+                    $('input[name="products"]:checked').each(function () {
+                        allVals.push($(this).val());
+                    });
+                    $.ajax({
+                        url: deleteUrl,
+                        data: {_token: token, ids: allVals},
+                        method: 'DELETE'
+                    }).done(function (response) {
+                        confirmButton.button('reset');
+                        swal({
+                            title: "Deleted!",
+                            text: "Records  have been deleted.",
+                            type: "success",
+                            confirmButtonColor: "#007B00",
+                            confirmButtonText: "Close"
+                        });
+                        // reload the manage member table
+                        table.destroy();
+                        myFunc();
+                    }).fail(function (error) {
+                        confirmButton.button('reset');
+                        swal({
+                            title: "Not Deleted!",
+                            text: "Records are not deleted please try again later.",
+                            type: "info",
+                            confirmButtonColor: "#ff3f71",
+                            confirmButtonText: "Ok ,Close"
+                        });
+                        confirmButton.button('reset');
+                    });
+                });
+            }
         });
     </script>
 @endsection

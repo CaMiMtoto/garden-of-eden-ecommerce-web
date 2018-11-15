@@ -127,7 +127,7 @@ function deleteWithUrl(deleteUrl, button, table) {
     var confirmButton = $('button.confirm');
     swal({
         title: "Are you sure?",
-        text: "You will not be able to recover this record!",
+        text: "You will not be able to recover this data!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#007B00",
