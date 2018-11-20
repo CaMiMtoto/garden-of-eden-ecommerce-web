@@ -34,16 +34,11 @@
 <div id="wrapper">
     <div class="vertical-align-wrap">
         <div class="vertical-align-middle">
-            <div class="logo text-center">
-                {{--<img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="DiffDash" style="height: 80px">--}}
-              <h3>
-                  <a href="{{ route('home') }}">
-                      {{ env('APP_NAME','Garden Of Eden Produce') }}
-                  </a>
-              </h3>
-            </div>
-            <br>
-            <div class="auth-box">
+
+            <div class="auth-box"> <div class="logo text-center">
+                    <img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="DiffDash" style="height: 80px">
+                </div>
+                <br>
                 <div class="content">
                     @if(Session::has('message'))
                         <div class="alert alert-danger alert-dismissable flat">
@@ -97,13 +92,6 @@
                         <div class="bottom">
                             <span class="helper-text">
                                 <i class="fa fa-lock"></i> <a href="{{ route('password.request') }}">Forgot password?</a>
-                            </span>
-                        </div>
-                        <div class="bottom">
-                            <span class="helper-text">
-                                Don't have an account?
-                                <a href="{{ route('register') }}">Sign up
-                                </a>
                             </span>
                         </div>
                     </form>

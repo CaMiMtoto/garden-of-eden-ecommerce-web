@@ -57,14 +57,30 @@
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <div class="caption">
-                                                        <h5 class="pull-right">{{ number_format($product->price,1) }}
+                                                        <h5 class="pull-right">
+                                                            <span class="text-success" style="padding-right: 20px">
+                                                                 {{ number_format($product->getRealPrice(),1) }}
+                                                            </span>
+                                                            @if($product->discount>0)
+                                                                <del class="product-old-price text-danger">
+                                                                    <span>{{ number_format($product->price) }}</span>
+                                                                </del>
+                                                            @endif
                                                             <small>Rwf / {{ $product->measure }}</small>
                                                         </h5>
                                                         <h4 class="product-name">
                                                             <span>{{ $product->name }}</span>
                                                         </h4>
-                                                        <p class="hidden-xs">{{ substr($product->description,0,150) }}
-                                                            ..</p>
+                                                        <p class="hidden-xs">
+                                                            @if($product->description!=='')
+                                                                {{ substr($product->description,0,150) }}
+                                                                ..
+                                                            @else
+                                                                <span class="label label-default">
+                                                                    No description available
+                                                                </span>
+                                                            @endif
+                                                        </p>
                                                     </div>
                                                     <div class="ratings margin-left-sm">
                                                         {{--<div class="">{{ $product->qty }} in stock</div>--}}
@@ -75,26 +91,41 @@
                                                             </a>
                                                         </div>
                                                         <div class="pull-right">
-                                                            <form action="{{ route('cart.addToCart',['id'=>$product->id]) }}"
-                                                                  class="form-inline">
-                                                                <div class="form-group form-group-sm">
-                                                                    <label for="qty{{$product->id}}"></label>
-                                                                    <input style="width: 60px" min="1" size="10"
-                                                                           value="1" type="number"
-                                                                           max="{{ $product->qty }}" name="qty"
-                                                                           class="form-control flat" placeholder="Qty"
-                                                                           id="qty{{$product->id}}">
-                                                                </div>
-                                                                <button type="submit"
-                                                                        class="btn  btn-cart btn-sm flat" {{ $product->qty <=0 ? 'disabled':'' }}>
-                                                                    <i class="fa fa-shopping-basket"></i>
-                                                                    Add to cart
-                                                                </button>
-                                                            </form>
+                                                            @if($product->status==='Available')
+                                                                <form action="{{ route('cart.addToCart',['id'=>$product->id]) }}"
+                                                                      class="form-inline">
+                                                                    <div class="form-group form-group-sm">
+                                                                        <label for="qty{{$product->id}}"></label>
+                                                                        <input style="width: 60px" min="0.5" size="10"
+                                                                               value="1" type="text"
+                                                                               max="{{ $product->qty }}" name="qty"
+                                                                               class="form-control flat"
+                                                                               placeholder="Qty"
+                                                                               id="qty{{$product->id}}">
+                                                                    </div>
+                                                                    <button type="submit"
+                                                                            class="btn  btn-cart btn-sm flat" {{ $product->qty <=0 ? 'disabled':'' }}>
+                                                                        <i class="fa fa-shopping-basket"></i>
+                                                                        Add to cart
+                                                                    </button>
+                                                                </form>
+                                                            @else
+                                                                <span class="label label-default">
+                                                                <i class="fa fa-info-circle"></i>
+                                                                Out Of Stock
+                                                            </span>
+                                                            @endif
                                                         </div>
 
                                                         <div class="clearfix"></div>
                                                     </div>
+                                                    @if($product->discount>0)
+                                                        <h4>
+                                                           <span class="label label-danger">
+                                                                {{ - $product->getDiscountPercent()}} Rwf
+                                                           </span>
+                                                        </h4>
+                                                    @endif
                                                 </div>
                                                 <div class="clearfix"></div>
                                             </div>

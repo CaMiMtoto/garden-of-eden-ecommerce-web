@@ -29,7 +29,7 @@ class ProductsController extends Controller
             4 => 'price',
             3 => 'measure',
             6 => 'minStock',
-            7 => 'description'
+            7 => 'status'
         );
 
         $totalData = Product::count();
@@ -72,6 +72,8 @@ class ProductsController extends Controller
                 $nestedData['price'] = number_format($product->price);
                 $nestedData['qty'] = $product->qty;
                 $nestedData['minStock'] = $product->minStock;
+                $nestedData['discount'] = $product->discount;
+                $nestedData['status'] = $product->status;
                 $nestedData['category'] = $product->category->name;
                 $nestedData['image'] = asset("uploads/products/" . $product->image);
                 $nestedData['description'] = substr(strip_tags($product->description), 0, 50) . "...";
@@ -97,10 +99,11 @@ class ProductsController extends Controller
             'name' => 'required',
             'category' => 'required|numeric',
             'price' => 'required|numeric',
+            'discount' => 'required|numeric',
             'qty' => 'required|numeric',
             'measure' => 'required',
             'minStock' => 'required',
-            'description' => 'required'
+            'status' => 'required'
         ]);
 
         $category = Category::find($request->input('category'));
@@ -109,10 +112,12 @@ class ProductsController extends Controller
         $product = new Product();
         $product->name = $request['name'];
         $product->price = $request['price'];
+        $product->discount = $request['discount'];
         $product->qty = $request['qty'];
         $product->measure = $request['measure'];
         $product->minStock = $request['minStock'];
         $product->description = $request['description'];
+        $product->status = $request['status'];
 
         $photoName = time() . '.' . $request->image->getClientOriginalExtension();
         $request->image->move(public_path('uploads/products'), $photoName);
@@ -140,10 +145,11 @@ class ProductsController extends Controller
             'name' => 'required',
             'category' => 'required|numeric',
             'price' => 'required|numeric',
+            'discount' => 'required|numeric',
             'qty' => 'required|numeric',
             'measure' => 'required',
             'minStock' => 'required',
-            'description' => 'required'
+            'status' => 'required'
         ]);
 
         $category = Category::find($request->input('category'));
@@ -154,10 +160,12 @@ class ProductsController extends Controller
 
         $obj->name = $request['name'];
         $obj->price = $request['price'];
+        $obj->discount = $request['discount'];
         $obj->qty = $request['qty'];
         $obj->measure = $request['measure'];
         $obj->minStock = $request['minStock'];
         $obj->description = $request['description'];
+        $obj->status = $request['status'];
         $image = $obj->image;
         if ($request->image != null) {
             $photoName = time() . '.' . $request->image->getClientOriginalExtension();

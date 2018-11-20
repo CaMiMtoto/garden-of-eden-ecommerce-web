@@ -1,29 +1,27 @@
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
-@import url('https://fonts.googleapis.com/css?family=Inconsolata|Raleway');
+
 
 html, body {
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: 13px !important;
+    font-size: 15px !important;
 }
-.home-info{
+
+.home-info {
     font-family: 'Raleway', sans-serif;
-    font-size: 25px!important;
+    font-size: 25px !important;
 }
+
 .header-search form .input-select, .header-search form .search-btn {
     border-radius: 0 !important;
 
 }
-.header-search{
+
+.header-search {
     font-size: 15px;
 }
+
 .shop:before {
     width: 50%;
     transform: skewX(-0deg);
-}
-
-.main-nav > li > a:hover, .main-nav > li > a:focus, .main-nav > li.active > a {
-    /* color: #FFF;
-     background-color: transparent;*/
 }
 
 .main-nav > li > a:after {
@@ -44,9 +42,7 @@ html, body {
     padding-left: 20px;
 }
 
-#bottom-footer {
-    /*background: #f3f3f3;*/
-}
+
 
 .shop .shop-img {
     background-color: transparent;
@@ -64,14 +60,6 @@ a:hover, a:focus {
 
 .header-search form .search-btn {
     border: 1px solid #D10024 !important;
-}
-
-.btn-success {
-    background-color: #00AF50;
-}
-
-.btn-primary {
-    background-color: #2F81D8;
 }
 
 .pagination > li > a, .pagination > li > span {
@@ -108,50 +96,101 @@ a:hover, a:focus {
 .category-info:hover {
     /*border: 1px solid #a7a7a7;;*/
 }
-.btn-cart{
+
+.btn-cart {
     color: white;
     background-color: #D10024;
     border: 2px solid #D10024;
     text-transform: uppercase;
 }
-.btn-cart:hover{
+
+.btn-cart:hover {
     color: #D10024;
     background-color: #FFFFFF;
     border: 2px solid #D10024;
 }
 
-.btn-green{
+.btn-green {
     color: white;
     background-color: #00AF50;
     border: 2px solid #00bd59;
     text-transform: uppercase;
 }
-.btn-green:hover{
+
+.btn-green:hover {
     color: #00AF50;
     background-color: #FFFFFF;
     border: 2px solid #00AF50;
 }
-.item:hover{
+
+.item:hover {
     border: 1px solid darkgray;
 }
-.badge-primary{
+
+.badge-primary {
     background-color: #D10024;
 }
-.list-group-item.active1{
+
+.list-group-item.active1 {
     background-color: #D10024;
     color: white;
     z-index: 2;
     border-color: #D10024;
 }
-.list-group-item.active1 a{
-    color: white!important;
+
+.list-group-item.active1 a {
+    color: white !important;
 }
-.color-primary{
- color: #D10024!important;
+
+.color-primary {
+    color: #D10024 !important;
 }
-.cart-btn-qty{
+
+.cart-btn-qty {
     border: 2px solid #D10024;
 }
-.cart-btn-qty:hover{
+
+.cart-btn-qty:hover {
     border: 2px solid #D10024;
+}
+
+/*animations
+css
+*/
+ .header{
+    font-family: 'Raleway', sans-serif;
+}
+div.animate {
+    font-family: 'Raleway', sans-serif;
+    color: #000000;
+    text-decoration: none;
+    /*background-color: #f3f3f3;*/
+    text-align: left;
+    padding: 1em;
+    border-radius: 1px;
+}
+
+div.animate>p {
+    color: #626262 !important;
+}
+.padding-30-not-sm{
+    padding: 30px;
+}
+
+@media (max-width: 480px) {
+    .padding-30-not-sm{
+        padding: 0;
+    }
+}
+/*nav hover dropdown*/
+
+li:hover {
+    cursor: pointer;
+}
+
+ul li:hover > ul,
+ul li ul:hover {
+    visibility: visible;
+    opacity: 1;
+    display: block;
 }

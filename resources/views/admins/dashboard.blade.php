@@ -13,30 +13,83 @@
 
         <!-- Orders -->
         <div class="dashboard-section no-margin">
-            <div class="panel-content">
+            <div class="panel-content panel">
                 <div class="row">
                     <div class="col-md-3 col-sm-6">
-                        <p class="metric-inline">
-                            <i class="fa fa-shopping-basket"></i> {{ number_format(\App\MyFunc::counts("orders")) }}
-                            <span>Orders</span></p>
+                        <div class="number-chart">
+                            <div class="mini-stat">
+                                <div id="number-chart1" class="inlinesparkline">
+                                    <i class="fa fa-shopping-basket"></i>
+                                </div>
+                                <p class="text-muted">
+                                </p>
+                            </div>
+                            <div class="number">
+                                <span>{{ number_format(\App\MyFunc::counts("orders")) }}</span>
+                                <span>
+                                    <a href="{{ route('orders.index') }}">
+                                    Orders
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
-                        <p class="metric-inline">
-                            <i class="fa fa-shopping-cart"></i> {{ number_format(\App\MyFunc::countOrdersByStatus("Pending")) }}
-                            <span>Pending Orders</span>
-                        </p>
+                        <div class="number-chart">
+                            <div class="mini-stat">
+                                <div  class="inlinesparkline">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                                <p class="text-muted">
+                                </p>
+                            </div>
+                            <div class="number">
+                                <span>{{ number_format(\App\MyFunc::countOrdersByStatus("Pending")) }}</span>
+                                <span>
+                                    <a href="{{ route('orders.index') }}">
+                                    Pending Orders
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
-                        <p class="metric-inline">
-                            <i class="fa fa-check-circle-o"></i> {{ number_format(\App\MyFunc::countOrdersByStatus("Delivered")) }}
-                            <span>Delivered orders</span>
-                        </p>
+                        <div class="number-chart">
+                            <div class="mini-stat">
+                                <div  class="inlinesparkline">
+                                    <i class="fa fa-check-circle-o"></i>
+                                </div>
+                                <p class="text-muted">
+                                </p>
+                            </div>
+                            <div class="number">
+                                <span>{{ number_format(\App\MyFunc::countOrdersByStatus("Delivered")) }}</span>
+                                <span>
+                                    <a href="{{ route('orders.index') }}">
+                                    Delivered orders
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
-                        <p class="metric-inline">
-                            <i class="fa fa-spinner"></i> {{ number_format(\App\MyFunc::countOrdersByStatus("Processing")) }}
-                            <span>Processing orders</span>
-                        </p>
+                        <div class="number-chart">
+                            <div class="mini-stat">
+                                <div>
+                                    <i class="fa fa-spinner"></i>
+                                </div>
+                                <p class="text-muted">
+                                </p>
+                            </div>
+                            <div class="number">
+                                <span>{{ number_format(\App\MyFunc::countOrdersByStatus("Processing")) }}</span>
+                                <span>
+                                    <a href="{{ route('orders.index') }}">
+                                    Processing orders
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,7 +99,7 @@
         <div class="row">
             <div class="col-md-4">
                 <!-- TRAFFIC SOURCES -->
-                <div class="panel-content">
+                <div class="panel-content panel">
                     <h2 class="heading"><i class="fa fa-square"></i> Orders analytics</h2>
                     <div id="demo-pie-chart" class="ct-chart"></div>
                 </div>
@@ -54,7 +107,7 @@
             </div>
             <div class="col-md-8">
                 <!-- REFERRALS -->
-                <div class="panel-content">
+                <div class="panel-content panel">
                     <h2 class="heading"><i class="fa fa-square"></i> Orders</h2>
                     <ul class="list-unstyled list-referrals">
                         <li>
@@ -104,26 +157,26 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <div class="panel-content">
+                <div class="panel-content panel">
                     <h3 class="heading"><i class="fa fa-square"></i> Recent orders</h3>
                     <div class="table-responsive">
-                        <table class="table table-striped no-margin">
+                        <table class="table no-margin">
                             <thead>
                             <tr>
+                                <th>Date &amp; Time</th>
                                 <th>Order No.</th>
                                 <th>Name</th>
                                 <th>Amount</th>
-                                <th>Date &amp; Time</th>
                                 <th>Status</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach(\App\MyFunc::recentOrders() as $order)
                                 <tr>
+                                    <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->id }}</td>
                                     <td>{{ $order->clientName }}</td>
-                                    <td>{{ number_format($order->orderItems()->sum('sub_total')) }}</td>
-                                    <td>{{ $order->created_at }}</td>
+                                    <td>{{ number_format($order->orderItems()->sum('sub_total')+$order->shipping_amount) }}</td>
                                     <td>
                                         @if( $order->status=="Pending")
                                             <span class="label label-primary">
@@ -146,13 +199,19 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="text-center">
+                        <a href="{{ route('orders.index') }}" class="btn btn-link">
+                            More info
+                            <i class="fa fa-arrow-circle-o-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="panel-content">
+                <div class="panel-content panel">
                     <h3 class="heading"><i class="fa fa-square"></i> Top Products</h3>
                     <div class="table-responsive">
-                        <table class="table table-striped no-margin">
+                        <table class="table  no-margin">
                             <thead>
                             <tr>
                                 <th>Product</th>
@@ -168,6 +227,12 @@
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ route('products.index') }}" class="btn btn-link">
+                            More info
+                            <i class="fa fa-arrow-circle-o-right"></i>
+                        </a>
                     </div>
 
                 </div>

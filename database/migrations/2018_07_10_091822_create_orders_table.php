@@ -17,9 +17,10 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('clientName');
             $table->string('clientPhone');
-            $table->unsignedInteger('user_id');
-            $table->string('status');
+            $table->string('email');
+            $table->string('status')->default('Pending');
             $table->string('shipping_address');
+            $table->decimal('shipping_amount')->default(0);
             $table->timestamps();
         });
     }

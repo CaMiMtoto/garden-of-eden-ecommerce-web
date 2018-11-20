@@ -55,6 +55,14 @@
         <tr>
             <td>
             <span>
+            <b>Email address</b>
+            </span>
+            </td>
+            <td> : {{$order->email }}</td>
+        </tr>
+        <tr>
+            <td>
+            <span>
             <b>Shipping address</b>
             </span>
             </td>
@@ -84,6 +92,32 @@
             </tr>
         @endforeach
         </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="3">
+                Sub Total
+            </th>
+            <th>
+                : {{ $order->orderItems()->sum('sub_total') }} Rwf
+            </th>
+        </tr>
+        <tr>
+            <th colspan="3">
+                Shipping
+            </th>
+            <th>
+                : {{ number_format($order->shipping_amount) }} Rwf
+            </th>
+        </tr>
+        <tr>
+            <th colspan="3">
+                Total
+            </th>
+            <th>
+                : {{ number_format($order->orderItems()->sum('sub_total')+$order->shipping_amount) }} Rwf
+            </th>
+        </tr>
+        </tfoot>
     </table>
     <hr>
 
@@ -100,7 +134,7 @@
                 <b>Total amount to Pay</b>
             </span>
             </td>
-            <td> : <b>{{ number_format($order->orderItems->sum('sub_total')) }} Rwf</b></td>
+            <td> : <b>{{ number_format($order->orderItems->sum('sub_total')+$order->shipping_amount) }} Rwf</b></td>
         </tr>
         </tbody>
     </table>

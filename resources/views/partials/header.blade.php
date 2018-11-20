@@ -12,52 +12,7 @@
             </ul>
             <ul class="header-links pull-right">
                 <li><a href="javascript:void(0);">RWF</a></li>
-                @if(Auth::user())
-                    @if(Auth::user()->role==='Admin')
-
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="true">
-                                <i class="fa fa-user-o"></i>
-                                {{ \Illuminate\Support\Facades\Auth::user()->name }}
-                                <span class="caret"></span>
-                            </a>
-                            <ul style="min-width: 135px" class="dropdown-menu flat" aria-labelledby="dropdownMenu1">
-                                <li><a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Admin</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <a href="{{ route('logout') }}">
-                                        <i class="fa fa-sign-out"></i> Log out
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    @else
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="true">
-                                <i class="fa fa-user-o"></i>
-                                {{ \Illuminate\Support\Facades\Auth::user()->name }}
-                                <span class="caret"></span>
-                            </a>
-                            <ul style="min-width: 135px"  class="dropdown-menu flat" aria-labelledby="dropdownMenu1">
-                                <li><a href="{{ route('my.profile') }}"><i class="fa fa-user"></i> My Profile</a></li>
-                                <li><a href="{{ route('my.orders') }}"><i class="fa fa-shopping-cart"></i> My orders</a>
-                                </li>
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <a href="{{ route('logout') }}">
-                                        <i class="fa fa-sign-out"></i> Log out
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                @else
-                    <li><a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
-                    <li><a href="{{ route('register') }}"><i class="fa fa-lock"></i> Register</a></li>
-                @endif
-
+                <li><a href="{{ route('dashboard') }}" target="_blank">ADMIN</a></li>
             </ul>
         </div>
     </div>
@@ -105,16 +60,6 @@
                             </a>
                         </div>
                         <div class="clearfix"></div>
-                        <!-- /Cart -->
-
-                        <!-- Menu Toogle -->
-                    {{--       <div class="menu-toggle">
-                               <a href="#">
-                                   <i class="fa fa-bars"></i>
-                                   <span>Menu</span>
-                               </a>
-                           </div>--}}
-                    <!-- /Menu Toogle -->
                     </div>
                     <div class="clearfix"></div>
                 </div>

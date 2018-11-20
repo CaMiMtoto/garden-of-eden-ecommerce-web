@@ -18,24 +18,13 @@
                         </button>
                         <span class="clearfix"></span>
                     </h4>
-                    <button data-url="{{ route('products.delete.selected') }}"
-                            class="btn btn-danger btn-sm" id="btnDeleteSelected">
-                        <i class="fa fa-trash"></i> Delete selected
-                    </button>
+
                 </div>
                 <div class="panel-body panel-content table-responsive ">
                     <table class="table table-condensed  table-hover"
                            id="manageTable">
                         <thead>
                         <tr>
-                            <th>
-                                <label class="fancy-checkbox element-left">
-                                    <input type="checkbox">
-                                    <span>
-                                        <small></small>
-                                    </span>
-                                </label>
-                            </th>
                             <th>Image</th>
                             <th>Name</th>
                             <th>Category</th>
@@ -43,7 +32,7 @@
                             <th>Price</th>
                             <th>Qty</th>
                             <th>Min stock</th>
-                            <th>Description</th>
+                            <th>Status</th>
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -64,8 +53,8 @@
                       action="{{ route('products.store') }}"
                       method="POST">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-plus"></i> Add Product</h4>
                     </div>
                     <div class="modal-body">
@@ -108,8 +97,16 @@
                             <label for="addcatgory" class="col-sm-4 control-label">Price</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="addprice" placeholder="Price" name="price"
-                                       autocomplete="off" required>
+                                <input type="text" class="form-control" id="addprice" placeholder="Price" name="price" autocomplete="off" required>
+                            </div>
+                        </div> <!-- /form-group-->
+                        <div class="form-group">
+                            <label for="adddiscount" class="col-sm-4 control-label">Discount</label>
+                            <label class="col-sm-1 control-label">: </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control"
+                                       id="adddiscount" placeholder="Discount" value="0"
+                                       name="discount" autocomplete="off" required>
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
@@ -141,8 +138,19 @@
                             <label for="addescription" class="col-sm-4 control-label">Description</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <textarea required name="description" placeholder="Description" id="addescription"
+                                <textarea  name="description" placeholder="Description" id="addescription"
                                           class="form-control"></textarea>
+                            </div>
+                        </div> <!-- /form-group-->
+                        <div class="form-group">
+                            <label for="addstatus" class="col-sm-4 control-label">Status</label>
+                            <label class="col-sm-1 control-label">: </label>
+                            <div class="col-sm-7">
+                                <select name="status" class="form-control" id="addstatus" required>
+                                    <option value="">--select--</option>
+                                    <option value="Available">Available</option>
+                                    <option value="Not Available">Not Available</option>
+                                </select>
                             </div>
                         </div> <!-- /form-group-->
 
@@ -247,6 +255,14 @@
                                             <input type="text" class="form-control" id="editPrice" placeholder="Price"
                                                    name="price" autocomplete="off" required>
                                         </div>
+                                    </div> <!-- /form-group-->  <div class="form-group">
+                                        <label for="editDiscount" class="col-sm-4 control-label">Discount</label>
+                                        <label class="col-sm-1 control-label">: </label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control"
+                                                   id="editDiscount" placeholder="Discount" value="0"
+                                                   name="discount" autocomplete="off" required>
+                                        </div>
                                     </div> <!-- /form-group-->
                                     <div class="form-group">
                                         <label for="editQty" class="col-sm-4 control-label">Quantity #</label>
@@ -279,8 +295,18 @@
                                         <label for="editDescription" class="col-sm-4 control-label">Description</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7">
-                                            <textarea required name="description" placeholder="Description"
+                                            <textarea  name="description" placeholder="Description"
                                                       id="editDescription" class="form-control"></textarea>
+                                        </div>
+                                    </div> <!-- /form-group-->           <div class="form-group">
+                                        <label for="editStatus" class="col-sm-4 control-label">Status</label>
+                                        <label class="col-sm-1 control-label">: </label>
+                                        <div class="col-sm-7">
+                                            <select name="status" class="form-control" id="editStatus" required>
+                                                <option value="">--select--</option>
+                                                <option value="Available">Available</option>
+                                                <option value="Not Available">Not Available</option>
+                                            </select>
                                         </div>
                                     </div> <!-- /form-group-->
                                 </div>
@@ -324,15 +350,6 @@
                 },
                 columns: [
                     {
-                        data: 'id', 'sortable': false,
-                        render: function (data, type, row) {
-                            return '<label class="fancy-checkbox element-left"> ' +
-                                '<input type="checkbox" name="products" value="' + data + '"> ' +
-                                '<span></span> ' +
-                                '</label>';
-                        }
-                    },
-                    {
                         data: 'image', 'sortable': false,
                         render: function (data, type, row) {
                             return "<img src='" + data + "' class='img-responsive product_image img-thumbnail'/>"
@@ -344,7 +361,14 @@
                     {data: 'price', 'sortable': false},
                     {data: 'qty', 'sortable': false},
                     {data: 'minStock', 'sortable': false},
-                    {data: 'description', 'sortable': false},
+                    {data: 'status', 'sortable': false,
+                    render:function (data,type,row) {
+                        if(data==='Available'){
+                            return '<span class="label label-success">'+data+'</span>';
+                        }
+                        return '<span class="label label-danger">'+data+'</span>';
+                    }
+                    },
                     {
                         data: 'id',
                         'sortable': false,
@@ -408,6 +432,8 @@
                     $("#editQty").val(response.qty);
                     $("#editDescription").val(response.description);
                     $("#editMinStock").val(response.minStock);
+                    $("#editStatus").val(response.status);
+                    $("#editDiscount").val(response.discount);
                     // set the form value to be updated
                     var src = '/uploads/products/' + response.image;
                     $('.product-img').attr("src", src);

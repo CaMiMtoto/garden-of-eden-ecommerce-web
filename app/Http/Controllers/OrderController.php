@@ -112,5 +112,12 @@ class OrderController extends Controller
         return \response()->json(["data" => $obj], 204);
     }
 
+    public function orderSuccess($id)
+    {
+        $order = Order::find($id);
+        if (!$order) abort(404);
+        return view('clients.order-success', ['order' => $order])
+            ->with('message', " You successfully placed orders");
+    }
 
 }

@@ -13,13 +13,23 @@ use Illuminate\Database\Eloquent\Model;
  * @property array|null|string clientPhone
  * @property array|null|string shipping_address
  * @property string status
+ * @property array|null|string clientName
+ * @property double shipping_amount
+ * @property array|null|string email
  */
 class Order extends Model
 {
-    public function orderItems(){
+    public static $shippingCharge=1000;
+    public function orderItems()
+    {
         return $this->hasMany('App\OrderItem');
     }
-    public function user(){
+
+    public function user()
+    {
         return $this->belongsTo('App\User');
-}
+    }
+    public function getTotalAmountToPay(){
+        return $this->orderItems->sum('sub_total')+$this->shipping_amount;
+    }
 }

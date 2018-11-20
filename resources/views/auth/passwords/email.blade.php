@@ -25,11 +25,7 @@
 <div id="wrapper">
     <div class="vertical-align-wrap">
         <div class="vertical-align-middle">
-            <h3 class="text-center text-uppercase">
-                <a href="{{ route('home') }}">
-                    Garden Of Eden Produce
-                </a>
-            </h3>
+
             <div class="auth-box">
 
                 <div class="content">
@@ -41,8 +37,7 @@
 
                     <div class="header">
                         <div class="logo text-center">
-
-                            {{--<img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="DiffDash" style="height: 80px">--}}
+                            <img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="DiffDash" style="height: 80px">
                         </div>
                         <p class="lead">
                             {{ __('Reset Password') }}
@@ -82,12 +77,7 @@
                                 </a>
                             </span>
                         </div>
-                        <div class="bottom">
-                            <span class="helper-text">
-                                Don't have an account?
-                                <a href="{{ route('register') }}">Register</a>
-                            </span>
-                        </div>
+
                     </form>
                 </div>
             </div>

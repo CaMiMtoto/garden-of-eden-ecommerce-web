@@ -19,6 +19,8 @@ class CartController extends Controller
     public function getAddToCart(Request $request, $id)
     {
         $product = Product::find($id);
+        if ($product->status !== 'Available' || !$product) return redirect()->back();
+
         $qty = $request->input('qty');
         if (!$qty) {
             $qty = 1;
@@ -27,7 +29,7 @@ class CartController extends Controller
             'id' => $product->id,
             'name' => $product->name,
             'qty' => $qty,
-            'price' => $product->price
+            'price' => $product->getRealPrice()
         ]);
         $cartItem->associate('Product');
 
@@ -82,15 +84,17 @@ class CartController extends Controller
         if (Cart::count() == 0) {
             return redirect()->route('cart.shoppingCart');
         }
-
-        return view('clients.check-out');
+        $cart = Cart::content();
+        return view('clients.check-out', ['cart' => $cart]);
     }
 
     public function postCheckOut(Request $request)
     {
         $this->validate($request, [
-            'phoneNumber' => 'required| min:10',
-            'shipping_address' => 'required'
+            'clientName' => 'required',
+            'email' => 'required|email',
+            'shipping_address' => 'required',
+            'phoneNumber' => 'required| min:10'
         ]);
 
 
@@ -101,11 +105,13 @@ class CartController extends Controller
         $cart = Cart::content();
         $order = new Order();
         $order->clientPhone = $request->input('phoneNumber');
+        $order->email = $request->input('email');
+        $order->clientName = $request->input('clientName');
         $order->shipping_address = $request->input('shipping_address');
-//        $order->total_paid = Cart::subtotal();
+        $order->shipping_amount = 1000;
         $order->status = "Pending";
-        Auth::user()->orders()->save($order);
-//        $order->save();
+        $order->save();
+
         foreach ($cart as $cartItem) {
             $orderItem = new OrderItem();
             $orderItem->product_id = $cartItem->id;
@@ -119,6 +125,8 @@ class CartController extends Controller
         ProcessOrder::dispatch($order);
 
         Cart::destroy();
-        return redirect()->route('my.orders')->with('message', " You successfully placed orders");
+        return redirect()->route('order.success',['id'=>$order->id]);
     }
+
+
 }

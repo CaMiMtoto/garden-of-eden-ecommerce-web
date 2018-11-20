@@ -24,9 +24,6 @@ Route::get('/getProduct', 'ClientController@getProductPage')->name('getProduct')
 Route::get('/login', 'UsersController@login')->name('login');
 Route::post('/admin/login', 'UsersController@postLogin')->name('post.login');
 
-Route::get('/customer/register', 'ClientController@register')->name('register');
-Route::post('/customer/register', 'ClientController@createAccount')->name('client.create');
-
 
 Route::get('/addToCart/{id}', ['uses' => 'CartController@getAddToCart', 'as' => 'cart.addToCart']);
 Route::get('/shoppingCart', ['uses' => 'CartController@getShoppingCart', 'as' => 'cart.shoppingCart']);
@@ -51,13 +48,7 @@ Route::get('/decrement/cart/item/{id}', [
 ]);
 
 
-Route::group(['prefix' => 'customer', 'middleware' => ['auth']], function () {
-    Route::get('/profile', 'ClientController@profile')
-        ->name('my.profile');
-    Route::get('/orders', 'ClientController@orders')
-        ->name('my.orders');
-    Route::post('/myOrders', 'ClientController@myOrders')
-        ->name('myOrders');
+Route::group(['prefix' => 'customer'], function () {
 
     Route::get('/check-out', [
         'uses' => 'CartController@checkOut',
@@ -68,6 +59,9 @@ Route::group(['prefix' => 'customer', 'middleware' => ['auth']], function () {
         'uses' => 'CartController@postCheckOut',
         'as' => 'cart.checkOut'
     ]);
+
+    Route::get('/order-success/{id}', 'OrderController@orderSuccess')
+        ->name('order.success');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {

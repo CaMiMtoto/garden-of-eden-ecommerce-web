@@ -19,11 +19,12 @@ class CreateProductsTable extends Migration
             $table->string("name");
             $table->integer("qty");
             $table->decimal("price");
+            $table->decimal("discount")->default(0);
             $table->string("measure");
             $table->string("minStock");
             $table->longText("description");
             $table->string("image");
-            $table->tinyInteger("isFeatured")->default(false);
+            $table->tinyInteger("status")->default('Available');
             $table->timestamps();
         });
     }

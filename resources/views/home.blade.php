@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('styles')
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/home-carousel.css') }}"/>
+@endsection
 @section('content')
     <div class="section">
         <!-- container -->
@@ -39,62 +41,78 @@
 
             </div>
 
-            <div id="hot-deal" class="section">
+            <div class="section">
                 <!-- container -->
                 <div class="container">
-                    <!-- row -->
-                    <div class="row home-info">
-                        <div class="col-md-12">
-                            <h2 class="text-uppercase text-center">Garden of eden produce</h2>
-                            <div class="hot-deal">
-                                <p style="text-transform: none" class="home-info">
-                                    Provides Organic
-                                    Rwandan fruit and vegetables at
-                                    affordable prices. <br>With more than 25 years
-                                    of organic farming experience,
-                                    we specialize in high quality,great
-                                    tasting produce. <br>We serve and deliver to
-                                    residential homes,business
-                                    , restaurant and hotels. <br>
-                                    Check out our online market
-                                    and start enjoying
-                                </p>
-                                <a class="btn primary-btn cta-btn flat" href="{{ route('getProduct') }}">
-                                    Shop now
-                                    <i class="fa fa-arrow-circle-right"></i>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- Carousel -->
+                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                <!-- Indicators -->
+                                <div style="padding: 0px">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carousel-example-generic" data-slide-to="0"
+                                            class="active"></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                                    </ol>
+                                    <!-- Wrapper for slides -->
+                                    <div class="carousel-inner text-center">
+                                        <div class="item active">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <img src="{{ asset('carousel/carousel1.jpeg') }}" alt="First slide"
+                                                         style="max-height: 350px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <img src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.59 PM (1).jpeg') }}"
+                                                         alt="Second slide" style="max-height: 350px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <img src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.58 PM (1).jpeg') }}"
+                                                         alt="Third slide" style="max-height: 350px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Controls -->
+                                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                    <span class="ti-angle-left"></span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                    <span class="ti-angle-right"></span>
                                 </a>
                             </div>
+                            <!-- /carousel -->
                         </div>
+                        <div class="col-sm-6">
+                            <div class="padding-30-not-sm">
+                                <h3 class="text-uppercase text-center header">Garden Of Eden Produce</h3>
+                                <div class="h2 text-left animate">
+                                    <p  class="typewrite" data-period="2000"
+                                       data-type='[ "Garden of Eden Produce provides Organic Rwandan fruit and vegetables at affordable prices.",
+                                       "With more than 25 years of organic farming experience,we specialize in high quality,great tasting produce.", "We serve and deliver to residential homes,business,restaurant and hotels.", "Check out our online market and start enjoying Organic Rwandan produce today." ]'>
+                                        <span class="wrap"></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
-                    <!-- /row -->
                 </div>
                 <!-- /container -->
             </div>
-            {{--  <div class="container">
-                  <div class="row">
-                      <div class="col-md-2">
-                          <div class="section-title">
-                              <h3 class="title">Categories</h3>
-                          </div>
-                          <div style="margin-top: 44px">
-                              <ul class="list-group flat">
-                                  @foreach(\App\Category::all() as $category)
-                                      <li class="list-group-item flat">
-                                          <a href="/getProduct?cat={{ $category->id }}">
-                                              {{ $category->name }}
-                                              <span class="badge pull-right badge-primary">{{$category->products()->count()}}</span>
-                                          </a>
-                                      </li>
-                                  @endforeach
-                              </ul>
-                          </div>
-                      </div>
-                      <!-- section title -->
-                      <div class="col-md-10">
 
-                      </div>
-                  </div>
-              </div>--}}
         </div>
         <!-- /container -->
     </div>
@@ -136,7 +154,11 @@
                                                     <img style="width: 100%" src="{{ $path }}" alt="">
                                                 </div>
                                                 <div class="product-label">
-                                                    <span class="sale">-30%</span>
+                                                    @if($item->discount>0)
+                                                        <span class="sale">
+                                                            -{{ $item->discount }}%
+                                                        </span>
+                                                    @endif
                                                     <span class="new">NEW</span>
                                                 </div>
                                             </div>
@@ -149,18 +171,32 @@
                                                         {{ $item->name }}
                                                     </a>
                                                 </h3>
-                                                <h4 class="product-price">RF {{ number_format($item->price) }}
-                                                    <del class="product-old-price">
-                                                        RF {{ number_format($item->price-($item->price*30/100)) }}
-                                                    </del>
+                                                <h4 class="product-price">
+                                                    RF {{ number_format($item->getRealPrice()) }}
+                                                    @if($item->discount>0)
+                                                        <del class="product-old-price">
+                                                            RF {{ number_format($item->price) }}
+                                                        </del>
+                                                    @endif
                                                 </h4>
+                                                <h5>
+                                                    {{ $item->measure }}
+                                                </h5>
                                             </div>
-                                                <div class="add-to-cart">
+                                            <div class="add-to-cart">
+                                                @if($item->status==='Available')
                                                     <a href="{{ route('cart.addToCart',['id'=>$item->id]) }}"
                                                        class="btn add-to-cart-btn flat">
                                                         <i class="fa fa-shopping-bag"></i> add to basket
                                                     </a>
-                                                </div>
+                                                @else
+                                                    <a href="javascript:void(0);"
+                                                       class="btn add-to-cart-btn flat" disabled="">
+                                                        <i class="fa fa-ban"></i>
+                                                        Out of stock
+                                                    </a>
+                                                @endif
+                                            </div>
                                         </div>
                                         <!-- /product -->
                                     @endforeach
@@ -184,7 +220,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h3 class="title">New Deals</h3>
+                        <h3 class="title">New Products</h3>
                     </div>
                     <div class="row">
                         <!-- /section title -->
@@ -199,7 +235,11 @@
                                         </div>
 
                                         <div class="product-label">
-                                            <span class="sale">-10%</span>
+                                            @if($item->discount>0)
+                                                <span class="sale">
+                                                            -{{ $item->discount }}%
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="product-body">
@@ -210,10 +250,12 @@
                                             </a>
                                         </h3>
                                         <h4 class="product-price">
-                                            RWF {{ number_format($item->price) }}
-                                            <del class="product-old-price">
-                                                RWF {{ number_format($item->price-($item->price*10/100)) }}
-                                            </del>
+                                            RF {{ number_format($item->getRealPrice()) }}
+                                            @if($item->discount>0)
+                                                <del class="product-old-price">
+                                                    RF {{ number_format($item->price) }}
+                                                </del>
+                                            @endif
                                         </h4>
                                         <h5>
                                             {{ $item->measure }}
@@ -221,10 +263,18 @@
 
                                     </div>
                                     <div class="add-to-cart">
-                                        <a href="{{ route('cart.addToCart',['id'=>$item->id]) }}"
-                                           class="btn add-to-cart-btn flat">
-                                            <i class="fa fa-shopping-bag"></i> add to basket
-                                        </a>
+                                        @if($item->status==='Available')
+                                            <a href="{{ route('cart.addToCart',['id'=>$item->id]) }}"
+                                               class="btn add-to-cart-btn flat">
+                                                <i class="fa fa-shopping-bag"></i> add to basket
+                                            </a>
+                                        @else
+                                            <a href="javascript:void(0);"
+                                               class="btn add-to-cart-btn flat" disabled="">
+                                                <i class="fa fa-ban"></i>
+                                                Out of stock
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -359,4 +409,70 @@
         <!-- /container -->
     </div>
     <!-- /NEWSLETTER -->
+@endsection
+
+@section('scripts')
+    <script>
+        var TxtType = function(el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 10) || 2000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+        };
+
+        TxtType.prototype.tick = function() {
+            var i = this.loopNum % this.toRotate.length;
+            var fullTxt = this.toRotate[i];
+
+            if (this.isDeleting) {
+                this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+                this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+
+            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+            var that = this;
+            var delta = 200 - Math.random() * 100;
+
+            if (this.isDeleting) { delta /= 2; }
+
+            if (!this.isDeleting && this.txt === fullTxt) {
+                delta = this.period;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.loopNum++;
+                delta = 500;
+            }
+
+            setTimeout(function() {
+                that.tick();
+            }, delta);
+        };
+
+        window.onload = function() {
+            var elements = document.getElementsByClassName('typewrite');
+            for (var i=0; i<elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-type');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                    new TxtType(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // INJECT CSS
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
+            document.body.appendChild(css);
+        };
+
+        $('.carousel').carousel({
+            interval: 10000,
+            pause: false
+        })
+    </script>
 @endsection

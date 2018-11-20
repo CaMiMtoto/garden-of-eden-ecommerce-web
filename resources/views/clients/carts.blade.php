@@ -71,7 +71,7 @@ use \Gloudemans\Shoppingcart\Facades\cart;
                                         <form class="form-inline" action="{{ route('cart.increment',['id'=>$cartItem->rowId]) }}">
                                             <div class="form-group form-group-sm">
                                                 <label>
-                                                    <input name="qty" placeholder="Quantity" style="width: 80px" value="<?php print (int) $cartItem->qty; ?>" type="number" min="1" class="form-control flat">
+                                                    <input name="qty" placeholder="Quantity" style="width: 80px" value="<?php print (float) $cartItem->qty; ?>" type="text" min="0.5" class="form-control flat">
                                                 </label>
 
                                                 <button type="submit" class="btn btn-cart btn-sm flat" title="Click here to update Quantity."  data-toggle="tooltip" data-placement="right"><i class="fa fa-refresh"></i></button>
@@ -88,8 +88,12 @@ use \Gloudemans\Shoppingcart\Facades\cart;
                                     </td>
 
                                     <td>
-                                        <a class="cart-remove-btn" title="Click here to remove Item."  data-toggle="tooltip" data-placement="left"
-                                           href="{{ route('cart.removeItem',['id'=>$cartItem->rowId]) }}"><i class="fa fa-times"></i></a>
+                                        <a class="cart-remove-btn"
+                                           title="Click here to remove Item."
+                                           data-toggle="tooltip" data-placement="left"
+                                           href="{{ route('cart.removeItem',['id'=>$cartItem->rowId]) }}">
+                                            <i class="fa fa-times"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

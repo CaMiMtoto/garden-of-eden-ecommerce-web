@@ -9,6 +9,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ProcessOrder implements ShouldQueue
@@ -35,9 +36,17 @@ class ProcessOrder implements ShouldQueue
     public function handle()
     {
         $data = ['message' => $this->order];
-        $users = User::where('role', 'Admin')->get()->each(function ($user) {
+        $users = User::where('role', 'Admin')->get();
+        //client email send as user
+        $client = new User();
+        $client->name = $this->order->clientName;
+        $client->email = $this->order->email;
+        $users->push($client);
+
+        $users = $users->each(function ($user) {
             return $user->email;
         });
+        Log::info("Users:" . json_encode($users));
         Mail::to($users)->send(new SendMail($data));
     }
 }

@@ -9,10 +9,13 @@
     <title>Garden of eden</title>
 
     <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
     <link type="text/css" rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap-theme.min.css') }}"/>
     <!-- Latest compiled and minified CSS -->
 {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--}}
 <!-- Slick -->
@@ -23,9 +26,11 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('css/nouislider.min.css') }}"/>
 
     <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{{ asset('vendor/themify/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">
 {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">--}}
-<!-- Custom stlylesheet -->
+<!-- Custom stylesheet -->
+    @yield('styles')
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
 
@@ -64,6 +69,7 @@
 <script src="{{ asset('js/nouislider.min.js') }}"></script>
 <script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+@yield('scripts')
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
