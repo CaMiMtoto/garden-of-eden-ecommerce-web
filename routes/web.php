@@ -109,5 +109,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::put('/events/update', 'EventController@update')->name('events.update');
     Route::get('/events/show/{id}', 'EventController@show')->name('events.show');
 
+    Route::get('/settings', 'HomeController@settings')
+        ->name('admin.settings');
+    Route::post('/settings', 'HomeController@saveSettings')
+        ->name('admin.settings.save');
+
 });
 

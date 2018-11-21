@@ -101,9 +101,9 @@
                     data: {_token: "{{csrf_token()}}"}
                 },
                 columns: [
-                    {data: 'created_at', 'sortable': true},
+                    {data: 'created_at', 'sortable': false},
                     {
-                        data: 'clientName', 'sortable': true,
+                        data: 'clientName', 'sortable': false,
                         render: function (data, type, row) {
                             if (row.user) {
                                 return row.user.name;
@@ -112,13 +112,13 @@
                         }
                     },
                     {
-                        data: 'clientPhone', 'sortable': true,
+                        data: 'clientPhone', 'sortable': false,
                         render: function (data) {
                             return "<a href='tel:'" + data + "'>" + data + "</a>";
                         }
                     },
                     {
-                        data: 'status', 'sortable': true,
+                        data: 'status', 'sortable': false,
                         render: function (data) {
                             if (data === "Pending") {
                                 return "<a class='label label-warning'><i class='fa fa-shopping-cart'></i> " + data + "</a>";

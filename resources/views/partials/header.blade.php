@@ -1,14 +1,54 @@
+
+<?php
+$mail = \App\MyFunc::getDefaultSetting()->email1;
+$whatsapp = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->whatsapp);
+$email2 = \App\MyFunc::getDefaultSetting()->email2;
+$phone = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->phoneNumber1);
+$phone2 = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->phoneNumber2);
+$phone1 = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->phoneNumber1);
+$address = \App\MyFunc::getDefaultSetting()->address;
+?>
+
 <header>
-    <!-- TOP HEADER -->
+<!-- TOP HEADER -->
     <div id="top-header">
         <div class="container">
             <ul class="header-links pull-left">
-                {{--<li><a href="tel:+250784929046"><i class="fa fa-phone"></i>{{ \App\MyFunc::format_phone_us("0 784 929 046") }}</a></li>--}}
-                <li><a href="tel:+250728177613"><i
-                                class="fa fa-whatsapp"></i>{{ \App\MyFunc::format_phone_us("0728177613") }}</a></li>
-                <li><a href="mailto:frankuwuzuyinema@yahoo.fr">
-                        <i class="fa fa-envelope-o"></i>frankuwuzuyinema@yahoo.fr</a></li>
-                <li><a href="#"><i class="fa fa-map-marker"></i>J.Lynn's Kagugu , Rouge Hotel KG 414</a></li>
+                <li>
+                    <a href="tel:{{$whatsapp }}">
+                        <i class="fa fa-whatsapp"></i>{{$whatsapp }}
+                    </a>
+                </li>
+                <li>
+                    <a href="tel:{{$phone1 }}">
+                        <i class="fa fa-mobile-phone"></i>{{$phone1 }}
+                    </a>
+                </li>
+                <li>
+                    <a href="tel:{{$phone2 }}">
+                        <i class="fa fa-phone"></i>{{$phone2 }}
+                    </a>
+                </li>
+                <li>
+
+                    <a href="mailto:{{ $mail }}">
+                        <i class="fa fa-envelope-o"></i>
+                        {{ $mail }}
+                    </a>
+                </li>
+                <li>
+
+                    <a href="mailto:{{ $email2 }}">
+                        <i class="fa fa-envelope-o"></i>
+                        <?php print $email2;?>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-map-marker"></i>
+                        {{ $address }}
+                    </a>
+                </li>
             </ul>
             <ul class="header-links pull-right">
                 <li><a href="javascript:void(0);">RWF</a></li>

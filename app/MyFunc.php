@@ -98,5 +98,8 @@ class MyFunc
             ->sum("order_items.sub_total");
 
     }
-
+    static function getDefaultSetting(){
+        $setting = Setting::orderBy('id', 'asc')->limit(1)->first();
+        return $setting;
+    }
 }

@@ -1,3 +1,12 @@
+<?php
+$mail = \App\MyFunc::getDefaultSetting()->email1;
+$whatsapp = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->whatsapp);
+$phone = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->phoneNumber1);
+$phone2 = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->phoneNumber2);
+$address = \App\MyFunc::getDefaultSetting()->address;
+$about = \App\MyFunc::getDefaultSetting()->about;
+?>
+
 <!-- top footer -->
 <footer id="footer">
     <div class="section">
@@ -9,14 +18,20 @@
                     <div class="footer">
                         <h3 class="footer-title">About Us</h3>
                         <p>
-                            Garden of Eden Produce provides Organic Rwandan fruit and vegetables at affordable prices.With more than 25 years of organic farming experience,we specialize in high quality,great tasting produce.We serve and deliver  to residential homes,business,restaurant and hotels. Check out our online market and start enjoying Organic Rwandan produce today!
-
+                            {{ $about }}
                         </p>
 
                         <ul class="footer-links">
-                            <li><a href="#"><i class="fa fa-map-marker"></i>J.Lynn's Kagugu , Rouge Hotel KG 414</a></li>
-                            <li><a href="#"><i class="fa fa-phone"></i> +250 784 929 046</a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i>frankuwuzuyinema@yahoo.fr</a></li>
+                            <li>
+                                <a href="">
+                                    <i class="fa fa-map-marker"></i>
+                                    {{ $address }}
+                                </a>
+                            </li>
+                            <li><a href="tel:{{ $phone2 }}"><i class="fa fa-phone"></i> {{ $phone2 }}</a></li>
+                            <li><a href="mailto:{{ $mail }}"><i class="fa fa-envelope-o"></i>
+                                    {{ $mail }}
+                                </a></li>
                         </ul>
                     </div>
                 </div>

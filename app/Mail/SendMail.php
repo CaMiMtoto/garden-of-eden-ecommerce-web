@@ -20,8 +20,8 @@ class SendMail extends Mailable
 
     public function build()
     {
-//        $address = 'frankuwuzuyinema@yahoo.fr';
-        $address="jeanpaulcami@live.com";
+        $address = 'frankuwuzuyinema@yahoo.fr';
+//        $address="jeanpaulcami@live.com";
         $subject = 'New order!';
         $name = 'Garden Of Eden Produce';
 

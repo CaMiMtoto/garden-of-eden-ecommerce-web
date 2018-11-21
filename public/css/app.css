@@ -18,7 +18,7 @@ html, body {
 }
 
 .form-control, .btn, .alert, .modal-content, .sweet-alert button, .sweet-alert, .nav-pills > li > a, .img-thumbnail {
-    border-radius: 2px !important;
+    border-radius: 1px !important;
 }
 
 .ct-series-a .ct-area, .ct-series-a .ct-slice-donut-solid, .ct-series-a .ct-slice-pie {

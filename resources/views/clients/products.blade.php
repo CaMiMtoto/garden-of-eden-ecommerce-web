@@ -122,7 +122,7 @@
                                                     @if($product->discount>0)
                                                         <h4>
                                                            <span class="label label-danger">
-                                                                {{ - $product->getDiscountPercent()}} Rwf
+                                                                {{ - $product->getDiscountPercent()}} Rwf ,OFF
                                                            </span>
                                                         </h4>
                                                     @endif

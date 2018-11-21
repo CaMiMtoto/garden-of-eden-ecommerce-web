@@ -29,12 +29,15 @@
         <div class="col-sm-10 col-sm-offset-1">
             <br>
             <br>
-            <a href="{{ route('home') }}">
-                <i class="glyphicon glyphicon-home"></i>
+            <a href="{{ route('home') }}" class="no-print">
+                <span>
+                      <i class="glyphicon glyphicon-home"></i>
                 Back to Home
                 <br>
-                <img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="" style="max-height: 100px">
+                </span>
             </a>
+
+            <img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="" style="max-height: 100px">
             <buton class="btn btn-primary pull-right btn-sm no-print"
                    onclick="window.print();">
                 <i class="glyphicon glyphicon-print"></i>

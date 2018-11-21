@@ -52,6 +52,14 @@
         <tr>
             <td>
             <span>
+            <b>Email address</b>
+            </span>
+            </td>
+            <td> : {{ $order->email }}</td>
+        </tr>
+        <tr>
+            <td>
+            <span>
             <b>Shipping address</b>
             </span>
             </td>
@@ -96,27 +104,39 @@
             </tr>
         @endforeach
         </tbody>
-    </table>
-
-
-    <table class="table billing-history">
-        <thead class="sr-only">
+        <tfoot>
         <tr>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td>
-            <span>
-                <b>Total amount to Pay</b>
-            </span>
+            <td colspan="3">
+                                    <span>
+                                        <b>Sub total:</b>
+                                    </span>
             </td>
-            <td> : <b>{{ number_format($order->orderItems->sum('sub_total')) }} Rwf</b></td>
+            <td>
+                <b>{{ number_format($order->orderItems->sum('sub_total')) }} Rwf</b>
+            </td>
         </tr>
-        </tbody>
+        <tr>
+            <td colspan="3">
+                                    <span>
+                                        <b>Shipping amount to Pay:</b>
+                                    </span>
+            </td>
+            <td>
+                <b>{{ number_format($order->shipping_amount) }} Rwf</b>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                                    <span>
+                                        <b>Grand total:</b>
+                                    </span>
+            </td>
+            <td>
+                <b>{{ number_format($order->getTotalAmountToPay()) }} Rwf</b>
+            </td>
+        </tr>
+        </tfoot>
     </table>
-
 </div>
 
 @if(\Illuminate\Support\Facades\Auth::user()->role==='Admin')

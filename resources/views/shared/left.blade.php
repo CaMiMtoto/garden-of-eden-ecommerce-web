@@ -48,6 +48,11 @@
                         <i class="fa fa-clock-o"></i> <span>Event</span>
                     </a>
                 </li>
+                <li class="nav-settings">
+                    <a href="{{ route('admin.settings') }}">
+                        <i class="fa fa-cogs"></i> <span>Settings</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
