@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property array|null|string clientName
  * @property double shipping_amount
  * @property array|null|string email
+ * @property string notes
  */
 class Order extends Model
 {

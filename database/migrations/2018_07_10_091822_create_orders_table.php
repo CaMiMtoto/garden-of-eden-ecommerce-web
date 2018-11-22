@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('email');
             $table->string('status')->default('Pending');
             $table->string('shipping_address');
+            $table->text('notes');
             $table->decimal('shipping_amount')->default(0);
             $table->timestamps();
         });

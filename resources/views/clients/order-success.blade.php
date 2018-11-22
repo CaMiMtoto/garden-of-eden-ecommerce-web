@@ -150,11 +150,20 @@
                     </tr>
                     </tfoot>
                 </table>
-
+                <div>
+                    <p>
+                       <strong>Note:</strong>
+                        <span> {{ $order->notes }}</span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<br>
+<br>
+<br>
+<br>
 
 
 </body>

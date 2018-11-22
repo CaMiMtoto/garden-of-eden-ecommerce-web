@@ -138,15 +138,20 @@
         </tfoot>
     </table>
 </div>
-
+<div>
+    <p>
+        <strong>Note:</strong>
+        <span> {{ $order->notes }}</span>
+    </p>
+</div>
 @if(\Illuminate\Support\Facades\Auth::user()->role==='Admin')
 
     {{ csrf_field() }}
     <input type="hidden" value="{{ $order->id }}" name="id">
     <div class="form-group">
-        <label for="status" class="control-label col-sm-3">Status</label>
+        <label for="status" class="control-label col-sm-1">Status</label>
         <label for="status" class="control-label col-sm-1">:</label>
-        <div class="col-sm-8">
+        <div class="col-sm-10">
             <select required class="form-control" name="status" id="status">
                 <option value="">--mark order as--</option>
                 <option value="Pending" {{ $order->status=="Pending"? 'selected':'' }}>Pending</option>
@@ -157,3 +162,4 @@
     </div>
 
 @endif
+

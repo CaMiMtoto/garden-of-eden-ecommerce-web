@@ -108,6 +108,7 @@ class CartController extends Controller
         $order->email = $request->input('email');
         $order->clientName = $request->input('clientName');
         $order->shipping_address = $request->input('shipping_address');
+        $order->notes = $request->input('notes');
         $order->shipping_amount = 1000;
         $order->status = "Pending";
         $order->save();

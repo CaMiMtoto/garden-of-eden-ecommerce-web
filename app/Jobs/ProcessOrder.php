@@ -46,7 +46,6 @@ class ProcessOrder implements ShouldQueue
         $users = $users->each(function ($user) {
             return $user->email;
         });
-        Log::info("Users:" . json_encode($users));
         Mail::to($users)->send(new SendMail($data));
     }
 }

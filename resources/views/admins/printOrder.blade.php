@@ -119,7 +119,7 @@
                     </table>
 
                     <h4 class="text-info">Products ordered</h4>
-                    <table class="table table-responsive table-striped">
+                    <table class="table table-responsive table-striped table-bordered">
                         <thead>
                         <tr>
                             <th>Product</th>
@@ -173,8 +173,12 @@
                         </tfoot>
 
                     </table>
-
-
+                    <div>
+                        <p>
+                            <strong>Note:</strong>
+                            <span> {{ $order->notes }}</span>
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="panel-footer flat">
