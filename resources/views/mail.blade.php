@@ -120,6 +120,11 @@
         </tfoot>
     </table>
     <hr>
+    <p>
+        <strong>Note:</strong>
+        <p>{{ $order->notes }}</p>
+    </p>
+    <hr>
 
     <table class="table billing-history">
         <thead class="sr-only">
