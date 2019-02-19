@@ -45,7 +45,7 @@
                 <!-- container -->
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-md-6">
                             <div class="carousel-image div-hide">
                                 <div>
                                     <img src="{{ asset('carousel/1533157040.jpg') }}" alt="First slide"
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-md-6">
                             <div class="padding-30-not-sm">
                                 <h3 class="text-uppercase text-center header">Garden Of Eden Produce</h3>
                                 <div class="h2 text-left animate">
