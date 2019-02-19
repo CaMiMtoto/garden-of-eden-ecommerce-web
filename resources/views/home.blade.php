@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('styles')
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/home-carousel.css') }}"/>
 @endsection
 @section('content')
@@ -38,7 +39,6 @@
                         </div>
                     @endif
                 </div>
-
             </div>
 
             <div class="section">
@@ -46,68 +46,51 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6">
-                            <!-- Carousel -->
-                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                                <!-- Indicators -->
-                                <div style="padding: 0px">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#carousel-example-generic" data-slide-to="0"
-                                            class="active"></li>
-                                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                                    </ol>
-                                    <!-- Wrapper for slides -->
-                                    <div class="carousel-inner text-center">
-                                        <div class="item active">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <img src="{{ asset('carousel/carousel1.jpeg') }}" alt="First slide"
-                                                         style="max-height: 350px;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <img src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.59 PM (1).jpeg') }}"
-                                                         alt="Second slide" style="max-height: 350px;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <img src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.58 PM (1).jpeg') }}"
-                                                         alt="Third slide" style="max-height: 350px;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="carousel-image div-hide">
+                                <div>
+                                    <img src="{{ asset('carousel/1533157040.jpg') }}" alt="First slide"
+                                         style="max-height: 350px;">
                                 </div>
-                                <!-- Controls -->
-                                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                                    <span class="ti-angle-left"></span>
-                                </a>
-                                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                                    <span class="ti-angle-right"></span>
-                                </a>
+                                <div>
+                                    <img src="{{ asset('carousel/1533153168.jpg') }}" alt="First slide"
+                                         style="max-height: 350px;">
+                                </div>
+                                <div>
+                                    <img src="{{ asset('carousel/1541062003.jpg') }}" alt="First slide"
+                                         style="max-height: 350px;">
+                                </div>
+                                <div>
+                                    <img src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.59 PM (1).jpeg') }}"
+                                         alt="Second slide" style="max-height: 350px;">
+                                </div>
+                                <div>
+                                    <img src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.58 PM (1).jpeg') }}"
+                                         alt="Third slide" style="max-height: 350px;">
+                                </div>
                             </div>
-                            <!-- /carousel -->
                         </div>
                         <div class="col-sm-6">
                             <div class="padding-30-not-sm">
                                 <h3 class="text-uppercase text-center header">Garden Of Eden Produce</h3>
                                 <div class="h2 text-left animate">
-                                    <p  class="typewrite" data-period="2000"
-                                       data-type='[ "Garden of Eden Produce provides Organic Rwandan fruit and vegetables at affordable prices.",
-                                       "With more than 25 years of organic farming experience,we specialize in high quality,great tasting produce.", "We serve and deliver to residential homes,business,restaurant and hotels.", "Check out our online market and start enjoying Organic Rwandan produce today." ]'>
-                                        <span class="wrap"></span>
-                                    </p>
+                                    <div class="your-class div-hide">
+                                        <div>
+                                            Garden of Eden Produce provides Organic Rwandan fruit and vegetables at affordable prices.
+                                        </div>
+                                        <div>
+                                            With more than 26 years of organic farming experience,we specialize in high quality,great tasting produce.
+                                        </div>
+                                        <div>
+                                            We serve and deliver to residential homes,business,restaurant and hotels.
+                                        </div>
+                                        <div>
+                                            Check out our online market and start enjoying Organic Rwandan produce today.
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
-
                     </div>
                 </div>
                 <!-- /container -->
@@ -412,67 +395,5 @@
 @endsection
 
 @section('scripts')
-    <script>
-        var TxtType = function(el, toRotate, period) {
-            this.toRotate = toRotate;
-            this.el = el;
-            this.loopNum = 0;
-            this.period = parseInt(period, 10) || 2000;
-            this.txt = '';
-            this.tick();
-            this.isDeleting = false;
-        };
-
-        TxtType.prototype.tick = function() {
-            var i = this.loopNum % this.toRotate.length;
-            var fullTxt = this.toRotate[i];
-
-            if (this.isDeleting) {
-                this.txt = fullTxt.substring(0, this.txt.length - 1);
-            } else {
-                this.txt = fullTxt.substring(0, this.txt.length + 1);
-            }
-
-            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
-
-            var that = this;
-            var delta = 200 - Math.random() * 100;
-
-            if (this.isDeleting) { delta /= 2; }
-
-            if (!this.isDeleting && this.txt === fullTxt) {
-                delta = this.period;
-                this.isDeleting = true;
-            } else if (this.isDeleting && this.txt === '') {
-                this.isDeleting = false;
-                this.loopNum++;
-                delta = 500;
-            }
-
-            setTimeout(function() {
-                that.tick();
-            }, delta);
-        };
-
-        window.onload = function() {
-            var elements = document.getElementsByClassName('typewrite');
-            for (var i=0; i<elements.length; i++) {
-                var toRotate = elements[i].getAttribute('data-type');
-                var period = elements[i].getAttribute('data-period');
-                if (toRotate) {
-                    new TxtType(elements[i], JSON.parse(toRotate), period);
-                }
-            }
-            // INJECT CSS
-            var css = document.createElement("style");
-            css.type = "text/css";
-            css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
-            document.body.appendChild(css);
-        };
-
-        $('.carousel').carousel({
-            interval: 10000,
-            pause: false
-        })
-    </script>
+    <script src="{{ asset('js/my-animation.min.js') }}"></script>
 @endsection

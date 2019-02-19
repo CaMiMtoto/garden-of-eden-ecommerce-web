@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->string("minStock");
             $table->longText("description");
             $table->string("image");
-            $table->tinyInteger("status")->default('Available');
+            $table->string("status")->default('Available');
             $table->timestamps();
         });
     }

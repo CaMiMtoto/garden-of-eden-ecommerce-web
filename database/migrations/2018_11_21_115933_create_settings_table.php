@@ -23,7 +23,7 @@ class CreateSettingsTable extends Migration
             $table->string('email2',100);
             $table->string('address');
             $table->string('logo')->default('');
-            $table->longText('about');
+            $table->longText('about')->nullable();
             $table->timestamps();
         });
     }

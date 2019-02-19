@@ -17,17 +17,18 @@
     <title>Garden of eden</title>
 
     <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}"/>
-    <link type="text/css" rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap-theme.min.css') }}"/>
+  {{--  <link type="text/css" rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap-theme.min.css') }}"/>--}}
     <!-- Latest compiled and minified CSS -->
-{{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--}}
-<!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/slick.css') }}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Slick -->
+    {{--<link type="text/css" rel="stylesheet" href="{{ asset('css/slick.css') }}"/>--}}
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/slick-theme.css') }}"/>
 
     <!-- nouislider -->
@@ -35,8 +36,8 @@
 
     <!-- Font Awesome Icon -->
     <link rel="stylesheet" href="{{ asset('vendor/themify/themify-icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">
-{{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">--}}
+    {{--<link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">--}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Custom stylesheet -->
     @yield('styles')
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
@@ -49,9 +50,9 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-
-    <!-- jQuery Plugins -->
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    {{--<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>--}}
 </head>
 <body>
 <!-- HEADER -->
@@ -68,12 +69,11 @@
 @include('partials.footer')
 <!-- /FOOTER -->
 
-<!-- jQuery library -->
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}
-<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+{{--<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>--}}
 <!-- Latest compiled JavaScript -->
-{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
-<script src="{{ asset('js/slick.min.js') }}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{{--<script src="{{ asset('js/slick.min.js') }}"></script>--}}
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="{{ asset('js/nouislider.min.js') }}"></script>
 <script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>

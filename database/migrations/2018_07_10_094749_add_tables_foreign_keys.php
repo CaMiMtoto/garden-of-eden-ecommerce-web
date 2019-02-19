@@ -24,9 +24,9 @@ class AddTablesForeignKeys extends Migration
         Schema::table('order_items', function (Blueprint $table) {
             $table->foreign('product_id')->references('id')->on('products');
         });
-        Schema::table('orders', function (Blueprint $table) {
+     /*   Schema::table('orders', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
-        });
+        });*/
     }
 
     /**

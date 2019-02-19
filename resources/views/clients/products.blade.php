@@ -8,7 +8,7 @@
     <div class="section">
         <div class="container">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <h4>Categories</h4>
                     <div>
                         <?php
@@ -29,7 +29,7 @@
                         </ul>
                     </div>
                 </div>
-                <section class="col-md-10">
+                <section class="col-md-9">
                     @if(count($products) ==0)
                         <div class="alert alert-info">
                             <p>Your search keyword could not math anything. Try with a different keyword.</p>

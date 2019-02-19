@@ -158,10 +158,10 @@ a:hover, a:focus {
 css
 */
  .header{
-    font-family: 'Raleway', sans-serif;
+     font-family: 'Nunito', sans-serif;
 }
 div.animate {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Nunito', sans-serif;
     color: #000000;
     text-decoration: none;
     /*background-color: #f3f3f3;*/
@@ -175,6 +175,9 @@ div.animate>p {
 }
 .padding-30-not-sm{
     padding: 30px;
+}
+div.animate>div.your-class>button.slick-arrow{
+    display: none!important;
 }
 
 @media (max-width: 480px) {
