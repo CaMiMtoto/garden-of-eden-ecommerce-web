@@ -370,12 +370,17 @@
                             <img src="{{ asset('Cards/1280px-UnionPay_logo.svg.png') }}" class="img-responsive " alt="">
                         </div>
                         <div class="card-container">
+                            <img src="{{ asset('Cards/mtn-mobile-money-logo-AD1D8B5CE4-seeklogo.com.jpg') }}" class="img-responsive " alt="">
+                        </div>
+                        <div class="card-container">
                             <img src="{{ asset('Cards/2000px-Mastercard-logo.png') }}" class="img-responsive " alt="">
                         </div>
 
                         <div class="card-container">
                             <img src="{{ asset('Cards/Diners_Club_Logo3.svg.png') }}" class="img-responsive " alt="">
                         </div>
+
+
                     </div>
                 </div>
             </div>
