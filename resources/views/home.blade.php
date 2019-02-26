@@ -359,11 +359,33 @@
     <div id="newsletter" class="section">
         <!-- container -->
         <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center">Card accepted</h3>
+                    <div class="center" data-slick='{"slidesToShow": 4, "slidesToScroll": 4}'>
+                        <div class="card-container">
+                            <img src="{{ asset('Cards/visa-2623015_960_720.png') }}" class="img-responsive " alt="">
+                        </div>
+                        <div class="card-container">
+                            <img src="{{ asset('Cards/1280px-UnionPay_logo.svg.png') }}" class="img-responsive " alt="">
+                        </div>
+                        <div class="card-container">
+                            <img src="{{ asset('Cards/2000px-Mastercard-logo.png') }}" class="img-responsive " alt="">
+                        </div>
+
+                        <div class="card-container">
+                            <img src="{{ asset('Cards/Diners_Club_Logo3.svg.png') }}" class="img-responsive " alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
             <!-- row -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="newsletter">
-                        <p>Tell others</p>
+                        <h3>Get in touch with us</h3>
 
                         <ul class="newsletter-follow">
                             <li>
@@ -396,4 +418,32 @@
 
 @section('scripts')
     <script src="{{ asset('js/my-animation.min.js') }}"></script>
+    <script>
+        $('.center').slick({
+            centerMode: true,
+            centerPadding: '60px',
+            slidesToShow: 3,
+            autoplay:true,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 1
+                    }
+                }
+            ]
+        });
+    </script>
 @endsection

@@ -88,7 +88,7 @@
                         About us
                     </label> <label class="control-label col-sm-1" for="about">:</label>
                     <div class="col-sm-9">
-                        <textarea name="about" id="about"  class="form-control" placeholder="About us" required>{{ $setting->about }}</textarea>
+                        <textarea rows="7" name="about" id="about"  class="form-control" placeholder="About us" required>{{ $setting->about }}</textarea>
                     </div>
                 </div>
 

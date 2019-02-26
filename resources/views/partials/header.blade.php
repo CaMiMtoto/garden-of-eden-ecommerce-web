@@ -68,8 +68,8 @@ $address = \App\MyFunc::getDefaultSetting()->address;
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="{{ route('home') }}" class="logo" style="color: #F0FFDF;">
-                            <img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="Garden Of Eden Produce"
-                                 style="width: 50px">
+                            <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive img-circle" alt="Garden Of Eden Produce"
+                                 style="width: 80px;background-color: whitesmoke">
                         </a>
                     </div>
                 </div>
