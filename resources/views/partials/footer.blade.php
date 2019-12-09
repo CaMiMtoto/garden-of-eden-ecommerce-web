@@ -77,7 +77,7 @@ $about = \App\MyFunc::getDefaultSetting()->about;
                 <div class="col-md-12 text-center">
                     <span class="copyright">
 							Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                        All rights reserved | This website made by
+                        All rights reserved  | This website made by
                         <a style="color: whitesmoke"
                            href="mailto:jeanpaulbyiringiro9764@gmail.com">Jean Paul Byiringiro</a>
 							</span>

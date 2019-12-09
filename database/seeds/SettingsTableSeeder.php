@@ -20,6 +20,7 @@ class SettingsTableSeeder extends Seeder
         $setting->email2 = "mtotocami@live.com";
         $setting->address = "J.Lynn's Kagugu , Rouge Hotel KG 414";
         $setting->logo = "";
+  $setting->about = "About us";
         $setting->save();
     }
 }
