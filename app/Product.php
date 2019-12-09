@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Product extends Model
 {
+    protected $appends=['image_url'];
+
     public function category()
     {
         return $this->belongsTo('App\Category');
@@ -47,5 +49,12 @@ class Product extends Model
     }
     public function getDescriptionAttribute($value){
         return trim($value);
+    }
+    public function getImageUrlAttribute($value){
+        $path = 'uploads/products/' . $this->image;
+        if (!file_exists($path)) {
+            $path = 'img/no_image.png';
+        }
+        return asset("$path");
     }
 }

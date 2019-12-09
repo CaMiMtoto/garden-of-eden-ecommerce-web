@@ -50,7 +50,7 @@
                             {{ __('Reset Password') }}
                         </p>
                     </div>
-                    <form method="POST" action="{{ route('password.update') }}" class="form-auth-small">
+                    <form method="POST" action="{{ url('password/reset') }}" class="form-auth-small">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">

@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('clientName');
             $table->string('clientPhone');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('status')->default('Pending');
             $table->string('shipping_address');
             $table->text('notes');
