@@ -31,9 +31,7 @@ class HomeController extends Controller
             'random' => $this->randomProducts(),
             'new' => $this->newProducts()
         );
-        return [
-            $arrays
-        ];
+        return response($arrays,200);
     }
 
 
