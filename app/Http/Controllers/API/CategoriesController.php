@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class CategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $categories=Category::all();
+        return response($categories,200);
     }
 
     /**

@@ -2,50 +2,49 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function productsByCategory(Category $category)
     {
-        //
+        $products=Product::with('category')
+            ->where('category_id',$category->id)
+            ->paginate(10);
+        return response($products);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function allProducts(Request $request)
     {
-        //
+        $products=Product::with('category')
+            ->paginate(10);
+        return response($products);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function searchProduct(Request $request)
     {
-        //
+        if (empty($request->input('q'))) {
+            $products = Product::with('category')
+                ->orderBy("id", "desc")
+                ->paginate(10);
+        } else {
+            $search = $request->input('q');
+            $products = Product::with('category')
+                ->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('price', 'LIKE', "%{$search}%")
+                ->orderBy("id", "desc")
+                ->paginate(10);
+            $products->appends(['q' => $search]);
+        }
+        return response($products,200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
