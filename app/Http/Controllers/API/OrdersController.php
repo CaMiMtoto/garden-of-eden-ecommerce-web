@@ -8,22 +8,23 @@ use App\Order;
 use App\OrderItem;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use function GuzzleHttp\Psr7\str;
 
 class OrdersController extends Controller
 {
     public function checkOut(Request $request)
     {
         $this->validate($request, [
-            'clientName' => 'required',
+            'client_name' => 'required',
             'email' => 'required|email',
             'shipping_address' => 'required',
-            'phoneNumber' => 'required| min:10'
+            'phone_number' => 'required| min:10'
         ]);
 
         $order = new Order();
-        $order->clientPhone = $request->input('phoneNumber');
+        $order->clientPhone = $request->input('phone_number');
         $order->email = $request->input('email');
-        $order->clientName = $request->input('clientName');
+        $order->clientName = $request->input('client_name');
         $order->shipping_address = $request->input('shipping_address');
         $order->notes = $request->input('notes');
         $order->shipping_amount = 1000;
@@ -32,10 +33,10 @@ class OrdersController extends Controller
         $cart = $request->cart;
         foreach ($cart as $cartItem) {
             $orderItem = new OrderItem();
-            $orderItem->product_id = $cartItem->id;
-            $orderItem->price = $cartItem->price;
-            $orderItem->qty = $cartItem->qty;
-            $orderItem->sub_total = $cartItem->price * $cartItem->qty;
+            $orderItem->product_id = $cartItem['product_id'];
+            $orderItem->price = $cartItem['price'];
+            $orderItem->qty = $cartItem['qty'];
+            $orderItem->sub_total = $cartItem['qty'] * $cartItem['price'];
             $order->orderItems()->save($orderItem);
         }
         //Send email to all users in background
