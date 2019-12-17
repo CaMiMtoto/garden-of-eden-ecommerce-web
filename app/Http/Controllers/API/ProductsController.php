@@ -21,7 +21,7 @@ class ProductsController extends Controller
     public function allProducts(Request $request)
     {
         $products=Product::with('category')
-            ->paginate(10);
+            ->paginate(20);
         return response($products);
     }
 
@@ -31,14 +31,14 @@ class ProductsController extends Controller
         if (empty($request->input('q'))) {
             $products = Product::with('category')
                 ->orderBy("id", "desc")
-                ->paginate(10);
+                ->paginate(20);
         } else {
             $search = $request->input('q');
             $products = Product::with('category')
                 ->where('name', 'LIKE', "%{$search}%")
                 ->orWhere('price', 'LIKE', "%{$search}%")
                 ->orderBy("id", "desc")
-                ->paginate(10);
+                ->paginate(20);
             $products->appends(['q' => $search]);
         }
         return response($products,200);
