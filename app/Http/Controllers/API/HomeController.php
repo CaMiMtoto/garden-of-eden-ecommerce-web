@@ -11,9 +11,9 @@ class HomeController extends Controller
     public function randomProducts()
     {
         $products= Product::with('category')
+            ->inRandomOrder()
             ->limit(4)
-            ->get()
-            ->shuffle();
+            ->get();
         return response($products,200);
     }
 
