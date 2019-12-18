@@ -18,11 +18,6 @@ class ProcessOrder implements ShouldQueue
     private $order;
     public $tries = 5;
 
-    /**
-     * Create a new job instance.
-     *
-     * @param $order
-     */
     public function __construct($order)
     {
         $this->order = $order;

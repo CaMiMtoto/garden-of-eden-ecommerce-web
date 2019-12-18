@@ -8,21 +8,22 @@ use App\Product;
 class HomeController extends Controller
 {
 
-    private function randomProducts()
+    public function randomProducts()
     {
-        return Product::with('category')
-            ->limit(10)
-            ->take(10)
+        $products= Product::with('category')
+            ->limit(4)
             ->get()
             ->shuffle();
+        return response($products,200);
     }
 
-    private function newProducts()
+    public function newProducts()
     {
-        return Product::with('category')
+        $products= Product::with('category')
             ->orderBy('id', 'desc')
             ->limit(10)
             ->get();
+        return response($products,200);
     }
 
     public function products()
