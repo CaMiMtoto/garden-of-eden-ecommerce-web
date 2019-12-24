@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
     public function index()
     {
         return view('admins.categories');
+    }
+
+    public function newCategories()
+    {
+        $categories = Category::all();
+        return view('admins.new_categories', compact('categories'));
     }
 
     public function all(Request $request)
@@ -32,7 +37,7 @@ class CategoryController extends Controller
         if (empty($request->input('search.value'))) {
             $categories = Category::offset($start)
                 ->limit($limit)
-                ->orderBy($order,$dir)
+                ->orderBy($order, $dir)
                 ->get();
         } else {
             $search = $request->input('search.value');
@@ -72,40 +77,52 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $category=new Category();
-        $category->name=$request->input('name');
+        $category = new Category();
+        $category->name = $request->input('name');
         $category->save();
-        return \response()->json(["message"=>"Data saved"],201);
+        return \response()->json(["message" => "Data saved"], 201);
     }
 
     public function show($id)
     {
-        $category=Category::find($id);
-        if(!$category){
-            return \response()->json(["message"=>"Not found"],404);
+        $category = Category::find($id);
+        if (!$category) {
+            return \response()->json(["message" => "Not found"], 404);
         }
-        return \response()->json($category,200);
+        return \response()->json($category, 200);
     }
 
     public function update(Request $request)
     {
-        $category=Category::find($request->input('id'));
-        if(!$category){
-            return \response()->json(["message"=>"Not found"],404);
+        $category = Category::find($request->input('id'));
+        if (!$category) {
+            return \response()->json(["message" => "Not found"], 404);
         }
-        $category->name=$request->input('name');
+        $category->name = $request->input('name');
         $category->update();
-        return \response()->json(["message"=>"Data updated"],204);
+        return \response()->json(["message" => "Data updated"], 204);
+    }
+
+    public function save(Request $request)
+    {
+        if ($request->id == 0) {
+            $category = new Category();
+        } else {
+            $category = Category::find($request->input('id'));
+        }
+        $category->name = $request->input('name');
+        $category->save();
+        return \response()->json(["message" => "Data updated"], 204);
     }
 
 
     public function destroy($id)
     {
-        $category=Category::find($id);
-        if(!$category){
-            return \response()->json(["message"=>"Not found"],404);
+        $category = Category::find($id);
+        if (!$category) {
+            return \response()->json(["message" => "Not found"], 404);
         }
         $category->delete();
-        return \response()->json(["message"=>"Data deleted"],200);
+        return \response()->json(["message" => "Data deleted"], 200);
     }
 }

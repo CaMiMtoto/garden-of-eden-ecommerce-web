@@ -58,8 +58,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
     Route::get('/', 'HomeController@dashboard')->name('dashboard');
-
-    //categories routes
     Route::get('/categories', 'CategoryController@index')->name('category.index');
     Route::post('/categories/all', 'CategoryController@all')->name('category.all');
     Route::delete('/categories/destroy/{id}', 'CategoryController@destroy')->name('category.destroy');

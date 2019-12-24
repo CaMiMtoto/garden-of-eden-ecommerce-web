@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('API')->group(function () {
     Route::get('/home/products/random', 'HomeController@randomProducts');
+    Route::get('/top/products', 'HomeController@topSoldProducts');
     Route::get('/home/products/new', 'HomeController@newProducts');
     Route::get('/categories', 'CategoriesController@index');
     Route::get('/products/category/{category}', 'ProductsController@productsByCategory');
