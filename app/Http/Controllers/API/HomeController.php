@@ -39,11 +39,12 @@ class HomeController extends Controller
 
     public function topSoldProducts()
     {
-        $products = OrderItem::join('products', 'products.id', 'order_items.product_id')
-            ->select('name',DB::raw('count(products.id) as sold_count'))
-            ->groupBy('products.id','name')
+        $products = OrderItem::with('product.category')
+            ->join('products', 'products.id', 'order_items.product_id')
+            ->select('*','products.id', DB::raw('count(products.id) as sold_count'))
+            ->groupBy('products.id')
             ->orderBy('sold_count', 'desc')
-            ->limit(20)
+            ->limit(20)->with('product')
             ->get();
         return response($products, 200);
     }
