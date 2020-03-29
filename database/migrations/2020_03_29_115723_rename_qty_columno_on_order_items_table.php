@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTablesForeignKeys extends Migration
+class RenameQtyColumnoOnOrderItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,17 +14,8 @@ class AddTablesForeignKeys extends Migration
     public function up()
     {
         Schema::table('order_items', function (Blueprint $table) {
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->float('qty')->change();
         });
-
-        Schema::table('products', function (Blueprint $table) {
-            $table->foreign('category_id')->references('id')->on('categories');
-        });
-
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->foreign('product_id')->references('id')->on('products');
-        });
-
     }
 
     /**

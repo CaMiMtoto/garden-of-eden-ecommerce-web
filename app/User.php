@@ -7,6 +7,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * @property mixed name
@@ -21,7 +22,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Model implements Authenticatable,\Illuminate\Contracts\Auth\CanResetPassword
 {
-    use Notifiable;
+    use HasApiTokens,Notifiable;
     use \Illuminate\Auth\Authenticatable;
     use CanResetPassword;
     protected $fillable = [
