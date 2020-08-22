@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -23,7 +23,7 @@ class UsersController extends Controller
             2 => 'role'
         );
 
-        $totalData = User::where('role', '!=', 'Client')->count();
+        $totalData = User::whereNotIn('role',['Client',Role::SUPER_ADMIN])->count();
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
@@ -32,14 +32,14 @@ class UsersController extends Controller
         $dir = $request->input('order.0.dir');
 
         if (empty($request->input('search.value'))) {
-            $users = User::where('role', '!=', 'Client')->offset($start)
+            $users = User::whereNotIn('role',['Client',Role::SUPER_ADMIN])->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
         } else {
             $search = $request->input('search.value');
 
-            $users = User::where('role', '!=', 'Client')
+            $users = User::whereNotIn('role',['Client',Role::SUPER_ADMIN])
                 ->orWhere('email', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->orWhere('role', 'LIKE', "%{$search}%")
@@ -48,7 +48,7 @@ class UsersController extends Controller
                 ->orderBy($order, $dir)
                 ->get();
 
-            $totalFiltered = User::where('role', '!=', 'Client')
+            $totalFiltered = User::whereNotIn('role',['Client',Role::SUPER_ADMIN])
                 ->where('id', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->count();
@@ -127,7 +127,7 @@ class UsersController extends Controller
         $id = $request->input('id');
 
         $obj = User::find($id);
-        if(!$obj)  return response()->json(['message'=>'Not found'], 404);
+        if (!$obj) return response()->json(['message' => 'Not found'], 404);
 
         $obj->name = $request['name'];
         $obj->user_name = $email;
@@ -164,16 +164,21 @@ class UsersController extends Controller
             'user_name' => 'required',
             'password' => 'required|min:4'
         ]);
+
         $credentials = $request->only('user_name', 'password');
 
-        if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            if (Auth::user()->role === 'Admin') {
+        $attempt = \auth()->attempt($credentials, \request('remember') ? true : false);
+        if ($attempt) {
+            $user = \auth()->user();
+            if (in_array($user->role, Role::roles())) {
                 return redirect()->route('dashboard');
             }
             return redirect()->home();
         }
-        return redirect()->back()->with('message', 'Incorrect email or password');
+        return redirect()->back()
+            ->with('message', 'Incorrect email or password')
+            ->withErrors(['password' => 'Incorrect email or password'])
+            ->withInput(['user_name' => $request->input('user_name')]);
     }
 
     public function logOut()

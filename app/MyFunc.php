@@ -16,7 +16,7 @@ class MyFunc
     public static function format_phone_us($phone)
     {
         // note: making sure we have something
-        if (!isset($phone{3})) {
+        if (!isset($phone)) {
             return '';
         }
         // note: strip out everything but numbers
@@ -99,7 +99,6 @@ class MyFunc
 
     }
     static function getDefaultSetting(){
-        $setting = Setting::orderBy('id', 'asc')->limit(1)->first();
-        return $setting;
+        return Setting::orderBy('id', 'asc')->limit(1)->first();
     }
 }

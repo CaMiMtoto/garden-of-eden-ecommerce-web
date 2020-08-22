@@ -20,8 +20,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
-        html,body{
-            font-family: 'Raleway', sans-serif!important;
+        html, body {
+            font-family: 'Raleway', sans-serif !important;
         }
     </style>
 
@@ -35,41 +35,48 @@
     <div class="vertical-align-wrap">
         <div class="vertical-align-middle">
 
-            <div class="auth-box"> <div class="logo text-center">
-                    <img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="DiffDash" style="height: 80px">
-                </div>
-                <br>
-                <div class="content">
-                    @if(Session::has('message'))
-                        <div class="alert alert-danger alert-dismissable flat">
+            <div class="auth-box">
+                <div class="logo text-center">
+
+               {{--     @if(session()->has('message'))
+                        <div class="alert text-left alert-danger alert-dismissable flat">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                         aria-hidden="true">×</span></button>
                             <p>
                                 <i class="fa fa-warning"></i>
-                                {{ Session::get('message') }}
+                                {{ session()->get('message') }}
                             </p>
                         </div>
-                    @endif
+                    @endif--}}
+
+                    <img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="DiffDash" style="height: 80px">
+                </div>
+                <br>
+                <div class="content">
+
 
                     <div class="header">
                         <p class="lead">
-                          <strong>
-                              {{_('Welcome back!')}}
-                          </strong>
+                            <strong>
+                                Welcome back!
+                            </strong>
                         </p>
                     </div>
-                    <form class="form-auth-small" action="{{ route('post.login') }}" method="post">
-                        {{ csrf_field() }}
+                    <form class="form-auth-small" autocomplete="off" action="{{ route('post.login') }}" method="post">
+                        @csrf
+
                         <div class="form-group {{ $errors->has('user_name')?'has-error':''}}">
                             <label for="signin-email" class="control-label sr-only">Username</label>
-                            <input value="{{Request::old('user_name')}}" type="text" name="user_name" class="form-control"
+                            <input value="{{ old('user_name')}}" type="text" name="user_name"
+                                   class="form-control"
                                    id="signin-email" placeholder="Username">
                             @if ($errors->has('user_name'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('user_name') }}</strong>
-                                    </span>
+                                </span>
                             @endif
                         </div>
+
                         <div class="form-group {{ $errors->has('password')?'has-error':''}}">
                             <label for="signin-password" class="control-label sr-only">Password</label>
                             <input type="password" name="password" class="form-control" id="signin-password"
@@ -82,16 +89,18 @@
                         </div>
                         <div class="form-group clearfix">
                             <label class="fancy-checkbox element-left">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" name="remember" value="1" checked>
                                 <span>Remember me</span>
                             </label>
                         </div>
                         <button type="submit" class="btn btn-success btn-block ">
                             <i class="fa fa-sign-in"></i>
-                            Sign in</button>
+                            Sign in
+                        </button>
                         <div class="bottom">
                             <span class="helper-text">
-                                <i class="fa fa-lock"></i> <a href="{{ route('password.request') }}">Forgot password?</a>
+                                <i class="fa fa-lock"></i> <a
+                                        href="{{ route('password.request') }}">Forgot password?</a>
                             </span>
                         </div>
                     </form>

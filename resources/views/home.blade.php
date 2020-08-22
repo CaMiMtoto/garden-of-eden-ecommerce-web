@@ -9,23 +9,6 @@
         <div class="container-fluid">
             <div class="container">
                 <div class="row">
-                    @if(\App\Event::where('active',true)->count()>0)
-                        <div>
-                            @foreach(\App\Event::all() as $event)
-                                <div class="alert alert-info alert-dismissible flat" role="alert">
-                                    <h4><i class="fa fa-info-circle"></i> {{ $event->name }}</h4>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        {{--<span aria-hidden="true">×</span>--}}
-                                    </button>
-                                    <p>
-                                        {{ $event->description }}
-                                        <br>
-                                        <span>This will start on </span><strong>{{ date('D j M Y', strtotime($event->date))  }}</strong>
-                                    </p>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
 
                     @if(Session::has('message'))
                         <div class="row">

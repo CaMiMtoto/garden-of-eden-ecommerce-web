@@ -3,25 +3,26 @@
 namespace App\Http\Controllers\API;
 
 use App\Category;
+use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class ProductsController extends Controller
 {
 
     public function productsByCategory(Category $category)
     {
-        $products=Product::with('category')
-            ->where('category_id',$category->id)
-            ->paginate(10);
+        $products = Product::with('category')
+            ->where('category_id', $category->id)
+            ->paginate(\request('page_size') ?? 20);
         return response($products);
     }
 
     public function allProducts(Request $request)
     {
-        $products=Product::with('category')
-            ->paginate(20);
+        $products = Product::with('category')
+            ->paginate(\request('page_size') ?? 20);
         return response($products);
     }
 
@@ -31,7 +32,7 @@ class ProductsController extends Controller
         if (empty($request->input('q'))) {
             $products = Product::with('category')
                 ->orderBy("id", "desc")
-                ->paginate(20);
+                ->paginate(\request('page_size') ?? 20);
         } else {
             $search = $request->input('q');
             $products = Product::with('category')
@@ -41,7 +42,7 @@ class ProductsController extends Controller
                 ->paginate(20);
             $products->appends(['q' => $search]);
         }
-        return response($products,200);
+        return response($products, Response::HTTP_OK);
     }
 
 
@@ -53,7 +54,7 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

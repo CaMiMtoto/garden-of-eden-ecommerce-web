@@ -17,13 +17,8 @@
     <title>Garden of eden</title>
 
     <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,600&display=swap" rel="stylesheet">
     <!-- Bootstrap -->
-  {{--  <link type="text/css" rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}"/>
-    <link type="text/css" rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap-theme.min.css') }}"/>--}}
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Slick -->
@@ -42,19 +37,28 @@
     @yield('styles')
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    {{--<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>--}}
 </head>
 <body>
+@if(\App\Event::where('active',true)->count()>0)
+    <div>
+        @foreach(\App\Event::all() as $event)
+            <div class="alert alert-info alert-dismissible flat" role="alert" style="margin-bottom: 0!important;background-color: #0067B8;color: white!important;border-color: #0067B8!important;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"  style="color: white!important;">
+                    <span aria-hidden="true" style="color: white!important;">
+                        &times;
+                    </span>
+                </button>
+                <p class="container" style="font-weight: lighter !important;">
+                    {{ $event->description }}
+                    <span>This will start on </span><strong>{{ date('D j M Y', strtotime($event->date))  }}</strong>
+                </p>
+            </div>
+        @endforeach
+    </div>
+@endif
+
 <!-- HEADER -->
 @include('partials.header')
 <!-- /HEADER -->
