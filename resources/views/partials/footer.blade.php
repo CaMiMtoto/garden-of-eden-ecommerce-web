@@ -75,12 +75,15 @@ $about = \App\MyFunc::getDefaultSetting()->about;
             <!-- row -->
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <span class="copyright">
-							Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                        All rights reserved  | This website made by
+                    <span class="copyright" style="margin: 20px 0">
+							Copyright &copy; {{ now()->format('Y') }} All rights reserved  | This website made by
                         <a style="color: whitesmoke"
-                           href="mailto:jeanpaulbyiringiro9764@gmail.com">Jean Paul Byiringiro</a>
-							</span>
+                           href="mailto:jeanpaulbyiringiro9764@gmail.com">Jean Paul Byiringiro</a>,
+                        Tel:
+                        <a href="tel:0780661813">
+                          {{ format_phone_us('0780661813') }}
+                        </a>
+                    </span>
                 </div>
             </div>
             <!-- /row -->

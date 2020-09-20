@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $updated_at
  * @property string company_name
  * @property string whatsapp
+ * @method static orderBy(string $string, string $string1)
  */
 class Setting extends Model
 {
