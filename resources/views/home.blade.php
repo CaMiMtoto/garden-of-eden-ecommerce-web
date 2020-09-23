@@ -31,23 +31,23 @@
                         <div class="col-md-6">
                             <div class="carousel-image div-hide">
                                 <div>
-                                    <img src="{{ asset('carousel/1533157040.jpg') }}" alt="First slide"
-                                         style="max-height: 350px;">
+                                    <img class="lozad" data-src="{{ asset('carousel/1533157040.jpg') }}"  alt="First slide"
+                                         style="max-height: 350px;" src="">
                                 </div>
                                 <div>
-                                    <img src="{{ asset('carousel/1533153168.jpg') }}" alt="First slide"
-                                         style="max-height: 350px;">
+                                    <img  class="lozad" data-src="{{ asset('carousel/1533153168.jpg') }}" alt="First slide"
+                                         style="max-height: 350px;" src="">
                                 </div>
                                 <div>
-                                    <img src="{{ asset('carousel/1541062003.jpg') }}" alt="First slide"
-                                         style="max-height: 350px;">
+                                    <img class="lozad" data-src="{{ asset('carousel/1541062003.jpg') }}" alt="First slide"
+                                         style="max-height: 350px;" src="">
                                 </div>
                                 <div>
-                                    <img src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.59 PM (1).jpeg') }}"
-                                         alt="Second slide" style="max-height: 350px;">
+                                    <img class="lozad" data-src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.59 PM (1).jpeg') }}"
+                                         alt="Second slide" style="max-height: 350px;" src="">
                                 </div>
                                 <div>
-                                    <img src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.58 PM (1).jpeg') }}"
+                                    <img class="lozad" data-src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.58 PM (1).jpeg') }}"
                                          alt="Third slide" style="max-height: 350px;">
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                             <!-- tab -->
                             <div id="tab1" class="tab-pane active">
                                 <div class="products-slick" data-nav="#slick-nav-1">
-                                @foreach(\App\Product::limit(10)->get()->shuffle()->take(10) as $item)
+                                @foreach(\App\Product::query()->limit(10)->get()->shuffle()->take(10) as $item)
                                     <!-- product -->
                                         <div class="product">
                                             <?php
@@ -117,7 +117,7 @@
                                             ?>
                                             <div class="product-img">
                                                 <div style="height: 232px;overflow: hidden">
-                                                    <img style="width: 100%" src="{{ $path }}" alt="">
+                                                    <img  style="width: 100%" class="lozad" data-src="{{ $path }}" alt="" src="">
                                                 </div>
                                                 <div class="product-label">
                                                     @if($item->discount>0)
@@ -196,8 +196,8 @@
                                 <div class="product">
                                     <div class="product-img">
                                         <div style="height: 232px;overflow: hidden">
-                                            <img style="width: 100%"
-                                                 src="{{ asset('uploads/products/'.$item->image) }}" alt="">
+                                            <img   style="width: 100%"
+                                                   class="lozad" data-src="{{ asset('uploads/products/'.$item->image) }}" alt="" src="">
                                         </div>
 
                                         <div class="product-label">
@@ -291,7 +291,7 @@
                                     <!-- product widget -->
                                         <div class="product-widget">
                                             <div class="product-img">
-                                                <img src="{{ asset($path) }}" alt="">
+                                                <img  class="lozad" data-src="{{ asset($path) }}" alt="" src="">
                                             </div>
                                             <div class="product-body">
                                                 <p class="product-category">{{ $product->category->name }}</p>
@@ -347,23 +347,21 @@
                     <h3 class="text-center">Card accepted</h3>
                     <div class="center" data-slick='{"slidesToShow": 4, "slidesToScroll": 4}'>
                         <div class="card-container">
-                            <img src="{{ asset('Cards/visa-2623015_960_720.png') }}" class="img-responsive " alt="">
+                            <img data-src="{{ asset('Cards/visa-2623015_960_720.png') }}" class="lozadimg-responsive " alt="" src="">
                         </div>
                         <div class="card-container">
-                            <img src="{{ asset('Cards/1280px-UnionPay_logo.svg.png') }}" class="img-responsive " alt="">
+                            <img   data-src="{{ asset('Cards/1280px-UnionPay_logo.svg.png') }}" class="lozadimg-responsive " alt="" src="">
                         </div>
                         <div class="card-container">
-                            <img src="{{ asset('Cards/mtn-mobile-money-logo-AD1D8B5CE4-seeklogo.com.jpg') }}" class="img-responsive " alt="">
+                            <img   data-src="{{ asset('Cards/mtn-mobile-money-logo-AD1D8B5CE4-seeklogo.com.jpg') }}" class="lozadimg-responsive " alt="" src="">
                         </div>
                         <div class="card-container">
-                            <img src="{{ asset('Cards/2000px-Mastercard-logo.png') }}" class="img-responsive " alt="">
+                            <img   data-src="{{ asset('Cards/2000px-Mastercard-logo.png') }}" class="lozad img-responsive " alt="" src="">
                         </div>
 
                         <div class="card-container">
-                            <img src="{{ asset('Cards/Diners_Club_Logo3.svg.png') }}" class="img-responsive " alt="">
+                            <img   data-src="{{ asset('Cards/Diners_Club_Logo3.svg.png') }}" class="lozad img-responsive " alt="" src="">
                         </div>
-
-
                     </div>
                 </div>
             </div>

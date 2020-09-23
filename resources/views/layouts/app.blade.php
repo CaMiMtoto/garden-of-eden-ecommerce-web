@@ -25,6 +25,7 @@
     {{--<link type="text/css" rel="stylesheet" href="{{ asset('css/slick.css') }}"/>--}}
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/slick-theme.css') }}"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
 
     <!-- nouislider -->
     <link type="text/css" rel="stylesheet" href="{{ asset('css/nouislider.min.css') }}"/>
@@ -84,7 +85,11 @@
 @yield('scripts')
 <script>
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
+
+        const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+        observer.observe();
+
     });
 </script>
 </body>

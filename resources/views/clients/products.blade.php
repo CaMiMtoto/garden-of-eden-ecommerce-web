@@ -50,9 +50,9 @@
                                                     <a title="View full size"
                                                        href="{{ asset("uploads/products/" . $product->image) }}"
                                                        target="_blank">
-                                                        <img src="{{ asset("uploads/products/" . $product->image) }}"
+                                                        <img data-src="{{ asset("uploads/products/" . $product->image) }}"
                                                              alt="" style="width: 100%"
-                                                             class="grow img-responsive">
+                                                             class="lozad grow img-responsive">
                                                     </a>
                                                 </div>
                                                 <div class="col-sm-9">
