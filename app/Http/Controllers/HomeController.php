@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function settings()
     {
         $setting = MyFunc::getDefaultSetting();
-        if(!$setting) abort(404);
+        if (!$setting) abort(404);
         return view('admins.settings', ['setting' => $setting]);
     }
 

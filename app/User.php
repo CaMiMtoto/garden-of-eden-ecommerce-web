@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Notifications\ResetPassword;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -20,13 +19,14 @@ use Laravel\Passport\HasApiTokens;
  * @property int $id
  * @property \Carbon\Carbon $updated_at
  */
-class User extends Model implements Authenticatable,\Illuminate\Contracts\Auth\CanResetPassword
+class User extends Model implements Authenticatable, \Illuminate\Contracts\Auth\CanResetPassword
 {
-    use HasApiTokens,Notifiable;
+    use HasApiTokens, Notifiable;
     use \Illuminate\Auth\Authenticatable;
     use CanResetPassword;
+
     protected $fillable = [
-        'name', 'email','role', 'password',
+        'name', 'email', 'role', 'password',
     ];
 
     /**
@@ -38,13 +38,16 @@ class User extends Model implements Authenticatable,\Illuminate\Contracts\Auth\C
         'password', 'remember_token',
     ];
 
-    public function orders(){
+    public function orders()
+    {
         return $this->hasMany('App\Order');
     }
-/*    public function sendPasswordResetNotification($token)
-    {
-        $this->notify(new ResetPassword($token));
-    }*/
+
+    /*    public function sendPasswordResetNotification($token)
+        {
+            $this->notify(new ResetPassword($token));
+        }*/
+
 
 }
 

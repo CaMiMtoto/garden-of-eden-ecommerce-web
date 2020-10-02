@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\InfoSlackNotification;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class UsersController extends Controller
 {
@@ -23,7 +25,7 @@ class UsersController extends Controller
             2 => 'role'
         );
 
-        $totalData = User::whereNotIn('role',['Client',Role::SUPER_ADMIN])->count();
+        $totalData = User::whereNotIn('role', ['Client', Role::SUPER_ADMIN])->count();
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
@@ -32,14 +34,14 @@ class UsersController extends Controller
         $dir = $request->input('order.0.dir');
 
         if (empty($request->input('search.value'))) {
-            $users = User::whereNotIn('role',['Client',Role::SUPER_ADMIN])->offset($start)
+            $users = User::whereNotIn('role', ['Client', Role::SUPER_ADMIN])->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
         } else {
             $search = $request->input('search.value');
 
-            $users = User::whereNotIn('role',['Client',Role::SUPER_ADMIN])
+            $users = User::whereNotIn('role', ['Client', Role::SUPER_ADMIN])
                 ->orWhere('email', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->orWhere('role', 'LIKE', "%{$search}%")
@@ -48,7 +50,7 @@ class UsersController extends Controller
                 ->orderBy($order, $dir)
                 ->get();
 
-            $totalFiltered = User::whereNotIn('role',['Client',Role::SUPER_ADMIN])
+            $totalFiltered = User::whereNotIn('role', ['Client', Role::SUPER_ADMIN])
                 ->where('id', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->count();
@@ -170,6 +172,11 @@ class UsersController extends Controller
         $attempt = \auth()->attempt($credentials, \request('remember') ? true : false);
         if ($attempt) {
             $user = \auth()->user();
+
+            Notification::route('slack', env('LOG_SLACK_WEBHOOK_URL'))
+                ->notify(new InfoSlackNotification($user->name . " Logged in on " . $request->userAgent() . " ,with IP=" . $request->ip()));
+
+
             if (in_array($user->role, Role::roles())) {
                 return redirect()->route('dashboard');
             }
@@ -183,10 +190,13 @@ class UsersController extends Controller
 
     public function logOut()
     {
-        if (Auth::user()->role === 'Client') {
+        $user = Auth::user();
+        if ($user->role === 'Client') {
             Auth::logout();
             return redirect()->route('home');
         }
+        Notification::route('slack', env('LOG_SLACK_WEBHOOK_URL'))
+            ->notify(new InfoSlackNotification($user->name . " Logged out"));
         Auth::logout();
         return view('auth.login');
     }
