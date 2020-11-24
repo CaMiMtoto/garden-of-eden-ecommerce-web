@@ -25,11 +25,11 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        @foreach(\App\Category::all() as $category)
+                        @foreach(\App\Category::query()->withCount('products')->get() as $category)
                             <li>
                                 <a href="/getProduct?cat={{ $category->id }}">
                                     {{ $category->name }}
-                                    <span class="label label-danger pull-right">{{$category->products()->count()}}</span>
+                                    <span class="label label-danger pull-right">{{$category->products_count}}</span>
                                 </a>
                             </li>
                         @endforeach

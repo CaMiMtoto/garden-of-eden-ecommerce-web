@@ -7,6 +7,7 @@ use App\OrderItem;
 use App\Product;
 use App\User;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -141,7 +142,21 @@ class ClientController extends Controller
 
     public function productDetails(Product $product)
     {
-        return view('clients.product_detail',compact('product'));
+        $onOder = OrderItem::query()->where('product_id', $product->id)->limit(1)->first();
+        $alsoBoughtProducts = collect([]);
+        if ($onOder) {
+            $alsoBoughtProducts = Product::with('category')
+                ->whereHas('orderItems', function (Builder $builder) use ($onOder, $product) {
+                    $builder->where([
+                        ['product_id', '!=', $product->id],
+                        ['order_id', '=', $onOder->order_id]
+                    ])->whereHas('order',function (Builder $query){
+                    });
+                })->withCount('orderItems')->orderByDesc('order_items_count')->limit(8)->get();
+//            return $alsoBoughtProducts->count();
+        }
+
+        return view('clients.product_detail', compact('product','alsoBoughtProducts'));
     }
 
 }

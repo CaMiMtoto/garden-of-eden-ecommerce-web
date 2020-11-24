@@ -84,22 +84,14 @@
                                     </button>
                                 </form>
                             @else
-                                <span class="label label-default"><i class="fa fa-info-circle"></i>Out Of Stock</span>
+                                <span class="label label-warning">
+                                    <i class="fa fa-info-circle"></i> Out Of Stock
+                                </span>
                             @endif
                         </div>
                         <div>
                             <p>
                                 {{$product->description}}
-                                Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
-                                suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                                vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
-                                Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
-                                accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
-                                pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
-                                elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
-                                et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
-                                vel, ullamcorper sit amet ligula. Proin eget tortor risus
                             </p>
                         </div>
                     </div>
@@ -110,62 +102,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <h4 class="strong bold text-center text-uppercase">
-                        <span>People also buy these together</span>
+                        <span>Products you may like</span>
                     </h4>
                 </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="product">
-                        <div class="product-img">
-                            <div style="height: 232px;overflow: hidden">
-                                <img style="width: 100%"
-                                     class="lozad" data-src="{{ asset('uploads/products/'.$product->image) }}"
-                                     alt="" src="">
-                            </div>
-
-                            <div class="product-label">
-                                @if($product->discount>0)
-                                    <span class="sale">
-                                                            -{{ $product->discount }}%
-                                                </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="product-body">
-                            <p class="product-category">{{ $product->category->name }}</p>
-                            <h3 class="product-name">
-                                <a href="javascript:void(0);">
-                                    {{ $product->name }}
-                                </a>
-                            </h3>
-                            <h4 class="product-price">
-                                RF {{ number_format($product->getRealPrice()) }}
-                                @if($product->discount>0)
-                                    <del class="product-old-price">
-                                        RF {{ number_format($product->price) }}
-                                    </del>
-                                @endif
-                            </h4>
-                            <h5>
-                                {{ $product->measure }}
-                            </h5>
-
-                        </div>
-                        <div class="add-to-cart">
-                            @if($product->status==='Available')
-                                <a href="{{ route('cart.addToCart',['id'=>$product->id]) }}"
-                                   class="btn add-to-cart-btn flat">
-                                    <i class="fa fa-shopping-bag"></i> add to basket
-                                </a>
-                            @else
-                                <a href="javascript:void(0);"
-                                   class="btn add-to-cart-btn flat" disabled="">
-                                    <i class="fa fa-ban"></i>
-                                    Out of stock
-                                </a>
-                            @endif
-                        </div>
+                @foreach($alsoBoughtProducts as $item)
+                    <div class="col-md-3 col-sm-6">
+                        @include('partials.product_card')
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

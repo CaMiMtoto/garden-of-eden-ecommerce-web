@@ -11,8 +11,10 @@ class EventController extends Controller
 
     public function index()
     {
-        return view("admins.events");
+        $event = Event::query()->first();
+        return view("admins.events", compact('event'));
     }
+
     public function all(Request $request)
     {
         $columns = array(
@@ -73,25 +75,8 @@ class EventController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        $obj = new Event();
-        $obj->name = $request->input('name');
-        $obj->date = $request->input('date');
-        $obj->description = $request->input('description');
-        if (!empty($request->input('active'))) {
-            $obj->active = true;
-        } else {
-            $obj->active = false;
-        }
-        $obj->save();
-        return \response()->json(["message" => "Data saved"], 201);
-    }
-
-
     public function show($id)
     {
-        //
         $obj = Event::find($id);
         if (!$obj) {
             return \response()->json(["message" => "Not found"], 404);
@@ -103,21 +88,26 @@ class EventController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
             'description' => 'required',
-            'date' => 'required'
         ]);
-        $obj = Event::find($request->input('id'));
+        $id = $request->input('id');
+        if ($id > 0) {
+            $obj = Event::find($id);
+        } else {
+            $obj = new Event();
+        }
+
         $obj->name = $request->input('name');
         $obj->date = $request->input('date');
         $obj->description = $request->input('description');
+
         if (!empty($request->input('active'))) {
             $obj->active = true;
         } else {
             $obj->active = false;
         }
-        $obj->update();
-        return \response()->json(["message" => "Data updated"], 204);
+        $obj->save();
+        return redirect()->back();
     }
 
 

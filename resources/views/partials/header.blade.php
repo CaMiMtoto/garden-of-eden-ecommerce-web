@@ -1,12 +1,12 @@
 
 <?php
-use App\MyFunc;$mail = MyFunc::getDefaultSetting()->email1;
-$whatsapp = MyFunc::format_phone_us(MyFunc::getDefaultSetting()->whatsapp);
-$email2 = MyFunc::getDefaultSetting()->email2;
-$phone = MyFunc::format_phone_us(MyFunc::getDefaultSetting()->phoneNumber1);
-$phone2 = MyFunc::format_phone_us(MyFunc::getDefaultSetting()->phoneNumber2);
-$phone1 = MyFunc::format_phone_us(MyFunc::getDefaultSetting()->phoneNumber1);
-$address = MyFunc::getDefaultSetting()->address;
+use App\MyFunc;$defaultSetting = MyFunc::getDefaultSetting();$mail = $defaultSetting->email1;
+$whatsapp = MyFunc::format_phone_us($defaultSetting->whatsapp);
+$email2 = $defaultSetting->email2;
+$phone = MyFunc::format_phone_us($defaultSetting->phoneNumber1);
+$phone2 = MyFunc::format_phone_us($defaultSetting->phoneNumber2);
+$phone1 = MyFunc::format_phone_us($defaultSetting->phoneNumber1);
+$address = $defaultSetting->address;
 ?>
 
 <header>

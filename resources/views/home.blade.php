@@ -114,66 +114,8 @@
                             <!-- tab -->
                             <div id="tab1" class="tab-pane active">
                                 <div class="products-slick" data-nav="#slick-nav-1">
-                                @foreach(\App\Product::query()->limit(10)->get()->shuffle()->take(10) as $item)
-                                    <!-- product -->
-                                        <div class="product">
-                                            <?php
-                                            $path = 'uploads/products/' . $item->image;
-                                            if (!file_exists($path)) {
-                                                $path = 'img/no_image.png';
-                                            }
-                                            ?>
-                                            <div class="product-img">
-                                                <div style="height: 232px;overflow: hidden">
-                                                    <img style="width: 100%" class="lozad" data-src="{{ $path }}" alt=""
-                                                         src="">
-                                                </div>
-                                                <div class="product-label">
-                                                    @if($item->discount>0)
-                                                        <span class="sale">
-                                                            -{{ $item->discount }}%
-                                                        </span>
-                                                    @endif
-                                                    <span class="new">NEW</span>
-                                                </div>
-                                            </div>
-                                            <div class="product-body">
-                                                <p class="product-category">
-                                                    {{$item->category->name}}
-                                                </p>
-                                                <h3 class="product-name">
-                                                    <a href="#">
-                                                        {{ $item->name }}
-                                                    </a>
-                                                </h3>
-                                                <h4 class="product-price">
-                                                    RF {{ number_format($item->getRealPrice()) }}
-                                                    @if($item->discount>0)
-                                                        <del class="product-old-price">
-                                                            RF {{ number_format($item->price) }}
-                                                        </del>
-                                                    @endif
-                                                </h4>
-                                                <h5>
-                                                    {{ $item->measure }}
-                                                </h5>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                @if($item->status==='Available')
-                                                    <a href="{{ route('cart.addToCart',['id'=>$item->id]) }}"
-                                                       class="btn add-to-cart-btn flat">
-                                                        <i class="fa fa-shopping-bag"></i> add to basket
-                                                    </a>
-                                                @else
-                                                    <a href="javascript:void(0);"
-                                                       class="btn add-to-cart-btn flat" disabled="">
-                                                        <i class="fa fa-ban"></i>
-                                                        Out of stock
-                                                    </a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <!-- /product -->
+                                    @foreach(\App\Product::with('category')->limit(10)->get()->shuffle()->take(10) as $item)
+                                        @include('partials.product_card',['label'=>'NEW'])
                                     @endforeach
                                 </div>
                                 <div id="slick-nav-1" class="products-slick-nav"></div>
@@ -200,59 +142,9 @@
                     <div class="row">
                         <!-- /section title -->
                         <!-- Products tab & slick -->
-                        @foreach(\App\Product::orderBy('id','desc')->limit(4)->get() as $item)
+                        @foreach(\App\Product::with('category')->orderBy('id','desc')->limit(4)->get() as $item)
                             <div class="col-md-3 col-sm-6">
-                                <div class="product">
-                                    <div class="product-img">
-                                        <div style="height: 232px;overflow: hidden">
-                                            <img style="width: 100%"
-                                                 class="lozad" data-src="{{ asset('uploads/products/'.$item->image) }}"
-                                                 alt="" src="">
-                                        </div>
-
-                                        <div class="product-label">
-                                            @if($item->discount>0)
-                                                <span class="sale">
-                                                            -{{ $item->discount }}%
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="product-body">
-                                        <p class="product-category">{{ $item->category->name }}</p>
-                                        <h3 class="product-name">
-                                            <a href="javascript:void(0);">
-                                                {{ $item->name }}
-                                            </a>
-                                        </h3>
-                                        <h4 class="product-price">
-                                            RF {{ number_format($item->getRealPrice()) }}
-                                            @if($item->discount>0)
-                                                <del class="product-old-price">
-                                                    RF {{ number_format($item->price) }}
-                                                </del>
-                                            @endif
-                                        </h4>
-                                        <h5>
-                                            {{ $item->measure }}
-                                        </h5>
-
-                                    </div>
-                                    <div class="add-to-cart">
-                                        @if($item->status==='Available')
-                                            <a href="{{ route('cart.addToCart',['id'=>$item->id]) }}"
-                                               class="btn add-to-cart-btn flat">
-                                                <i class="fa fa-shopping-bag"></i> add to basket
-                                            </a>
-                                        @else
-                                            <a href="javascript:void(0);"
-                                               class="btn add-to-cart-btn flat" disabled="">
-                                                <i class="fa fa-ban"></i>
-                                                Out of stock
-                                            </a>
-                                        @endif
-                                    </div>
-                                </div>
+                                @include('partials.product_card')
                             </div>
                         @endforeach
                     </div>
@@ -272,7 +164,7 @@
                 $i = 0;
                 ?>
                 @foreach($categories as $category)
-                    @if($category->products->count()>=4)
+                    @if($category->products_count>=4)
                         <?php $i++; ?>
                         <div class="col-md-4 col-xs-6">
                             <div class="section-title">

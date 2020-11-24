@@ -48,17 +48,16 @@
     <div>
         @foreach(\App\Event::all() as $event)
             <div class="alert alert-info alert-dismissible flat" role="alert"
-                 style="margin-bottom: 0!important;background-color: #0067B8;color: white!important;border-color: #0067B8!important;">
+                 style="margin-bottom: 0!important;background-color: #0067B8;color: white!important;border-color: #0067B8!important;padding: 0!important;">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"
                         style="color: white!important;">
                     <span aria-hidden="true" style="color: white!important;">
                         &times;
                     </span>
                 </button>
-                <p class="container" style="font-weight: lighter !important;">
-                    {{ $event->description }}
-                    <span>This will start on </span><strong>{{ date('D j M Y', strtotime($event->date))  }}</strong>
-                </p>
+                <div class="container" style="font-weight: lighter !important;">
+                    {!! $event->description !!}
+                </div>
             </div>
         @endforeach
     </div>

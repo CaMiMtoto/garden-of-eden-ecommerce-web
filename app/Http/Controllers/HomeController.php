@@ -12,7 +12,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('home', ['categories' => Category::all()]);
+        return view('home', ['categories' => Category::query()->withCount('products')->get()]);
     }
 
     public function dashboard()

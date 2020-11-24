@@ -1,10 +1,11 @@
 <?php
-$mail = \App\MyFunc::getDefaultSetting()->email1;
-$whatsapp = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->whatsapp);
-$phone = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->phoneNumber1);
-$phone2 = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->phoneNumber2);
-$address = \App\MyFunc::getDefaultSetting()->address;
-$about = \App\MyFunc::getDefaultSetting()->about;
+$defaultSetting = \App\MyFunc::getDefaultSetting();
+$mail = $defaultSetting->email1;
+$whatsapp = \App\MyFunc::format_phone_us($defaultSetting->whatsapp);
+$phone = \App\MyFunc::format_phone_us($defaultSetting->phoneNumber1);
+$phone2 = \App\MyFunc::format_phone_us($defaultSetting->phoneNumber2);
+$address = $defaultSetting->address;
+$about = $defaultSetting->about;
 ?>
 <!-- row -->
 <div class="container">
@@ -87,8 +88,8 @@ $about = \App\MyFunc::getDefaultSetting()->about;
                     <div class="footer">
                         <h3 class="footer-title">Categories</h3>
                         <ul class="footer-links">
-                            @foreach(\App\Category::limit(10)->get() as $item)
-                                @if($item->products->count() > 0)
+                            @foreach(\App\Category::query()->withCount('products')->limit(10)->get() as $item)
+                                @if($item->products_count > 0)
                                     <li>
                                         <a href="/getProduct?cat={{ $item->id }}">{{ $item->name }}</a>
                                     </li>
