@@ -10,6 +10,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 
 Route::get('/getProduct', 'ClientController@getProductPage')->name('getProduct');
+Route::get('/products/{product}/details-view','ClientController@productDetails')->name('products.details-view');
 
 Route::get('/login', 'UsersController@login')->name('login');
 Route::post('/admin/login', 'UsersController@postLogin')->name('post.login');

@@ -6,7 +6,54 @@ $phone2 = \App\MyFunc::format_phone_us(\App\MyFunc::getDefaultSetting()->phoneNu
 $address = \App\MyFunc::getDefaultSetting()->address;
 $about = \App\MyFunc::getDefaultSetting()->about;
 ?>
+<!-- row -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="newsletter" style="margin-top: 50px;">
+                <p>Subscribe to our <strong>NEWSLETTER</strong></p>
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <i class="fa fa-check-circle-o"></i>
+                    Thank you for subscribing with us!
+                </div>
+                <form>
+                    <label for="email" class="sr-only"></label>
+                    <input class="input" id="email" type="email" placeholder="Enter Your Email">
+                    <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+                </form>
 
+                <h3>Get in touch with us</h3>
+
+
+                <ul class="newsletter-follow">
+                    <li>
+                        <a href="https://www.facebook.com/EdenofGardenProducer" target="_blank"><i
+                                    class="fa fa-facebook"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/" target="_blank"><i
+                                    class="fa fa-twitter"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/garden_of_eden_produce/" target="_blank"><i
+                                    class="fa fa-instagram"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/" target="_blank"><i
+                                    class="fa fa-youtube-play"></i></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<!-- /row -->
 <!-- top footer -->
 <footer id="footer">
     <div class="section">

@@ -31,23 +31,28 @@
                         <div class="col-md-6">
                             <div class="carousel-image div-hide">
                                 <div>
-                                    <img class="lozad" data-src="{{ asset('carousel/1533157040.jpg') }}"  alt="First slide"
+                                    <img class="lozad" data-src="{{ asset('carousel/1533157040.jpg') }}"
+                                         alt="First slide"
                                          style="max-height: 350px;" src="">
                                 </div>
                                 <div>
-                                    <img  class="lozad" data-src="{{ asset('carousel/1533153168.jpg') }}" alt="First slide"
+                                    <img class="lozad" data-src="{{ asset('carousel/1533153168.jpg') }}"
+                                         alt="First slide"
                                          style="max-height: 350px;" src="">
                                 </div>
                                 <div>
-                                    <img class="lozad" data-src="{{ asset('carousel/1541062003.jpg') }}" alt="First slide"
+                                    <img class="lozad" data-src="{{ asset('carousel/1541062003.jpg') }}"
+                                         alt="First slide"
                                          style="max-height: 350px;" src="">
                                 </div>
                                 <div>
-                                    <img class="lozad" data-src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.59 PM (1).jpeg') }}"
+                                    <img class="lozad"
+                                         data-src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.59 PM (1).jpeg') }}"
                                          alt="Second slide" style="max-height: 350px;" src="">
                                 </div>
                                 <div>
-                                    <img class="lozad" data-src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.58 PM (1).jpeg') }}"
+                                    <img class="lozad"
+                                         data-src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.58 PM (1).jpeg') }}"
                                          alt="Third slide" style="max-height: 350px;">
                                 </div>
                             </div>
@@ -58,16 +63,19 @@
                                 <div class="h2 text-left animate">
                                     <div class="your-class div-hide">
                                         <div>
-                                            Garden of Eden Produce provides Organic Rwandan fruit and vegetables at affordable prices.
+                                            Garden of Eden Produce provides Organic Rwandan fruit and vegetables at
+                                            affordable prices.
                                         </div>
                                         <div>
-                                            With more than 26 years of organic farming experience,we specialize in high quality,great tasting produce.
+                                            With more than 26 years of organic farming experience,we specialize in high
+                                            quality,great tasting produce.
                                         </div>
                                         <div>
                                             We serve and deliver to residential homes,business,restaurant and hotels.
                                         </div>
                                         <div>
-                                            Check out our online market and start enjoying Organic Rwandan produce today.
+                                            Check out our online market and start enjoying Organic Rwandan produce
+                                            today.
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +125,8 @@
                                             ?>
                                             <div class="product-img">
                                                 <div style="height: 232px;overflow: hidden">
-                                                    <img  style="width: 100%" class="lozad" data-src="{{ $path }}" alt="" src="">
+                                                    <img style="width: 100%" class="lozad" data-src="{{ $path }}" alt=""
+                                                         src="">
                                                 </div>
                                                 <div class="product-label">
                                                     @if($item->discount>0)
@@ -196,8 +205,9 @@
                                 <div class="product">
                                     <div class="product-img">
                                         <div style="height: 232px;overflow: hidden">
-                                            <img   style="width: 100%"
-                                                   class="lozad" data-src="{{ asset('uploads/products/'.$item->image) }}" alt="" src="">
+                                            <img style="width: 100%"
+                                                 class="lozad" data-src="{{ asset('uploads/products/'.$item->image) }}"
+                                                 alt="" src="">
                                         </div>
 
                                         <div class="product-label">
@@ -291,7 +301,7 @@
                                     <!-- product widget -->
                                         <div class="product-widget">
                                             <div class="product-img">
-                                                <img  class="lozad" data-src="{{ asset($path) }}" alt="" src="">
+                                                <img class="lozad" data-src="{{ asset($path) }}" alt="" src="">
                                             </div>
                                             <div class="product-body">
                                                 <p class="product-category">{{ $product->category->name }}</p>
@@ -347,55 +357,32 @@
                     <h3 class="text-center">Card accepted</h3>
                     <div class="center" data-slick='{"slidesToShow": 4, "slidesToScroll": 4}'>
                         <div class="card-container">
-                            <img data-src="{{ asset('Cards/visa-2623015_960_720.png') }}" class="lozadimg-responsive " alt="" src="">
+                            <img data-src="{{ asset('Cards/visa-2623015_960_720.png') }}" class="lozadimg-responsive "
+                                 alt="" src="">
                         </div>
                         <div class="card-container">
-                            <img   data-src="{{ asset('Cards/1280px-UnionPay_logo.svg.png') }}" class="lozadimg-responsive " alt="" src="">
+                            <img data-src="{{ asset('Cards/1280px-UnionPay_logo.svg.png') }}"
+                                 class="lozadimg-responsive " alt="" src="">
                         </div>
                         <div class="card-container">
-                            <img   data-src="{{ asset('Cards/mtn-mobile-money-logo-AD1D8B5CE4-seeklogo.com.jpg') }}" class="lozadimg-responsive " alt="" src="">
+                            <img data-src="{{ asset('Cards/mtn-mobile-money-logo-AD1D8B5CE4-seeklogo.com.jpg') }}"
+                                 class="lozadimg-responsive " alt="" src="">
                         </div>
                         <div class="card-container">
-                            <img   data-src="{{ asset('Cards/2000px-Mastercard-logo.png') }}" class="lozad img-responsive " alt="" src="">
+                            <img data-src="{{ asset('Cards/2000px-Mastercard-logo.png') }}"
+                                 class="lozad img-responsive " alt="" src="">
                         </div>
 
                         <div class="card-container">
-                            <img   data-src="{{ asset('Cards/Diners_Club_Logo3.svg.png') }}" class="lozad img-responsive " alt="" src="">
+                            <img data-src="{{ asset('Cards/Diners_Club_Logo3.svg.png') }}" class="lozad img-responsive "
+                                 alt="" src="">
                         </div>
                     </div>
                 </div>
             </div>
             <br>
             <br>
-            <!-- row -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="newsletter">
-                        <h3>Get in touch with us</h3>
 
-                        <ul class="newsletter-follow">
-                            <li>
-                                <a href="https://www.facebook.com/EdenofGardenProducer" target="_blank"><i
-                                            class="fa fa-facebook"></i></a>
-                            </li>
-                            <li>
-                                <a href="https://twitter.com/" target="_blank"><i
-                                            class="fa fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="https://www.instagram.com/garden_of_eden_produce/" target="_blank"><i
-                                            class="fa fa-instagram"></i></a>
-                            </li>
-                            <li>
-                                <a href="https://www.youtube.com/" target="_blank"><i
-                                            class="fa fa-youtube-play"></i></a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- /row -->
         </div>
         <!-- /container -->
     </div>
@@ -409,7 +396,7 @@
             centerMode: true,
             centerPadding: '60px',
             slidesToShow: 3,
-            autoplay:true,
+            autoplay: true,
             responsive: [
                 {
                     breakpoint: 768,

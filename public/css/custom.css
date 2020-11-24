@@ -1,7 +1,6 @@
 
-
 html, body {
-    font-family: 'Alata', sans-serif!important;
+    font-family: 'Alata', sans-serif !important;
     font-size: 0.89rem !important;
 }
 
@@ -10,10 +9,10 @@ html, body {
     font-size: 25px !important;
 }
 
-.header-search form .input-select, .header-search form .search-btn {
+/*.header-search form .input-select, .header-search form .search-btn {
     border-radius: 0 !important;
 
-}
+}*/
 
 .header-search {
     font-size: 15px;
@@ -41,7 +40,6 @@ html, body {
 .padding-left-20 {
     padding-left: 20px;
 }
-
 
 
 .shop .shop-img {
@@ -157,9 +155,10 @@ a:hover, a:focus {
 /*animations
 css
 */
- .header{
-     font-family: 'Nunito', sans-serif;
+.header {
+    font-family: 'Nunito', sans-serif;
 }
+
 div.animate {
     font-family: 'Nunito', sans-serif;
     color: #000000;
@@ -170,21 +169,24 @@ div.animate {
     border-radius: 1px;
 }
 
-div.animate>p {
+div.animate > p {
     color: #626262 !important;
 }
-.padding-30-not-sm{
+
+.padding-30-not-sm {
     padding: 30px;
 }
-div.animate>div.your-class>button.slick-arrow{
-    display: none!important;
+
+div.animate > div.your-class > button.slick-arrow {
+    display: none !important;
 }
 
 @media (max-width: 480px) {
-    .padding-30-not-sm{
+    .padding-30-not-sm {
         padding: 0;
     }
 }
+
 /*nav hover dropdown*/
 
 li:hover {
@@ -197,15 +199,22 @@ ul li ul:hover {
     opacity: 1;
     display: block;
 }
+
 .form-control:focus {
-    border-color: #dc96a2!important;
+    border-color: #dc96a2 !important;
     outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #f9c3cc!important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #f9c3cc !important;
 }
-h1,h2,h3,h4,h5,h6{
+
+h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
 }
-.card-container>img{
+
+.card-container > img {
     height: 50px;
+}
+
+.header-search form .input {
+    border-radius: 40px 0 0 40px !important;
 }

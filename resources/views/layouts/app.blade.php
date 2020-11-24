@@ -17,7 +17,8 @@
     <title>Garden of eden</title>
 
     <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,600&display=swap"
+          rel="stylesheet">
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -33,11 +34,12 @@
     <!-- Font Awesome Icon -->
     <link rel="stylesheet" href="{{ asset('vendor/themify/themify-icons.css') }}">
     {{--<link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">--}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- Custom stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Custom stylesheet -->
     @yield('styles')
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
+    @yield('styles')
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
@@ -45,8 +47,10 @@
 @if(\App\Event::where('active',true)->count()>0)
     <div>
         @foreach(\App\Event::all() as $event)
-            <div class="alert alert-info alert-dismissible flat" role="alert" style="margin-bottom: 0!important;background-color: #0067B8;color: white!important;border-color: #0067B8!important;">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"  style="color: white!important;">
+            <div class="alert alert-info alert-dismissible flat" role="alert"
+                 style="margin-bottom: 0!important;background-color: #0067B8;color: white!important;border-color: #0067B8!important;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                        style="color: white!important;">
                     <span aria-hidden="true" style="color: white!important;">
                         &times;
                     </span>
@@ -90,7 +94,24 @@
         const observer = lozad(); // lazy loads elements with default selector as '.lozad'
         observer.observe();
 
+
+        $('.scroll').click(function (e) {
+            // prevent default action
+            e.preventDefault();
+
+            // get id of target div (placed in href attribute of anchor element)
+            // and pass it to the scrollToElement function
+            // also, use 2000 as an argument for the scroll speed (2 seconds, 2000 milliseconds)
+            scrollToElement($(this).attr('href'), 2000);
+        });
     });
+
+    var scrollToElement = function (el, ms) {
+        var speed = (ms) ? ms : 600;
+        $('html,body').animate({
+            scrollTop: $(el).offset().top
+        }, speed);
+    }
 </script>
 </body>
 </html>

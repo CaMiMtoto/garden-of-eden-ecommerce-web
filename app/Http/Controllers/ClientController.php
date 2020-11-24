@@ -139,4 +139,9 @@ class ClientController extends Controller
         echo json_encode($json_data);
     }
 
+    public function productDetails(Product $product)
+    {
+        return view('clients.product_detail',compact('product'));
+    }
+
 }

@@ -73,8 +73,7 @@
                                                         </h4>
                                                         <p class="hidden-xs">
                                                             @if($product->description!=='')
-                                                                {{ substr($product->description,0,150) }}
-                                                                ..
+                                                                {{ str_limit($product->description,150) }}
                                                             @else
                                                                 <span class="label label-default">
                                                                     No description available
@@ -126,6 +125,11 @@
                                                            </span>
                                                         </h4>
                                                     @endif
+                                                    <a href="{{ route('products.details-view',$product->id) }}"
+                                                       class="btn btn-default btn-sm flat text-uppercase">
+                                                        More Detail
+                                                        <i class="fa fa-chevron-right"></i>
+                                                    </a>
                                                 </div>
                                                 <div class="clearfix"></div>
                                             </div>
