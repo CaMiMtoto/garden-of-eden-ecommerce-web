@@ -48,8 +48,7 @@
                                             <div class="row">
                                                 <div class="col-sm-3 container-div">
                                                     <a title="View full size"
-                                                       href="{{ asset("uploads/products/" . $product->image) }}"
-                                                       target="_blank">
+                                                       href="{{ route('products.details-view',$product->id) }}">
                                                         <img data-src="{{ asset("uploads/products/" . $product->image) }}"
                                                              alt="" style="width: 100%"
                                                              class="lozad grow img-responsive">
