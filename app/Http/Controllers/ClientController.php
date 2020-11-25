@@ -142,21 +142,18 @@ class ClientController extends Controller
 
     public function productDetails(Product $product)
     {
-        $onOder = OrderItem::query()->where('product_id', $product->id)->limit(1)->first();
+        $onOder = OrderItem::query()->where('product_id', $product->id)->limit(20)->get();
         $alsoBoughtProducts = collect([]);
         if ($onOder) {
             $alsoBoughtProducts = Product::with('category')
                 ->whereHas('orderItems', function (Builder $builder) use ($onOder, $product) {
-                    $builder->where([
-                        ['product_id', '!=', $product->id],
-                        ['order_id', '=', $onOder->order_id]
-                    ])->whereHas('order',function (Builder $query){
-                    });
-                })->withCount('orderItems')->orderByDesc('order_items_count')->limit(8)->get();
-//            return $alsoBoughtProducts->count();
+                    $builder->whereIn('order_id', $onOder->pluck('order_id'))
+                        ->where('product_id', '!=', $product->id);
+                })->inRandomOrder()/*->withCount('orderItems')->orderByDesc('order_items_count')*/->limit(8)->get();
+//            return $alsoBoughtProducts;
         }
 
-        return view('clients.product_detail', compact('product','alsoBoughtProducts'));
+        return view('clients.product_detail', compact('product', 'alsoBoughtProducts'));
     }
 
 }
