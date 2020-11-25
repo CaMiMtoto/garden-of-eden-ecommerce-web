@@ -48,15 +48,19 @@
     <div>
         @foreach(\App\Event::all() as $event)
             <div class="alert alert-info alert-dismissible flat" role="alert"
-                 style="margin-bottom: 0!important;background-color: #0067B8;color: white!important;border-color: #0067B8!important;padding: 0!important;">
+                 style="margin-bottom: 0!important;background-color: #0067B8;color: white!important;border-color: #0067B8!important;padding:0 20px;">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"
-                        style="color: white!important;">
+                        style="color: white!important;margin-right: 20px;">
                     <span aria-hidden="true" style="color: white!important;">
                         &times;
                     </span>
                 </button>
                 <div class="container" style="font-weight: lighter !important;">
-                    {!! $event->description !!}
+                   <div class="row">
+                       <div class="col-md-12">
+                           {!! $event->description !!}
+                       </div>
+                   </div>
                 </div>
             </div>
         @endforeach
