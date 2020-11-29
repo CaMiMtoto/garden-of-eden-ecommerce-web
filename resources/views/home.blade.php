@@ -27,62 +27,92 @@
             <div class="section">
                 <!-- container -->
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="carousel-image div-hide">
-                                <div>
-                                    <img class="lozad" data-src="{{ asset('carousel/1533157040.jpg') }}"
-                                         alt="First slide"
-                                         style="max-height: 350px;" src="">
-                                </div>
-                                <div>
-                                    <img class="lozad" data-src="{{ asset('carousel/1533153168.jpg') }}"
-                                         alt="First slide"
-                                         style="max-height: 350px;" src="">
-                                </div>
-                                <div>
-                                    <img class="lozad" data-src="{{ asset('carousel/1541062003.jpg') }}"
-                                         alt="First slide"
-                                         style="max-height: 350px;" src="">
-                                </div>
-                                <div>
-                                    <img class="lozad"
-                                         data-src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.59 PM (1).jpeg') }}"
-                                         alt="Second slide" style="max-height: 350px;" src="">
-                                </div>
-                                <div>
-                                    <img class="lozad"
-                                         data-src="{{ asset('carousel/WhatsApp Image 2018-11-19 at 12.16.58 PM (1).jpeg') }}"
-                                         alt="Third slide" style="max-height: 350px;">
+                    @if(count($slides)>0)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="carousel-image div-hide">
+                                    @foreach($slides as $item)
+                                        <div style="height: 350px;overflow-y: hidden;background-image: url({{ $item->image_url }});display: flex;align-items: center;justify-content: center;flex-direction: column;background-size: cover;background-repeat: no-repeat">
+                                            {{-- <img class="lozad"
+                                                  data-src=""
+                                                  alt="First slide"
+                                                  style=";width: 100%" src="">--}}
+                                            @if($item->show_text)
+                                                <h2>{{$item->header}}</h2>
+                                                <div class="">
+                                                    <p>
+                                                        {{$item->description}}
+                                                    </p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="padding-30-not-sm">
-                                <h3 class="text-uppercase text-center header">Garden Of Eden Produce</h3>
-                                <div class="h2 text-left animate">
-                                    <div class="your-class div-hide">
-                                        <div>
-                                            Garden of Eden Produce provides Organic Rwandan fruit and vegetables at
-                                            affordable prices.
-                                        </div>
-                                        <div>
-                                            With more than 26 years of organic farming experience,we specialize in high
-                                            quality,great tasting produce.
-                                        </div>
-                                        <div>
-                                            We serve and deliver to residential homes,business,restaurant and hotels.
-                                        </div>
-                                        <div>
-                                            Check out our online market and start enjoying Organic Rwandan produce
-                                            today.
-                                        </div>
+                    @else
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="carousel-image div-hide">
+                                    <div>
+                                        <img class="lozad"
+                                             data-src="https://www.gardenofedenrwanda.com/carousel/1533157040.jpg"
+                                             alt="First slide"
+                                             style="max-height: 350px;" src="">
+                                    </div>
+                                    <div>
+                                        <img class="lozad"
+                                             data-src="https://www.gardenofedenrwanda.com/carousel/1533153168.jpg"
+                                             alt="First slide"
+                                             style="max-height: 350px;" src="">
+                                    </div>
+                                    <div>
+                                        <img class="lozad"
+                                             data-src="https://www.gardenofedenrwanda.com/carousel/1541062003.jpg"
+                                             alt="First slide"
+                                             style="max-height: 350px;" src="">
+                                    </div>
+                                    <div>
+                                        <img class="lozad"
+                                             data-src="https://www.gardenofedenrwanda.com/carousel/WhatsApp Image 2018-11-19 at 12.16.59 PM (1).jpeg"
+                                             alt="Second slide" style="max-height: 350px;" src="">
+                                    </div>
+                                    <div>
+                                        <img class="lozad"
+                                             data-src="https://www.gardenofedenrwanda.com/carousel/WhatsApp Image 2018-11-19 at 12.16.58 PM (1).jpeg"
+                                             alt="Third slide" style="max-height: 350px;">
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="padding-30-not-sm">
+                                    <h3 class="text-uppercase text-center header">Garden Of Eden Produce</h3>
+                                    <div class="h2 text-left animate">
+                                        <div class="your-class div-hide">
+                                            <div>
+                                                Garden of Eden Produce provides Organic Rwandan fruit and vegetables at
+                                                affordable prices.
+                                            </div>
+                                            <div>
+                                                With more than 26 years of organic farming experience,we specialize in
+                                                high
+                                                quality,great tasting produce.
+                                            </div>
+                                            <div>
+                                                We serve and deliver to residential homes,business,restaurant and
+                                                hotels.
+                                            </div>
+                                            <div>
+                                                Check out our online market and start enjoying Organic Rwandan produce
+                                                today.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
                 <!-- /container -->
             </div>
@@ -198,7 +228,7 @@
                                             <div class="product-body">
                                                 <p class="product-category">{{ $product->category->name }}</p>
                                                 <h6>
-                                                    <a href="#">{{ $product->name }}</a>
+                                                    <a href="{{ route('products.details-view',$product->id) }}">{{ $product->name }}</a>
                                                 </h6>
                                                 <h6>
                                                     <span class="pull-left">

@@ -21,7 +21,7 @@ $about = $defaultSetting->about;
                         <i class="fa fa-check-circle-o"></i>
                         Thank you for subscribing with us!
                     </div>
-                    <form>
+                    <form action="" method="post">
                         <label for="email" class="sr-only"></label>
                         <input class="input" id="email" type="email" placeholder="Enter Your Email">
                         <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>

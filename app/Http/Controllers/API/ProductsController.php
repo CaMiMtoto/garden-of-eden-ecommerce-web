@@ -15,6 +15,7 @@ class ProductsController extends Controller
     {
         $products = Product::with('category')
             ->where('category_id', $category->id)
+            ->latest()
             ->paginate(\request('page_size') ?? 20);
         return response($products);
     }
@@ -22,6 +23,7 @@ class ProductsController extends Controller
     public function allProducts(Request $request)
     {
         $products = Product::with('category')
+            ->latest()
             ->paginate(\request('page_size') ?? 20);
         return response($products);
     }
@@ -31,14 +33,14 @@ class ProductsController extends Controller
     {
         if (empty($request->input('q'))) {
             $products = Product::with('category')
-                ->orderBy("id", "desc")
+                ->latest()
                 ->paginate(\request('page_size') ?? 20);
         } else {
             $search = $request->input('q');
             $products = Product::with('category')
                 ->where('name', 'LIKE', "%{$search}%")
                 ->orWhere('price', 'LIKE', "%{$search}%")
-                ->orderBy("id", "desc")
+                ->latest()
                 ->paginate(20);
             $products->appends(['q' => $search]);
         }
