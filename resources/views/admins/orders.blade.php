@@ -124,6 +124,8 @@
                                 return "<a class='label label-warning'><i class='fa fa-shopping-cart'></i> " + data + "</a>";
                             } else if (data === "Processing") {
                                 return "<a class='label label-info'><i class='fa fa-spinner'></i> " + data + "</a>";
+                            } else if (data === "Cancelled") {
+                                return "<a class='label label-danger'><i class='fa fa-close'></i> " + data + "</a>";
                             }
                             return "<a class='label label-success'><i class='fa fa-check-circle-o'></i> " + data + "</a>";
                         }

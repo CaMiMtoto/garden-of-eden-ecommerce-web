@@ -149,8 +149,11 @@ class ClientController extends Controller
                 ->whereHas('orderItems', function (Builder $builder) use ($onOder, $product) {
                     $builder->whereIn('order_id', $onOder->pluck('order_id'))
                         ->where('product_id', '!=', $product->id);
-                })->inRandomOrder()/*->withCount('orderItems')->orderByDesc('order_items_count')*/->limit(8)->get();
-//            return $alsoBoughtProducts;
+                })->inRandomOrder()->limit(8)->get();
+        }
+        if ($alsoBoughtProducts->isEmpty()) {
+            $alsoBoughtProducts = Product::with('category')->where('category_id', $product->category_id)->inRandomOrder()
+                ->limit(8)->get();
         }
 
         return view('clients.product_detail', compact('product', 'alsoBoughtProducts'));

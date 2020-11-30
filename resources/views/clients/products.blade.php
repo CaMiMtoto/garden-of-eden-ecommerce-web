@@ -119,8 +119,8 @@
                                                     </div>
                                                     @if($product->discount>0)
                                                         <h4>
-                                                           <span class="label label-danger">
-                                                                {{ - $product->getDiscountPercent()}} Rwf ,OFF
+                                                           <span class="badge badge-primary">
+                                                                {{  $product->getDiscountPercent()}} Rwf ,OFF
                                                            </span>
                                                         </h4>
                                                     @endif

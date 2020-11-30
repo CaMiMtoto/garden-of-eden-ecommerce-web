@@ -10,7 +10,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 
 Route::get('/getProduct', 'ClientController@getProductPage')->name('getProduct');
-Route::get('/products/{product}/details-view','ClientController@productDetails')->name('products.details-view');
+Route::get('/products/{product}/details-view', 'ClientController@productDetails')->name('products.details-view');
 
 Route::get('/login', 'UsersController@login')->name('login');
 Route::post('/admin/login', 'UsersController@postLogin')->name('post.login');
@@ -102,6 +102,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         ->name('admin.settings');
     Route::post('/settings', 'HomeController@saveSettings')
         ->name('admin.settings.save');
+
+
+    Route::get('/home-slides', 'HomeSlideController@index')->name('slides.index');
+    Route::post('/home-slides/store', 'HomeSlideController@store')->name('slides.store');
+    Route::get('/home-slides/{slide}/show', 'HomeSlideController@show')->name('slides.show');
+    Route::get('/home-slides/{slide}/delete', 'HomeSlideController@destroy')->name('slides.destroy');
 
 });
 

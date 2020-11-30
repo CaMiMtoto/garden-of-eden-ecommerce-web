@@ -92,6 +92,10 @@
 @yield('scripts')
 <script>
     $(function () {
+
+
+        $('')
+
         $('[data-toggle="tooltip"]').tooltip();
 
         const observer = lozad(); // lazy loads elements with default selector as '.lozad'

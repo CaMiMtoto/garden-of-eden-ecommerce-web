@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\HomeSlide;
 use App\MyFunc;
 use App\Setting;
 use Illuminate\Http\Request;
@@ -12,7 +13,9 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('home', ['categories' => Category::query()->withCount('products')->get()]);
+        $slides = HomeSlide::query()->where('is_active', '=', true)->get();
+        $categories = Category::query()->withCount('products')->get();
+        return view('home', compact('categories', 'slides'));
     }
 
     public function dashboard()

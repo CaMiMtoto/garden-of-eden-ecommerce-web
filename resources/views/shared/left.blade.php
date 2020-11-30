@@ -5,8 +5,9 @@
     </button>
     <div class="sidebar-scroll">
         <div class="user-account">
-    {{--        <img src="{{ asset('img/user.png') }}"  alt="User Profile Picture">--}}
-            <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive  user-photo" alt="Garden Of Eden Produce" style="width: 100px;height: 100px">
+            {{--        <img src="{{ asset('img/user.png') }}"  alt="User Profile Picture">--}}
+            <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive  user-photo"
+                 alt="Garden Of Eden Produce" style="width: 100px;height: 100px">
             <div class="dropdown">
                 <a href="#" class="dropdown-toggle user-name" data-toggle="dropdown">
                     Hello, <strong>{{ \Illuminate\Support\Facades\Auth::user()->name  }}
@@ -49,9 +50,12 @@
                     </a>
                 </li>
                 <li class="nav-settings">
-                    <a href="{{ route('admin.settings') }}">
-                        <i class="fa fa-cogs"></i> <span>Settings</span>
-                    </a>
+                    <a href="#uiElements" class="has-arrow" aria-expanded="false"><i class="lnr lnr-magic-wand"></i>
+                        <span>Settings</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li class=""><a href="{{ route('admin.settings') }}">System settings</a></li>
+                        <li class=""><a href="{{ route('slides.index') }}">Home slides</a></li>
+                    </ul>
                 </li>
             </ul>
         </nav>
