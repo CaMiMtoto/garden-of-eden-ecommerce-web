@@ -16,7 +16,8 @@ class ProductsController extends Controller
 
     public function index()
     {
-        return view('admins.products', ['categories' => Category::all()]);
+        $categories = Category::all();
+        return view('admins.products', compact('categories'));
     }
 
     public function all(Request $request)
@@ -32,7 +33,7 @@ class ProductsController extends Controller
             7 => 'status'
         );
 
-        $totalData = Product::count();
+        $totalData = Product::query()->withoutGlobalScope('active')->count();
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
@@ -42,6 +43,8 @@ class ProductsController extends Controller
 
         if (empty($request->input('search.value'))) {
             $products = Product::with('category')
+                ->withoutGlobalScope('active')
+                
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -49,6 +52,8 @@ class ProductsController extends Controller
         } else {
             $search = $request->input('search.value');
             $products = Product::with('category')
+                ->withoutGlobalScope('active')
+                
                 ->where('price', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->orWhere('description', 'LIKE', "%{$search}%")
@@ -57,15 +62,17 @@ class ProductsController extends Controller
                 ->orderBy($order, $dir)
                 ->get();
 
-            $totalFiltered = Product::with('category')
+            $totalFiltered = Product::with('category')->withoutGlobalScope('active')
+                
                 ->where('price', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->count();
         }
-
+//return $products;
         $data = array();
         if (!empty($products)) {
             foreach ($products as $product) {
+                if (is_null($product->category)) continue;
                 $nestedData['id'] = $product->id;
                 $nestedData['name'] = $product->name;
                 $nestedData['measure'] = $product->measure;
@@ -106,7 +113,7 @@ class ProductsController extends Controller
             'status' => 'required'
         ]);
 
-        $category = Category::find($request->input('category'));
+        $category = Category::query()->withoutGlobalScopes()->find($request->input('category'));
         if (!$category) return response()->json(["message" => "Not found"], 404);
 
         $product = new Product();
@@ -131,7 +138,7 @@ class ProductsController extends Controller
     public function show($id)
     {
         //
-        $obj = Product::with('category')->find($id);
+        $obj = Product::with('category')->withoutGlobalScope('active')->find($id);
         if (!$obj) {
             return \response()->json(["message" => "Not found"], 404);
         }
@@ -152,10 +159,8 @@ class ProductsController extends Controller
             'status' => 'required'
         ]);
 
-        $category = Category::find($request->input('category'));
-        if (!$category) return \response()->json(["message" => "Category Not found"], 404);
 
-        $obj = Product::find($request->input('id'));
+        $obj = Product::query()->withoutGlobalScopes()->find($request->input('id'));
         if (!$obj) return \response()->json(["message" => "Product Not found"], 404);
 
         $obj->name = $request['name'];
@@ -177,14 +182,14 @@ class ProductsController extends Controller
                 File::delete($path);
             }
         }
-        $obj->category_id = $category->id;
+        $obj->category_id = $request->input('category');
         $obj->update();
         return response()->json($obj, 204);
     }
 
     public function destroy($id)
     {
-        $obj = Product::find($id);
+        $obj = Product::query()->withoutGlobalScopes()->find($id);
         if (!$obj) {
             return \response()->json(["message" => "Not found"], 404);
         }
@@ -192,7 +197,7 @@ class ProductsController extends Controller
 
         $obj->delete();
 
-        $obj = Product::find($id);
+        $obj = Product::query()->withoutGlobalScopes()->find($id);
         if (!$obj) {
             if (File::exists($path)) {
                 File::delete($path);

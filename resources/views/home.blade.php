@@ -194,7 +194,7 @@
                 $i = 0;
                 ?>
                 @foreach($categories as $category)
-                    @if($category->products_count>=4)
+                    @if($category->products->count()>=4)
                         <?php $i++; ?>
                         <div class="col-md-4 col-xs-6">
                             <div class="section-title">
@@ -226,7 +226,7 @@
                                                 <img class="lozad" data-src="{{ asset($path) }}" alt="" src="">
                                             </div>
                                             <div class="product-body">
-                                                <p class="product-category">{{ $product->category->name }}</p>
+                                                {{--                                                <p class="product-category">{{ $product->category->name }}</p>--}}
                                                 <h6>
                                                     <a href="{{ route('products.details-view',$product->id) }}">{{ $product->name }}</a>
                                                 </h6>
