@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -22,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Product extends Model
 {
-    protected $appends=['image_url'];
+    protected $appends = ['image_url'];
 
     public function category()
     {
@@ -47,14 +48,32 @@ class Product extends Model
     {
         return ($this->price * $this->discount) / 100;
     }
-    public function getDescriptionAttribute($value){
+
+    public function getDescriptionAttribute($value)
+    {
         return trim($value);
     }
-    public function getImageUrlAttribute($value){
+
+    public function getImageUrlAttribute($value)
+    {
         $path = 'uploads/products/' . $this->image;
         if (!file_exists($path)) {
             $path = 'img/no_image.png';
         }
         return asset("$path");
     }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope('active', function (Builder $builder) {
+            $builder->whereNotIn('status', ['Not Active']);
+        });
+        static::addGlobalScope('category', function (Builder $builder) {
+            $builder->whereHas('category');
+        });
+    }
+
+
 }

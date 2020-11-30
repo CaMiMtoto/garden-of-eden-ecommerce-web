@@ -14,7 +14,7 @@ class CategoryController extends Controller
 
     public function newCategories()
     {
-        $categories = Category::all();
+        $categories = Category::query()->withoutGlobalScope('active')->get();
         return view('admins.new_categories', compact('categories'));
     }
 
@@ -23,10 +23,11 @@ class CategoryController extends Controller
         $columns = array(
             0 => 'id',
             1 => 'name',
-            2 => 'created_at'
+            2 => 'status',
+            3 => 'created_at'
         );
 
-        $totalData = Category::count();
+        $totalData = Category::query()->withoutGlobalScope('active')->count();
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
@@ -35,21 +36,21 @@ class CategoryController extends Controller
         $dir = $request->input('order.0.dir');
 
         if (empty($request->input('search.value'))) {
-            $categories = Category::offset($start)
+            $categories = Category::query()->withoutGlobalScope('active')->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
         } else {
             $search = $request->input('search.value');
 
-            $categories = Category::where('created_at', 'LIKE', "%{$search}%")
+            $categories = Category::query()->withoutGlobalScope('active')->where('created_at', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
 
-            $totalFiltered = Category::where('id', 'LIKE', "%{$search}%")
+            $totalFiltered = Category::query()->withoutGlobalScope('active')->where('id', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->count();
         }
@@ -59,6 +60,7 @@ class CategoryController extends Controller
             foreach ($categories as $category) {
                 $nestedData['id'] = $category->id;
                 $nestedData['name'] = $category->name;
+                $nestedData['status'] = $category->status;
                 /* $nestedData['body'] = substr(strip_tags($category->body),0,50)."...";*/
                 $nestedData['created_at'] = date('j M Y h:i a', strtotime($category->created_at));
                 $data[] = $nestedData;
@@ -79,13 +81,14 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $category->name = $request->input('name');
+        $category->status = $request->input('status');
         $category->save();
         return \response()->json(["message" => "Data saved"], 201);
     }
 
     public function show($id)
     {
-        $category = Category::find($id);
+        $category = Category::query()->withoutGlobalScopes()->find($id);
         if (!$category) {
             return \response()->json(["message" => "Not found"], 404);
         }
@@ -94,11 +97,12 @@ class CategoryController extends Controller
 
     public function update(Request $request)
     {
-        $category = Category::find($request->input('id'));
+        $category = Category::query()->withoutGlobalScopes()->find($request->input('id'));
         if (!$category) {
             return \response()->json(["message" => "Not found"], 404);
         }
         $category->name = $request->input('name');
+        $category->status = $request->input('status');
         $category->update();
         return \response()->json(["message" => "Data updated"], 204);
     }
@@ -108,9 +112,10 @@ class CategoryController extends Controller
         if ($request->id == 0) {
             $category = new Category();
         } else {
-            $category = Category::find($request->input('id'));
+            $category = Category::query()->withoutGlobalScopes()->find($request->input('id'));
         }
         $category->name = $request->input('name');
+        $category->status = $request->input('status');
         $category->save();
         return \response()->json(["message" => "Data updated"], 204);
     }
@@ -118,7 +123,7 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $category = Category::query()->withoutGlobalScopes()->find($id);
         if (!$category) {
             return \response()->json(["message" => "Not found"], 404);
         }

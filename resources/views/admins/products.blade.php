@@ -97,7 +97,8 @@
                             <label for="addcatgory" class="col-sm-4 control-label">Price</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="addprice" placeholder="Price" name="price" autocomplete="off" required>
+                                <input type="text" class="form-control" id="addprice" placeholder="Price" name="price"
+                                       autocomplete="off" required>
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
@@ -130,7 +131,7 @@
                             <label for="addminStock" class="col-sm-4 control-label">Min stock</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <input type="number" min="1" max="100" class="form-control" id="addquantity"
+                                <input type="number" min="1" max="100" class="form-control" id="addminStock"
                                        placeholder="Minimum stock alert" name="minStock" autocomplete="off" required>
                             </div>
                         </div> <!-- /form-group-->
@@ -138,7 +139,7 @@
                             <label for="addescription" class="col-sm-4 control-label">Description</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <textarea  name="description" placeholder="Description" id="addescription"
+                                <textarea name="description" placeholder="Description" id="addescription"
                                           class="form-control"></textarea>
                             </div>
                         </div> <!-- /form-group-->
@@ -150,6 +151,7 @@
                                     <option value="">--select--</option>
                                     <option value="Available">Available</option>
                                     <option value="Not Available">Not Available</option>
+                                    <option value="Not Active">Not Active</option>
                                 </select>
                             </div>
                         </div> <!-- /form-group-->
@@ -255,7 +257,8 @@
                                             <input type="text" class="form-control" id="editPrice" placeholder="Price"
                                                    name="price" autocomplete="off" required>
                                         </div>
-                                    </div> <!-- /form-group-->  <div class="form-group">
+                                    </div> <!-- /form-group-->
+                                    <div class="form-group">
                                         <label for="editDiscount" class="col-sm-4 control-label">Discount</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7">
@@ -295,10 +298,11 @@
                                         <label for="editDescription" class="col-sm-4 control-label">Description</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7">
-                                            <textarea  name="description" placeholder="Description"
+                                            <textarea name="description" placeholder="Description"
                                                       id="editDescription" class="form-control"></textarea>
                                         </div>
-                                    </div> <!-- /form-group-->           <div class="form-group">
+                                    </div> <!-- /form-group-->
+                                    <div class="form-group">
                                         <label for="editStatus" class="col-sm-4 control-label">Status</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7">
@@ -306,6 +310,7 @@
                                                 <option value="">--select--</option>
                                                 <option value="Available">Available</option>
                                                 <option value="Not Available">Not Available</option>
+                                                <option value="Not Active">Not Active</option>
                                             </select>
                                         </div>
                                     </div> <!-- /form-group-->
@@ -361,13 +366,16 @@
                     {data: 'price', 'sortable': false},
                     {data: 'qty', 'sortable': false},
                     {data: 'minStock', 'sortable': false},
-                    {data: 'status', 'sortable': false,
-                    render:function (data,type,row) {
-                        if(data==='Available'){
-                            return '<span class="label label-success">'+data+'</span>';
+                    {
+                        data: 'status', 'sortable': false,
+                        render: function (data, type, row) {
+                            if (data === 'Available') {
+                                return '<span class="label label-success">' + data + '</span>';
+                            } else if (data === 'Not Active') {
+                                return '<span class="label label-danger">' + data + '</span>';
+                            }
+                            return '<span class="label label-warning">' + data + '</span>';
                         }
-                        return '<span class="label label-danger">'+data+'</span>';
-                    }
                     },
                     {
                         data: 'id',

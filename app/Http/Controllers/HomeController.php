@@ -6,6 +6,7 @@ use App\Category;
 use App\HomeSlide;
 use App\MyFunc;
 use App\Setting;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,7 +15,7 @@ class HomeController extends Controller
     public function index()
     {
         $slides = HomeSlide::query()->where('is_active', '=', true)->get();
-        $categories = Category::query()->withCount('products')->get();
+        $categories = Category::query()->whereHas('products')->get();
         return view('home', compact('categories', 'slides'));
     }
 

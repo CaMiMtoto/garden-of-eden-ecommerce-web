@@ -98,14 +98,14 @@ a:hover, a:focus {
 .btn-cart {
     color: white;
     background-color: #D10024;
-    border: 2px solid #D10024;
+    border: 1px solid #D10024;
     text-transform: uppercase;
 }
 
 .btn-cart:hover {
     color: #D10024;
     background-color: #FFFFFF;
-    border: 2px solid #D10024;
+    border: 1px solid #D10024;
 }
 
 .btn-green {

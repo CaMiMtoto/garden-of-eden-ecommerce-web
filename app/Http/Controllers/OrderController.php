@@ -83,7 +83,7 @@ class OrderController extends Controller
     public function show($id)
     {
         //
-        $obj = Order::with("orderItems")->find($id);
+        $obj = Order::with("orderItems.product")->find($id);
         if (!$obj) {
             return \response()->json(["message" => "Not found"], 404);
         }
@@ -93,7 +93,7 @@ class OrderController extends Controller
     public function printOrder($id)
     {
         //
-        $obj = Order::with("orderItems")->find($id);
+        $obj = Order::with("orderItems.product")->find($id);
         if (!$obj) {
             return \response()->json(["message" => "Not found"], 404);
         }

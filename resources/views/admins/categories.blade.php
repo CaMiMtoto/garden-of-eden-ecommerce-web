@@ -12,7 +12,8 @@
                     <h4 class="panel-title">
                         <i class="fa fa-square"></i> Categories
 
-                        <button  data-toggle="modal" data-target="#addModal" type="button" class="btn btn-default pull-right btn-sm flat">
+                        <button data-toggle="modal" data-target="#addModal" type="button"
+                                class="btn btn-default pull-right btn-sm flat">
                             <i class="fa fa-plus icon-collapsed"></i>
                             Add New
                         </button>
@@ -21,10 +22,12 @@
                     <hr>
                 </div>
                 <div class="panel-body panel-content">
-                    <table class="table table-condensed table-bordered table-striped table-responsive table-hover" id="manageTable">
+                    <table class="table table-condensed table-striped table-responsive table-hover"
+                           id="manageTable">
                         <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Status</th>
                             <th>Created At</th>
                             <th>Options</th>
                         </tr>
@@ -42,27 +45,45 @@
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form novalidate class="form-horizontal" id="submitForm" action="{{ route('category.store') }}" method="POST">
+                <form novalidate class="form-horizontal" id="submitForm" action="{{ route('category.store') }}"
+                      method="POST">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-plus"></i> Add Category</h4>
                     </div>
                     <div class="modal-body">
 
                         <div id="add-messages"></div>
-                        <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
+                        @csrf
                         <div class="form-group">
                             <label for="categoriesName" class="col-sm-4 control-label">Category Name</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <input type="text"  required class="form-control" id="categoriesName" placeholder="Category Name" name="name" autocomplete="off">
+                                <input type="text" required class="form-control" id="categoriesName"
+                                       placeholder="Category Name" name="name" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoriesStatus" class="col-sm-4 control-label">Status</label>
+                            <label class="col-sm-1 control-label">: </label>
+                            <div class="col-sm-7">
+                                <select required class="form-control" id="categoriesStatus" name="status">
+                                    <option value=""></option>
+                                    <option selected value="Active">Active</option>
+                                    <option value="Not Active">Not Active</option>
+                                </select>
                             </div>
                         </div> <!-- /form-group-->
                     </div> <!-- /modal-body -->
                     <div class="modal-footer">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
-                            <button type="submit" class="btn btn-primary" id="createBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
+                            <button type="submit" class="btn btn-primary" id="createBtn" data-loading-text="Loading...">
+                                <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                                        class="glyphicon glyphicon-remove-sign"></i> Close
+                            </button>
                         </div>
                     </div> <!-- /modal-footer -->
                 </form> <!-- /.form -->
@@ -77,13 +98,15 @@
             <div class="modal-content">
                 <form novalidate class="form-horizontal" id="editForm" action="{{ route('category.update') }}">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-pencil"></i> Edit category</h4>
                     </div>
                     <div class="modal-body">
                         <div id="edit-messages"></div>
 
-                        <div class="modal-loading div-hide" style="width:50px; margin:auto;padding-top:50px; padding-bottom:50px;">
+                        <div class="modal-loading div-hide"
+                             style="width:50px; margin:auto;padding-top:50px; padding-bottom:50px;">
                             <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -94,9 +117,21 @@
                                 <label for="editCategoriesName" class="col-sm-4 control-label">Category Name</label>
                                 <label class="col-sm-1 control-label">: </label>
                                 <div class="col-sm-7">
-                                    <input required type="text" class="form-control" id="editCategoriesName" placeholder="Categories Name" name="name" autocomplete="off">
+                                    <input required type="text" class="form-control" id="editCategoriesName"
+                                           placeholder="Categories Name" name="name" autocomplete="off">
                                 </div>
-                            </div> <!-- /form-group-->
+                            </div>
+                            <div class="form-group">
+                                <label for="editStatus" class="col-sm-4 control-label">Status</label>
+                                <label class="col-sm-1 control-label">: </label>
+                                <div class="col-sm-7">
+                                    <select required class="form-control" id="editStatus" name="status">
+                                        <option value=""></option>
+                                        <option value="Active">Active</option>
+                                        <option value="Not Active">Not Active</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <!-- /edit brand result -->
 
@@ -104,9 +139,13 @@
 
                     <div class="modal-footer editFooter">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
+                            <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading..."><i
+                                        class="glyphicon glyphicon-ok-sign"></i> Save Changes
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                                        class="glyphicon glyphicon-remove-sign"></i> Close
+                            </button>
 
-                            <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
                         </div>
                     </div>
                     <!-- /modal-footer -->
@@ -140,6 +179,14 @@
                 },
                 columns: [
                     {data: 'name', 'sortable': true},
+                    {
+                        data: 'status', 'sortable': true, render(data, type,row) {
+                            if(data==='Active'){
+                                return "<span class='label label-success'>"+data+"</span>"
+                            }
+                            return "<span class='label label-danger'>"+data+"</span>"
+                        }
+                    },
                     {data: 'created_at', 'sortable': true},
                     {
                         data: 'id',
@@ -195,6 +242,7 @@
                     footer.removeClass('div-hide');
                     // set the categories name
                     $("#editCategoriesName").val(response.name);
+                    $("#editStatus").val(response.status);
                     // add the categories id
                     footer.after('<input type="hidden" name="id" id="id" value="' + response.id + '" />');
                 }).fail(function (error) {

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,5 +20,13 @@ class OrderItem extends Model
     }
     public function product(){
         return $this->belongsTo('App\Product');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope('product', function (Builder $builder) {
+            $builder->whereHas('product');
+        });
     }
 }
