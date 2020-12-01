@@ -12,21 +12,24 @@ $about = $defaultSetting->about;
     <div class="row">
         <div class="col-md-12">
             <div class="newsletter" style="margin-top: 50px;">
-                @if(app()->environment()=='local')
-                    <p>Subscribe to our <strong>NEWSLETTER</strong></p>
+                <p>Subscribe to our <strong>NEWSLETTER</strong></p>
+                @if(session()->has('success'))
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <i class="fa fa-check-circle-o"></i>
-                        Thank you for subscribing with us!
+                        {{  session()->get('success') }}
                     </div>
-                    <form action="" method="post">
-                        <label for="email" class="sr-only"></label>
-                        <input class="input" id="email" type="email" placeholder="Enter Your Email">
-                        <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
-                    </form>
                 @endif
+                <form action="{{ route('newsletters.subscribe') }}" method="post">
+                    @csrf
+                    <label for="email" class="sr-only"></label>
+                    <input class="input" name="email" id="email" type="email" placeholder="Enter Your Email">
+                    <button class="newsletter-btn" type="submit"><i class="fa fa-envelope"></i> Subscribe
+                    </button>
+                </form>
+
 
                 <h3>Get in touch with us</h3>
 

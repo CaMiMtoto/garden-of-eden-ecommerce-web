@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::post('/newsletters/subscribe', 'NewsletterController@subscribe')->name('newsletters.subscribe');
+Route::get('/newsletters/{email}/unsubscribe', 'NewsletterController@unsubscribe')->name('newsletters.unsubscribe');
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 

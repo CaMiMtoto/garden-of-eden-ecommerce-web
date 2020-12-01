@@ -2,20 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\EmailSubscription;
+use App\Mail\Subscribed;
 use App\Newsletter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class NewsletterController extends Controller
 {
     public function subscribe(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|unique:newsletters'
+            'email' => 'required'
         ]);
 
-        return Newsletter::query()->create([
+        $model = Newsletter::query()->updateOrCreate([
             'email' => $request->input('email')
         ]);
+
+        // send email for thanking them.
+        $text = 'Thank you for subscribing with us, we will notify you for Any product we publish on our site';
+        $email = \request('email');
+        EmailSubscription::dispatch($email, $text);
+
+        session()->put('success', 'Thank you for subscribing with us!');
+        if ($request->wantsJson())
+            return $model;
+        return redirect()->back();
     }
 
     public function unsubscribe($email)
