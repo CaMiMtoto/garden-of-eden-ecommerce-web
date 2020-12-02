@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Mail;
 
 class NewsletterController extends Controller
 {
+
+    public function index()
+    {
+        $newsletters = Newsletter::all();
+        return view('admins.newsletters', compact('newsletters'));
+    }
+
     public function subscribe(Request $request)
     {
         $this->validate($request, [

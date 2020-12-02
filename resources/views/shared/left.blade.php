@@ -49,6 +49,11 @@
                         <i class="fa fa-clock-o"></i> <span>Event</span>
                     </a>
                 </li>
+                <li class="nav-newsletters">
+                    <a href="{{ route('newsletters.index') }}">
+                        <i class="fa fa-envelope"></i> <span>Newsletters</span>
+                    </a>
+                </li>
                 <li class="nav-settings">
                     <a href="#uiElements" class="has-arrow" aria-expanded="false"><i class="lnr lnr-magic-wand"></i>
                         <span>Settings</span></a>

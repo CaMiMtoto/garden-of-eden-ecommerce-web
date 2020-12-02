@@ -9,6 +9,7 @@ Auth::routes();
 Route::post('/newsletters/subscribe', 'NewsletterController@subscribe')->name('newsletters.subscribe');
 Route::get('/newsletters/{email}/unsubscribe', 'NewsletterController@unsubscribe')->name('newsletters.unsubscribe');
 
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 
@@ -111,6 +112,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::post('/home-slides/store', 'HomeSlideController@store')->name('slides.store');
     Route::get('/home-slides/{slide}/show', 'HomeSlideController@show')->name('slides.show');
     Route::get('/home-slides/{slide}/delete', 'HomeSlideController@destroy')->name('slides.destroy');
+
+    Route::get('/newsletters', 'NewsletterController@index')->name('newsletters.index');
 
 });
 
