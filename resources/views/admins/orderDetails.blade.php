@@ -144,7 +144,7 @@
         <span> {{ $order->notes }}</span>
     </p>
 </div>
-@if(\Illuminate\Support\Facades\Auth::user()->role==='Admin')
+@if(auth()->user()->role=='Admin' || auth()->user()->role=='Super admin')
 
     {{ csrf_field() }}
     <input type="hidden" value="{{ $order->id }}" name="id">
