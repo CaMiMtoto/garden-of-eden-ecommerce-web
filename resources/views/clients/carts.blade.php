@@ -1,7 +1,3 @@
-<?php
-use \Gloudemans\Shoppingcart\Facades\cart;
-?>
-
 @extends('layouts.app')
 
 @section('title')
@@ -72,11 +68,11 @@ use \Gloudemans\Shoppingcart\Facades\cart;
                                             </td>
                                             <td>
                                                 <form class="form-inline"
-                                                      action="{{ route('cart.increment',['id'=>$cartItem->rowId]) }}">
+                                                      action="{{ route('cart.increment',['id'=>$cartItem->id]) }}">
                                                     <div class="form-group form-group-sm">
                                                         <label>
                                                             <input name="qty" placeholder="Quantity" style="width: 80px"
-                                                                   value="<?php print (float)$cartItem->qty; ?>"
+                                                                   value="<?php print (float)$cartItem->quantity; ?>"
                                                                    type="text" min="0.5" class="form-control flat">
                                                         </label>
 
@@ -91,7 +87,7 @@ use \Gloudemans\Shoppingcart\Facades\cart;
                                             <td>{{ $product->measure }}</td>
                                             <td>
                                                 <p>
-                                                    {{ number_format($cartItem->subtotal) }}
+                                                    {{ number_format($cartItem->quantity*$cartItem->price) }}
                                                     <small>Rwf</small>
                                                 </p>
                                             </td>
@@ -100,7 +96,7 @@ use \Gloudemans\Shoppingcart\Facades\cart;
                                                 <a class="cart-remove-btn"
                                                    title="Click here to remove Item."
                                                    data-toggle="tooltip" data-placement="left"
-                                                   href="{{ route('cart.removeItem',['id'=>$cartItem->rowId]) }}">
+                                                   href="{{ route('cart.removeItem',['id'=>$cartItem->id]) }}">
                                                     <i class="fa fa-times"></i>
                                                 </a>
                                             </td>

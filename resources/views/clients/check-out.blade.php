@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 @extends('layouts.app')
 
 @section('title')
@@ -40,10 +36,7 @@
                                 <tbody>
                                 <?php $total = 0; ?>
                                 @foreach($cart as $cartItem)
-                                    <?php
-                                    $product = \App\Product::find($cartItem->id);
-                                    $total += $cartItem->subtotal;
-                                    ?>
+
                                     <tr>
                                         <td>
                                             <h5>{{ $cartItem->name }}</h5>
@@ -56,24 +49,25 @@
                                         </td>
                                         <td>
                                             <p>
-                                                <?php print (float)$cartItem->qty; ?>
+                                                {{ $cartItem->quantity }}
                                             </p>
                                         </td>
                                         <td>
                                             <p>
-                                                {{ number_format($cartItem->subtotal) }}
-                                                <small>Rwf / {{ $product->measure }} </small>
+                                                {{ number_format($cartItem->getPriceSum()) }}
+                                                <small>Rwf / {{ $cartItem->associatedModel->measure }} </small>
                                             </p>
                                         </td>
                                     </tr>
                                 @endforeach
+                                </tbody>
                                 <tfoot>
                                 <tr>
                                     <th colspan="3">
                                         Sub Total
                                     </th>
                                     <th>
-                                        : {{ Cart::subTotal() }} Rwf
+                                        : {{ Cart::getSubTotal() }} Rwf
                                     </th>
                                 </tr>
                                 <tr>
@@ -89,11 +83,11 @@
                                         Total
                                     </th>
                                     <th>
-                                        : {{ number_format($total+1000) }} Rwf
+                                        : {{ number_format(Cart::getSubTotal()+1000) }} Rwf
                                     </th>
                                 </tr>
                                 </tfoot>
-                                </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -124,24 +118,24 @@
                                 <h4>
                                     Total amount to pay
                                     <span class="label label-primary pull-right">
-                                        {{ number_format($total+1000) }} Rwf
+                                        {{ number_format(Cart::getSubTotal()+1000) }} Rwf
                                     </span>
                                 </h4>
                                 <form action="{{ route('cart.checkOut') }}"
                                       class="form-horizontal" method="post">
-                                    {{ csrf_field() }}
+                                    @csrf
 
                                     <div class="form-group  {{ $errors->has('clientName')?'has-error':''}} ">
                                         <label for="clientName" class="control-label">Name</label>
-                                            <input type="text" placeholder="Full name"
-                                                   value="{{Request::old('clientName')}}"
-                                                   class="form-control flat" name="clientName"
-                                                   id="clientName" maxlength="120">
-                                            @if ($errors->has('clientName'))
-                                                <span class="help-block">
+                                        <input type="text" placeholder="Full name"
+                                               value="{{Request::old('clientName')}}"
+                                               class="form-control flat" name="clientName"
+                                               id="clientName" maxlength="120">
+                                        @if ($errors->has('clientName'))
+                                            <span class="help-block">
                                                     <strong>{{ $errors->first('clientName') }}</strong>
                                                 </span>
-                                            @endif
+                                        @endif
                                     </div>
                                     <div class="form-group  {{ $errors->has('email')?'has-error':''}} ">
                                         <label for="email" class="control-label">Email</label>
@@ -160,39 +154,40 @@
 
                                     <div class="form-group  {{ $errors->has('shipping_address')?'has-error':''}} ">
                                         <label for="shipping_address" class="control-label">Address</label>
-                                            <input type="text" placeholder="Shipping address"
-                                                   value="{{Request::old('shipping_address')}}"
-                                                   class="form-control flat" name="shipping_address"
-                                                   id="shipping_address" maxlength="120">
-                                            @if ($errors->has('shipping_address'))
-                                                <span class="help-block">
+                                        <input type="text" placeholder="Shipping address"
+                                               value="{{Request::old('shipping_address')}}"
+                                               class="form-control flat" name="shipping_address"
+                                               id="shipping_address" maxlength="120">
+                                        @if ($errors->has('shipping_address'))
+                                            <span class="help-block">
                                                     <strong>{{ $errors->first('shipping_address') }}</strong>
                                                 </span>
-                                            @endif
+                                        @endif
                                     </div>
                                     <div class="form-group  {{ $errors->has('phoneNumber')?'has-error':''}}">
                                         <label for="phoneNumber" class="control-label">Phone</label>
-                                            <input type="text"
-                                                   placeholder="Phone number"
-                                                   value="{{Request::old('phoneNumber')}}" maxlength="13"
-                                                   class="form-control flat" name="phoneNumber" id="phoneNumber">
-                                            @if ($errors->has('phoneNumber'))
-                                                <span class="help-block">
+                                        <input type="text"
+                                               placeholder="Phone number"
+                                               value="{{Request::old('phoneNumber')}}" maxlength="13"
+                                               class="form-control flat" name="phoneNumber" id="phoneNumber">
+                                        @if ($errors->has('phoneNumber'))
+                                            <span class="help-block">
                                                     <strong>{{ $errors->first('phoneNumber') }}</strong>
                                                 </span>
-                                            @endif
+                                        @endif
                                     </div>
                                     <div class="form-group  {{ $errors->has('notes')?'has-error':''}}">
                                         <label for="notes" class="control-label">Note</label>
-                                            <textarea
-                                                    style="resize: vertical"
-                                                   placeholder="Write something extra here.. like notes. (Optional)"
-                                                   class="form-control flat" name="notes" id="notes">{{Request::old('notes')}}</textarea>
-                                            @if ($errors->has('notes'))
-                                                <span class="help-block">
+                                        <textarea
+                                                style="resize: vertical"
+                                                placeholder="Write something extra here.. like notes. (Optional)"
+                                                class="form-control flat" name="notes"
+                                                id="notes">{{Request::old('notes')}}</textarea>
+                                        @if ($errors->has('notes'))
+                                            <span class="help-block">
                                                     <strong>{{ $errors->first('notes') }}</strong>
                                                 </span>
-                                            @endif
+                                        @endif
                                     </div>
 
                                     <div class="form-group">

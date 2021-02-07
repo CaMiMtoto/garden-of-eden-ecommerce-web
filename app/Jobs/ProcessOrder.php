@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 class ProcessOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     private $order;
     public $tries = 5;
 

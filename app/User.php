@@ -2,11 +2,14 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+
 
 /**
  * @property mixed name
@@ -15,15 +18,16 @@ use Laravel\Passport\HasApiTokens;
  * @property string password
  * @property mixed user_name
  * @property mixed $orders
- * @property \Carbon\Carbon $created_at
+ * @property Carbon $created_at
  * @property int $id
- * @property \Carbon\Carbon $updated_at
+ * @property Carbon $updated_at
  */
 class User extends Model implements Authenticatable, \Illuminate\Contracts\Auth\CanResetPassword
 {
     use HasApiTokens, Notifiable;
     use \Illuminate\Auth\Authenticatable;
     use CanResetPassword;
+    use MustVerifyEmail;
 
     protected $fillable = [
         'name', 'email', 'role', 'password',

@@ -95,7 +95,7 @@ $address = $defaultSetting->address;
                                 <i class="fa fa-shopping-basket"></i>
                                 <span>My Basket</span>
                                 <div class="qty">
-                                    {{ Cart::count()}}
+                                    {{ \Cart::getTotalQuantity()}}
                                 </div>
                             </a>
                         </div>

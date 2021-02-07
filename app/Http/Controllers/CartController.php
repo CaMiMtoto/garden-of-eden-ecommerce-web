@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessOrder;
-use App\Mail\SendMail;
 use App\Order;
 use App\OrderItem;
 use App\Product;
-use App\User;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use \Cart;
 
 class CartController extends Controller
 {
@@ -19,72 +16,88 @@ class CartController extends Controller
     public function getAddToCart(Request $request, $id)
     {
         $product = Product::find($id);
-        if ($product->status !== 'Available' || !$product) return redirect()->back();
+        if ($product->status !== 'Available' || !$product)
+        {
+            return redirect()->back();
+        }
 
         $qty = $request->input('qty');
-        if (!$qty) {
+        if (!$qty)
+        {
             $qty = 1;
         }
+
         $cartItem = Cart::add([
             'id' => $product->id,
             'name' => $product->name,
-            'qty' => $qty,
+            'quantity' => $qty,
             'price' => $product->getRealPrice()
         ]);
-        $cartItem->associate('Product');
+        $cartItem->associate($product);
 
         return redirect()->back();
     }
 
     public function getShoppingCart()
     {
-        $cart = Cart::content();
+        $cart = Cart::getContent();
         return view('clients.carts', ['cart' => $cart]);
     }
 
     public function getIncrement(Request $request, $id)
     {
         $qty = $request->input('qty');
-        if (!$qty) {
+        if (!$qty)
+        {
             $qty = 1;
         }
-        $cartItem = Cart::get($id);
-        Cart::update($id, $qty);
+
+        $product = Product::findOrFail($id);
+        Cart::remove($id);
+        $cartItem = Cart::add([
+            'id' => $product->id,
+            'name' => $product->name,
+            'quantity' => $qty,
+            'price' => $product->getRealPrice()
+        ]);
+        $cartItem->associate($product);
+
         return redirect()->route('cart.shoppingCart');
     }
 
-    public function getDecrement(Request $request, $id)
+    public function getDecrement($id)
     {
-        $cartItem = Cart::get($id);
-        Cart::update($id, $cartItem->qty - 1);
+        // you may also want to update a product by reducing its quantity, you do this like so:
+        Cart::update($id, array(
+            'quantity' => -1, // so if the current product has a quantity of 4, it will subtract 1 and will result to 3
+        ));
+
         return redirect()->route('cart.shoppingCart');
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return RedirectResponse
      */
     public function getRemoveItem($id)
     {
-        $cartItem = Cart::get($id);
-        if ($cartItem->rowId === $id) {
-            Cart::remove($id);
-        }
+        Cart::remove($id);
         return redirect()->route('cart.shoppingCart');
     }
 
     public function getRemoveAll()
     {
-        Cart::destroy();
+        Cart::clear();
         return redirect()->route('cart.shoppingCart');
     }
 
     public function checkOut()
     {
-        if (Cart::count() == 0) {
+        if (Cart::isEmpty())
+        {
             return redirect()->route('cart.shoppingCart');
         }
-        $cart = Cart::content();
+        $cart = Cart::getContent();
         return view('clients.check-out', ['cart' => $cart]);
     }
 
@@ -97,12 +110,12 @@ class CartController extends Controller
             'phoneNumber' => 'required| min:10'
         ]);
 
-
-        if (Cart::count() == 0) {
+        if (Cart::isEmpty())
+        {
             return redirect()->back();
         }
 
-        $cart = Cart::content();
+        $cart = Cart::getContent();
         $order = new Order();
         $order->clientPhone = $request->input('phoneNumber');
         $order->email = $request->input('email');
@@ -113,20 +126,21 @@ class CartController extends Controller
         $order->status = "Pending";
         $order->save();
 
-        foreach ($cart as $cartItem) {
+        foreach ($cart as $cartItem)
+        {
             $orderItem = new OrderItem();
             $orderItem->product_id = $cartItem->id;
             $orderItem->price = $cartItem->price;
-            $orderItem->qty = $cartItem->qty;
-            $orderItem->sub_total = $cartItem->subtotal;
+            $orderItem->qty = $cartItem->quantity;
+            $orderItem->sub_total = $cartItem->getPriceSum();
             $order->orderItems()->save($orderItem);
         }
 
         //Send email to all users in background
         ProcessOrder::dispatch($order);
 
-        Cart::destroy();
-        return redirect()->route('order.success',['id'=>$order->id]);
+        Cart::clear();
+        return redirect()->route('order.success', ['id' => $order->id]);
     }
 
 
