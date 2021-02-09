@@ -172,7 +172,7 @@
                                 </div>
                                 <div class="form-group  {{ $errors->has('notes')?'has-error':''}}">
                                     <label for="notes" class="control-label">Note</label>
-                                    <textarea
+                                    <textarea rows="5"
                                             style="resize: vertical"
                                             placeholder="Write something extra here.. like notes. (Optional)"
                                             class="form-control " name="notes"
