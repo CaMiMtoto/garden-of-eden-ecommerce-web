@@ -237,8 +237,8 @@
                                                     </span>
                                                     <span class="pull-right">
                                                         <a href="{{ route('cart.addToCart',['id'=>$product->id]) }}"
-                                                           class="btn btn-cart btn-xs flat">
-                                                        <i class="fa fa-shopping-bag"></i>
+                                                           class="btn text-uppercase btn-outline-danger btn-sm rounded-sm">
+                                                        <i class="fa fa-plus"></i>
                                                         Basket
                                                     </a>
                                                     </span>

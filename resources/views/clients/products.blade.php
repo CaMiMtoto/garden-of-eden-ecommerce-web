@@ -17,9 +17,9 @@
                             $cat = $_GET['cat'];
                         }
                         ?>
-                        <ul class="list-group flat">
+                        <ul class="list-group rounded-sm shadow-sm">
                             @foreach(\App\Category::all() as $category)
-                                <li class="list-group-item flat {{ $category->id===(int)$cat? 'active1':'' }}">
+                                <li class="list-group-item {{ $category->id===(int)$cat? 'active1':'' }}">
                                     <a href="/getProduct?cat={{ $category->id }}">
                                         {{ $category->name }}
                                         <span class="badge badge-primary pull-right">{{$category->products()->count()}}</span>
@@ -42,8 +42,7 @@
                             </h4>
                             <ul class="list-group">
                                 @foreach($products as $product)
-
-                                    <li class="item list-group-item">
+                                    <li class="item list-group-item rounded-sm shadow-xs">
                                         <div>
                                             <div class="row">
                                                 <div class="col-sm-3 container-div">
