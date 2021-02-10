@@ -1,4 +1,3 @@
-
 <?php
 use App\MyFunc;$defaultSetting = MyFunc::getDefaultSetting();$mail = $defaultSetting->email1;
 $whatsapp = MyFunc::format_phone_us($defaultSetting->whatsapp);
@@ -10,7 +9,7 @@ $address = $defaultSetting->address;
 ?>
 
 <header>
-<!-- TOP HEADER -->
+    <!-- TOP HEADER -->
     <div id="top-header">
         <div class="container">
             <ul class="header-links pull-left">
@@ -68,7 +67,8 @@ $address = $defaultSetting->address;
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="{{ route('home') }}" class="logo" style="color: #F0FFDF;">
-                            <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive img-circle" alt="Garden Of Eden Produce"
+                            <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive img-circle"
+                                 alt="Garden Of Eden Produce"
                                  style="width: 80px;background-color: whitesmoke">
                         </a>
                     </div>
@@ -88,20 +88,7 @@ $address = $defaultSetting->address;
 
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
-                    <div class="header-ctn" style="float: left">
-                        <!-- Cart -->
-                        <div>
-                            <a href="{{ route('cart.shoppingCart') }}">
-                                <i class="fa fa-shopping-basket"></i>
-                                <span>My Basket</span>
-                                <div class="qty">
-                                    {{ \Cart::getTotalQuantity()}}
-                                </div>
-                            </a>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="clearfix"></div>
+                    <livewire:cart-counter/>
                 </div>
 
                 <!-- /ACCOUNT -->

@@ -1,14 +1,29 @@
-
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat');
+@import url('https://fonts.googleapis.com/css2?family=Poppins');
 // Variables
 @import "variables";
-
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/dist/css/bootstrap.css';
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+@import "../../public/css/nouislider.min.css";
+@import "../../public/vendor/themify/themify-icons.css";
+@import "../../public/vendor/font-awesome/css/font-awesome.min.css";
+@import "../../public/css/home-carousel.css";
+@import "../../public/css/style.css";
+@import "custom";
 
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 0.89rem !important;
+}
+
+.home-info {
+  font-family: 'Poppins', sans-serif;
+  font-size: 25px !important;
 }

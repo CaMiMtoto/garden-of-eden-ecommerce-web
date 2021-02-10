@@ -1,8 +1,13 @@
 <?php
 
 
+use App\Http\Livewire\CardProduct;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
+
+
+Livewire::component('card-product', CardProduct::class);
 
 Auth::routes();
 
