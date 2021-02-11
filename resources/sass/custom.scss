@@ -313,3 +313,27 @@ h1, h2, h3, h4, h5, h6 {
 .z-index-high {
   z-index: 999999999 !important;
 }
+
+.toast-success {
+  background-color: $green !important;
+}
+#toast-container>div{
+  opacity: 1!important;
+}
+.w-100{
+  width: 100% !important;
+}
+
+.d-block{
+  display: block !important;
+}
+.loading{
+  opacity: .5 !important;
+}
+.my-2{
+  margin: 10px 0 10px 0 !important;
+}
+
+td {
+  vertical-align: middle !important;
+}

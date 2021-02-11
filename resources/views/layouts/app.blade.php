@@ -16,6 +16,7 @@
     @livewireStyles
     <!-- Google font -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     @yield('styles')
 </head>
 <body>
@@ -56,9 +57,8 @@
 @include('partials.footer')
 <!-- /FOOTER -->
 
-<script src="{{ asset('js/app.js') }}"></script>
 @livewireScripts
-
+<script src="{{ asset('js/app.js') }}" ></script>
 @yield('scripts')
 
 </body>

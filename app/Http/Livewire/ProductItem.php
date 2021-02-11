@@ -2,46 +2,25 @@
 
 namespace App\Http\Livewire;
 
-use App\Product;
 use Cart;
-use Illuminate\Http\RedirectResponse;
+use App\Product;
 use Livewire\Component;
 
-class CardProduct extends Component
+class ProductItem extends Component
 {
     public $product;
-    public $label;
     public $quantity;
 
-    public function mount(Product $product, string $label)
+    public function mount(Product $product)
     {
         $this->quantity = 1;
     }
 
     public function render()
     {
-        return view('livewire.card-product', [
+        return view('livewire.product-item', [
             'added' => Cart::get($this->product->id)
         ]);
-    }
-
-    public function add()
-    {
-        $product = $this->product;
-        if ($product->status !== 'Available')
-            session()->flash('error', "Product not available");
-        $cartItem = Cart::add([
-            'id' => $product->id,
-            'name' => $product->name,
-            'quantity' => $this->quantity,
-            'price' => $product->getRealPrice()
-        ]);
-        $cartItem->associate($product);
-
-        $this->emit('productAdded');
-
-        session()->flash('success', $product->name . " Successfully added to cart");
-
     }
 
     public function remove()
@@ -50,5 +29,29 @@ class CardProduct extends Component
         $this->emit('productRemoved');
 
         session()->flash('success', $this->product->name . " Successfully removed to cart");
+    }
+
+    public function add()
+    {
+        $product = $this->product;
+        $quantity = $this->quantity;
+
+        if ($product->status !== 'Available' || $quantity <= 0)
+            session()->flash('error', "Product not available");
+
+        $id = $product->id;
+        Cart::remove($id);
+
+        $cartItem = Cart::add([
+            'id' => $id,
+            'name' => $product->name,
+            'quantity' => $quantity,
+            'price' => $product->getRealPrice()
+        ]);
+        $cartItem->associate($product);
+
+        $this->emit('productAdded');
+
+        session()->flash('success', $product->name . " Successfully added to cart");
     }
 }

@@ -1,16 +1,20 @@
 try {
-    window.$=require('jquery');
-    window.jQuery=require('jquery');
+    let jquery = require('jquery');
+    window.$ = jquery;
+    window.jQuery = jquery;
     require('bootstrap/dist/js/bootstrap.min');
     window.lozad = require('lozad');
+    // window.toastr = require('toastr');
 
-    window.slick=require('slick-carousel/slick/slick.min');
+    window.slick = require('slick-carousel/slick/slick.min');
     require('../../public/js/nouislider.min.js');
     require('../../public/js/jquery.zoom.min.js');
     require('../../public/js/main.js');
 } catch (e) {
-
+    console.log(e);
 }
+
+
 
 
 // import Echo from 'laravel-echo'

@@ -40,9 +40,7 @@ class CartController extends Controller
 
     public function getShoppingCart()
     {
-        $cart = Cart::getContent();
-
-        return view('clients.carts', ['cart' => $cart]);
+        return view('clients.carts');
     }
 
     public function getIncrement(Request $request, $id)

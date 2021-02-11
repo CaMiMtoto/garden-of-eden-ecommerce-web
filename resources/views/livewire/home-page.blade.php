@@ -142,7 +142,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         @foreach(\App\Product::with('category')->where('status','=','available')->limit(4)->get()->take(10) as $item)
-                            <div class="col-md-3">
+                            <div class="col-md-3 col-xs-6">
                                 <livewire:card-product
                                         :product="$item"
                                         label="NEW"/>

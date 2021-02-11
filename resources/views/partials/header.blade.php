@@ -48,9 +48,6 @@ $address = $defaultSetting->address;
                         {{ $address }}
                     </a>
                 </li>
-            </ul>
-            <ul class="header-links pull-right">
-                <li><a href="javascript:void(0);">RWF</a></li>
                 <li><a href="{{ route('dashboard') }}" target="_blank">ADMIN</a></li>
             </ul>
         </div>
@@ -64,7 +61,7 @@ $address = $defaultSetting->address;
             <!-- row -->
             <div class="row">
                 <!-- LOGO -->
-                <div class="col-md-3">
+                <div class="col-sm-3 hidden-xs">
                     <div class="header-logo">
                         <a href="{{ route('home') }}" class="logo" style="color: #F0FFDF;">
                             <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive img-circle"
@@ -76,18 +73,30 @@ $address = $defaultSetting->address;
                 <!-- /LOGO -->
 
                 <!-- SEARCH BAR -->
-                <div class="col-md-6">
+                <div class="col-sm-6">
                     <div class="header-search">
-                        <form action="{{ route('getProduct') }}">
-                            <input class="input" type="search" placeholder="Search here" name="search">
-                            <button class="search-btn"><i class="fa fa-search"></i></button>
+                        <form action="{{ route('getProduct') }}" class="form-inline">
+                            <div class="input-group input-group-lg w-100">
+                                <input type="text"
+                                       value="{{ request('search') }}"
+                                       class="form-control font-small" name="search" placeholder="What are your looking for?">
+                                <span class="input-group-btn">
+                                <button class="btn btn-danger" type="submit">
+                                    &nbsp;
+                                    &nbsp;
+                                    <i class="fa fa-search"></i>
+                                     &nbsp;
+                                     &nbsp;
+                                </button>
+                              </span>
+                            </div><!-- /input-group -->
                         </form>
                     </div>
                 </div>
                 <!-- /SEARCH BAR -->
 
                 <!-- ACCOUNT -->
-                <div class="col-md-3 clearfix">
+                <div class="col-sm-3 clearfix">
                     <livewire:cart-counter/>
                 </div>
 

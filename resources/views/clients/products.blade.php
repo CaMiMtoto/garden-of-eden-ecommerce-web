@@ -13,7 +13,8 @@
                     <div>
                         <?php
                         $cat = 0;
-                        if (isset($_GET['cat'])) {
+                        if (isset($_GET['cat']))
+                        {
                             $cat = $_GET['cat'];
                         }
                         ?>
@@ -30,115 +31,30 @@
                     </div>
                 </div>
                 <section class="col-md-9">
-                    @if(count($products) ==0)
-                        <div class="alert alert-info">
-                            <p>Your search keyword could not math anything. Try with a different keyword.</p>
-                        </div>
-                    @else
-                        <div>
-                            <h4>
-                                Showing result of {{ $products->total() }} product(s)
-                                <small> currently showing {{ $products->count() }} product(s)</small>
-                            </h4>
-                            <ul class="list-group">
-                                @foreach($products as $product)
-                                    <li class="item list-group-item rounded-sm shadow-xs">
-                                        <div>
-                                            <div class="row">
-                                                <div class="col-sm-3 container-div">
-                                                    <a title="View full size"
-                                                       href="{{ route('products.details-view',$product->id) }}">
-                                                        <img data-src="{{ asset("uploads/products/" . $product->image) }}"
-                                                             alt="" style="width: 100%"
-                                                             class="lozad grow img-responsive">
-                                                    </a>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <div class="caption">
-                                                        <h5 class="pull-right">
-                                                            <span class="text-success" style="padding-right: 20px">
-                                                                 {{ number_format($product->getRealPrice(),1) }}
-                                                            </span>
-                                                            @if($product->discount>0)
-                                                                <del class="product-old-price text-danger">
-                                                                    <span>{{ number_format($product->price) }}</span>
-                                                                </del>
-                                                            @endif
-                                                            <small>Rwf / {{ $product->measure }}</small>
-                                                        </h5>
-                                                        <h4 class="product-name">
-                                                            <span>{{ $product->name }}</span>
-                                                        </h4>
-                                                        <p class="hidden-xs">
-                                                            @if($product->description!=='')
-                                                                {{ str_limit($product->description,150) }}
-                                                            @else
-                                                                <span class="label label-default">
-                                                                    No description available
-                                                                </span>
-                                                            @endif
-                                                        </p>
-                                                    </div>
-                                                    <div class="ratings margin-left-sm">
-                                                        {{--<div class="">{{ $product->qty }} in stock</div>--}}
-                                                        {{--<br>--}}
-                                                        <div class="pull-left">
-                                                            <a href="/getProduct?cat={{ $product->category->id }}">
-                                                                {{ $product->category->name }}
-                                                            </a>
-                                                        </div>
-                                                        <div class="pull-right">
-                                                            @if($product->status==='Available')
-                                                                <form action="{{ route('cart.addToCart',['id'=>$product->id]) }}"
-                                                                      class="form-inline">
-                                                                    <div class="form-group form-group-sm">
-                                                                        <label for="qty{{$product->id}}"></label>
-                                                                        <input style="width: 60px" min="0.5" size="10"
-                                                                               value="1" type="text"
-                                                                               max="{{ $product->qty }}" name="qty"
-                                                                               class="form-control flat"
-                                                                               placeholder="Qty"
-                                                                               id="qty{{$product->id}}">
-                                                                    </div>
-                                                                    <button type="submit"
-                                                                            class="btn  btn-cart btn-sm flat" {{ $product->qty <=0 ? 'disabled':'' }}>
-                                                                        <i class="fa fa-shopping-basket"></i>
-                                                                        Add to cart
-                                                                    </button>
-                                                                </form>
-                                                            @else
-                                                                <span class="label label-default">
-                                                                <i class="fa fa-info-circle"></i>
-                                                                Out Of Stock
-                                                            </span>
-                                                            @endif
-                                                        </div>
-
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                    @if($product->discount>0)
-                                                        <h4>
-                                                           <span class="badge badge-primary">
-                                                                {{  $product->getDiscountPercent()}} Rwf ,OFF
-                                                           </span>
-                                                        </h4>
-                                                    @endif
-                                                    <a href="{{ route('products.details-view',$product->id) }}"
-                                                       class="btn btn-default btn-sm flat text-uppercase">
-                                                        More Detail
-                                                        <i class="fa fa-chevron-right"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                            {{ $products->links() }}
-                        </div>
-                        <div class="clearfix"></div>
-                    @endif
+                    <div>
+                        <h4>
+                            Showing result of {{ $products->total() }} product(s)
+                            <small> currently showing {{ $products->count() }} product(s)</small>
+                        </h4>
+                        <ul class="list-group">
+                            @forelse($products as $product)
+                                <li class="item list-group-item rounded-sm shadow-xs">
+                                   <livewire:product-item :product="$product" />
+                                </li>
+                            @empty
+                                <li>
+                                    <div class="alert alert-info rounded-sm shadow-sm">
+                                        <p>
+                                            Your search keyword could not math anything. Try with a different
+                                            keyword.
+                                        </p>
+                                    </div>
+                                </li>
+                            @endforelse
+                        </ul>
+                        {{ $products->links() }}
+                    </div>
+                    <div class="clearfix"></div>
                 </section>
             </div>
         </div>

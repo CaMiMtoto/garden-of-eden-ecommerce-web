@@ -28,7 +28,7 @@
                         @foreach(\App\Category::query()->withCount('products')->get() as $category)
                             <li>
                                 <a href="/getProduct?cat={{ $category->id }}">
-                                    {{ $category->name }}
+                                    <strong>{{ ucfirst(strtolower($category->name)) }}</strong>
                                     <span class="label label-danger pull-right">{{$category->products_count}}</span>
                                 </a>
                             </li>
