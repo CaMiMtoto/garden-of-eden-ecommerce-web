@@ -211,41 +211,8 @@
 
                             <div class="products-widget-slick category-info" data-nav="#slick-nav-3">
                                 <div>
-                                @foreach($category->products->take(4) as $product)
-                                    <?php
-                                    $path = 'uploads/products/' . $product->image;
-                                    if (!file_exists($path))
-                                    {
-                                        $path = 'img/noimage.jpg';
-                                    }
-                                    ?>
-                                    <!-- product widget -->
-                                        <div class="product-widget">
-                                            <div class="product-img">
-                                                <img class="lozad img-thumbnail"
-                                                     style="width: 60px;height: 70px;object-fit: cover"
-                                                     data-src="{{ asset($path) }}" alt="" src="">
-                                            </div>
-                                            <div class="product-body">
-                                                {{--                                                <p class="product-category">{{ $product->category->name }}</p>--}}
-                                                <h6>
-                                                    <a href="{{ route('products.details-view',$product->id) }}">
-                                                        {{ ucfirst($product->name) }}
-                                                    </a>
-                                                </h6>
-                                                <h6>
-                                                    RF
-                                                    {{ number_format($product->price) }}
-                                                </h6>
-                                                <a href="{{ route('cart.addToCart',['id'=>$product->id]) }}"
-                                                   class="btn text-uppercase btn-outline-danger btn-xs flat">
-                                                    <i class="fa fa-plus"></i>
-                                                    Basket
-                                                </a>
-                                            </div>
-                                            <hr>
-                                        </div>
-                                        <!-- /product widget -->
+                                    @foreach($category->products->take(4) as $product)
+                                        <livewire:small-card-product :product="$product"/>
                                     @endforeach
                                 </div>
                             </div>
