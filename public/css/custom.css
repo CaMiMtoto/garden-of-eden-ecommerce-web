@@ -35,10 +35,6 @@
   border: 1px solid #e6e6e4;
 }
 
-a {
-  color: #E52C5A;
-}
-
 a:hover,
 a:focus {
   color: #1068BF;
@@ -195,9 +191,9 @@ ul li ul:hover {
 .form-control:focus {
   color: #212529;
   background-color: #fff;
-  border-color: #dc96a2 !important;
+  border-color: #96dca2 !important;
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(220, 110, 253, 0.25) !important;
+  box-shadow: 0 0 0 0.25rem rgba(110, 220, 253, 0.25) !important;
 }
 
 h1,
@@ -271,6 +267,38 @@ h6 {
   color: #fff;
   background-color: #E52C5A !important;
   border-color: #fff !important;
+  outline: none !important;
+}
+
+.btn-check:focus + .btn-success,
+.btn-success:focus {
+  color: #fff;
+  background-color: #31AF64 !important;
+  border-color: #31AF64 !important;
+  box-shadow: 0 0 0 0.25rem rgba(83, 225, 97, 0.5) !important;
+  outline: none !important;
+}
+
+.btn-outline-success {
+  color: #31AF64;
+  background-color: #fff !important;
+  border-color: #31AF64 !important;
+  font-weight: bold;
+}
+
+.btn-outline-success:hover {
+  color: #fff;
+  background-color: #31AF64 !important;
+  border-color: #fff !important;
+}
+
+.btn-check:focus + .btn-outline-success,
+.btn-outline-success:focus {
+  color: #31AF64;
+  background-color: #fff !important;
+  border-color: #31AF64 !important;
+  box-shadow: 0 0 0 0.25rem rgba(83, 225, 97, 0.5) !important;
+  outline: none !important;
 }
 
 .shadow-sm {
@@ -313,6 +341,23 @@ h6 {
   margin-bottom: 3rem !important;
 }
 
+.mt-5 {
+  margin-top: 3rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 1.5rem !important;
+}
+
+.mt-3 {
+  margin-top: 1.5rem !important;
+}
+
+.my-3 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
 .item:hover {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
@@ -353,5 +398,38 @@ h6 {
 
 td {
   vertical-align: middle !important;
+}
+
+.no-border {
+  border: none !important;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: -webkit-fill-available;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.table-border {
+  border: 1px solid #edeff2;
+}
+
+.prod-img {
+  height: 50px;
+  width: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.product-image {
+  height: 300px;
+  width: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 

@@ -12461,16 +12461,28 @@ try {
 
 /***/ }),
 
+/***/ "./resources/sass/master.scss":
+/*!************************************!*\
+  !*** ./resources/sass/master.scss ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!******************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/custom.scss ***!
-  \******************************************************************************************/
+/*!***********************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/custom.scss ./resources/sass/master.scss ***!
+  \***********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! D:\Projects\PHP\shop\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! D:\Projects\PHP\shop\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! D:\Projects\PHP\shop\resources\sass\custom.scss */"./resources/sass/custom.scss");
+__webpack_require__(/*! D:\Projects\PHP\shop\resources\sass\custom.scss */"./resources/sass/custom.scss");
+module.exports = __webpack_require__(/*! D:\Projects\PHP\shop\resources\sass\master.scss */"./resources/sass/master.scss");
 
 
 /***/ })

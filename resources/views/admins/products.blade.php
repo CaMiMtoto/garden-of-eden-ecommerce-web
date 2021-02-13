@@ -2,17 +2,15 @@
 @section('title','Products')
 
 @section('content')
-    <div class="section-heading">
-        <h1 class="page-title">Products</h1>
-    </div>
+
     <div class="row">
         <div class="col-md-12">
-            <div class="panel  flat">
-                <div class="panel-heading flat">
+            <div class="panel rounded-sm shadow-sm panel-default">
+                <div class="panel-heading bg-white">
                     <h4 class="panel-title">
                         <i class="fa fa-square"></i> Manage products
                         <button data-toggle="modal" data-target="#addModal" type="button"
-                                class="btn btn-default pull-right btn-sm flat">
+                                class="btn btn-primary pull-right btn-sm">
                             <i class="fa fa-plus icon-collapsed"></i>
                             Add New
                         </button>
@@ -20,8 +18,8 @@
                     </h4>
 
                 </div>
-                <div class="panel-body panel-content table-responsive ">
-                    <table class="table table-condensed  table-hover"
+                <div class="panel-body panel-content table-responsive">
+                    <table class="table table-condensed  table-hover table-border rounded-sm table-hover"
                            id="manageTable">
                         <thead>
                         <tr>
@@ -158,15 +156,13 @@
 
                     </div> <!-- /modal-body -->
                     <div class="modal-footer">
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-default flat" data-dismiss="modal"><i
-                                        class="glyphicon glyphicon-remove-sign"></i> Close
-                            </button>
-                            <button type="submit" class="btn btn-primary flat" id="createBtn"
-                                    data-loading-text="Loading...">
-                                <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary" id="createBtn"
+                                data-loading-text="Loading...">
+                            <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                                    class="glyphicon glyphicon-remove-sign"></i> Close
+                        </button>
                     </div> <!-- /modal-footer -->
                 </form> <!-- /.form -->
             </div> <!-- /modal-content -->
@@ -209,7 +205,7 @@
                                         <label for="productImage" class="col-sm-4 control-label">Product Image</label>
                                         <label class="col-sm-1 control-label">: </label>
                                         <div class="col-sm-7" style="max-height: 300px;">
-                                            <img src="" alt="Image " class="img-thumbnail img-responsive product-img"
+                                            <img src="" alt="Image " class="img-thumbnail img-responsive product-image"
                                                  style="overflow: scroll">
                                         </div>
                                     </div>
@@ -321,14 +317,12 @@
                     </div> <!-- /modal-body -->
 
                     <div class="modal-footer  editFooter">
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                <i class="glyphicon glyphicon-remove-sign"></i>Close
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading...">
-                                <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading...">
+                            <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <i class="glyphicon glyphicon-remove-sign"></i>Close
+                        </button>
                     </div> <!-- /modal-footer -->
                 </form> <!-- /.form -->
             </div> <!-- /modal-content -->
@@ -344,7 +338,7 @@
         var manageTable = $("#manageTable");
 
         function myFunc() {
-            table = manageTable.DataTable({
+            window.table = manageTable.DataTable({
                 "bProcessing": true,
                 "serverSide": true,
                 ajax: {
@@ -357,7 +351,7 @@
                     {
                         data: 'image', 'sortable': false,
                         render: function (data, type, row) {
-                            return "<img src='" + data + "' class='img-responsive product_image img-thumbnail'/>"
+                            return "<img src='" + data + "' class='img-responsive img-circle prod-img img-thumbnail' />"
                         }
                     },
                     {data: 'name', 'sortable': false},
@@ -381,11 +375,11 @@
                         data: 'id',
                         'sortable': false,
                         render: function (data, type, row) {
-                            return "<div class='btn-group btn-group-xs flat'>" +
-                                "<button class='btn btn-default btn-xs flat js-edit' " +
+                            return "<div class='btn-group btn-group-sm'>" +
+                                "<button class='btn btn-default js-edit' " +
                                 "data-url='/admin/products/show/" + row.id + "' data-id='" + row.id + "'> " +
                                 "<i class='glyphicon glyphicon-edit'></i></button>" +
-                                "<button class='btn btn-danger  btn-xs flat js-delete' data-id='" + data +
+                                "<button class='btn btn-danger  js-delete' data-id='" + data +
                                 "' data-url='/admin/products/destroy/" + row.id + "'> " +
                                 "<i class='glyphicon glyphicon-trash'></i>" +
                                 "</button>" +
@@ -444,7 +438,7 @@
                     $("#editDiscount").val(response.discount);
                     // set the form value to be updated
                     var src = '/uploads/products/' + response.image;
-                    $('.product-img').attr("src", src);
+                    $('.product-image').attr("src", src);
                     // add the products id
                     footer.after('<input type="hidden" name="id" id="id" value="' + response.id + '" />');
                 }).fail(function (error) {
@@ -477,8 +471,7 @@
                     //resetting form
                     form[0].reset();
                     // reload the manage member table
-                    table.destroy();
-                    myFunc();
+                    table.ajax.reload();
                     $('#add-messages').html('<div class="alert alert-success">' +
                         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                         '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> '
@@ -519,8 +512,7 @@
                     $("#editBtn").button('reset');
                     form[0].reset();
                     // reload the manage member table
-                    table.destroy();
-                    myFunc();
+                    table.ajax.reload();
 
                     $('#edit-messages').html('<div class="alert alert-success">' +
                         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -574,8 +566,7 @@
                             confirmButtonText: "Close"
                         });
                         // reload the manage member table
-                        table.destroy();
-                        myFunc();
+                        table.ajax.reload();
                     }).fail(function (error) {
                         confirmButton.button('reset');
                         swal({

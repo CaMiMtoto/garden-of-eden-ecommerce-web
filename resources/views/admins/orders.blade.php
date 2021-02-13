@@ -1,39 +1,32 @@
 @extends('layouts.master')
 @section('title','Orders')
 @section('content')
-    <div class="section-heading">
-        <h1 class="page-title">Orders</h1>
-    </div>
+
     <div class="row">
         <div class="col-md-12">
-            <div class="panel  flat">
-                <div class="panel-heading flat">
+            <div class="panel  rounded-sm shadow-sm panel-default">
+                <div class="panel-heading bg-white">
                     <h4 class="panel-title">
                         <i class="fa fa-square"></i> Manage Orders
-
-                        {{-- <button data-toggle="modal" data-target="#addModal" type="button"
-                                 class="btn btn-default pull-right btn-sm flat">
-                             <i class="fa fa-plus icon-collapsed"></i>
-                             Add New
-                         </button>
-                         <span class="clearfix"></span>--}}
                     </h4>
-                    <hr>
                 </div>
-                <div class="panel-body panel-content">
-                    <table class="table table-condensed table-responsive table-hover"
-                           id="manageTable">
-                        <thead>
-                        <tr>
-                            <th>Oder Date</th>
-                            <th>Client Name</th>
-                            <th>Client Phone</th>
-                            <th>Order status</th>
-                            <th>Options</th>
-                        </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-condensed  table-hover table-border rounded-sm"
+                               id="manageTable">
+                            <thead>
+                            <tr>
+                                <th>Oder Date</th>
+                                <th>Client Name</th>
+                                <th>Client Phone</th>
+                                <th>Order status</th>
+                                <th>Options</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
 
@@ -67,14 +60,12 @@
                     </div> <!-- /modal-body -->
 
                     <div class="modal-footer  editFooter">
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                <i class="glyphicon glyphicon-remove-sign"></i>Close
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading...">
-                                <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading...">
+                            <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <i class="glyphicon glyphicon-remove-sign"></i>Close
+                        </button>
                     </div> <!-- /modal-footer -->
                 </form> <!-- /.form -->
             </div> <!-- /modal-content -->
@@ -91,9 +82,10 @@
         var manageTable = $("#manageTable");
 
         function myFunc() {
-            table = manageTable.DataTable({
+            window.table = manageTable.DataTable({
                 "bProcessing": true,
                 "serverSide": true,
+                "order": [[0, "desc"]],
                 ajax: {
                     url: defaultUrl,
                     method: 'POST',
@@ -101,9 +93,9 @@
                     data: {_token: "{{csrf_token()}}"}
                 },
                 columns: [
-                    {data: 'created_at', 'sortable': false},
+                    {data: 'created_at', 'sortable': true},
                     {
-                        data: 'clientName', 'sortable': false,
+                        data: 'clientName', 'sortable': true,
                         render: function (data, type, row) {
                             if (row.user) {
                                 return row.user.name;
@@ -112,22 +104,22 @@
                         }
                     },
                     {
-                        data: 'clientPhone', 'sortable': false,
+                        data: 'clientPhone', 'sortable': true,
                         render: function (data) {
                             return "<a href='tel:'" + data + "'>" + data + "</a>";
                         }
                     },
                     {
-                        data: 'status', 'sortable': false,
+                        data: 'status', 'sortable': true,
                         render: function (data) {
                             if (data === "Pending") {
-                                return "<a class='label label-warning'><i class='fa fa-shopping-cart'></i> " + data + "</a>";
+                                return "<a class='label label-warning rounded-pill'>" + data + "</a>";
                             } else if (data === "Processing") {
-                                return "<a class='label label-info'><i class='fa fa-spinner'></i> " + data + "</a>";
+                                return "<a class='label label-info rounded-pill'><i class='fa fa-spinner'></i> " + data + "</a>";
                             } else if (data === "Cancelled") {
-                                return "<a class='label label-danger'><i class='fa fa-close'></i> " + data + "</a>";
+                                return "<a class='label label-danger rounded-pill'><i class='fa fa-close'></i> " + data + "</a>";
                             }
-                            return "<a class='label label-success'><i class='fa fa-check-circle-o'></i> " + data + "</a>";
+                            return "<a class='label label-success rounded-pill'><i class='fa fa-check-circle-o'></i> " + data + "</a>";
                         }
                     },
                     {
@@ -135,9 +127,8 @@
                         'sortable': false,
                         render: function (data, type, row) {
                             return "<div class='btn-group btn-group-sm'>" +
-                                "<button class='btn btn-default btn-xs  js-details' " +
-                                "data-url='/admin/orders/" + row.id + "' data-id='" + row.id + "'> " +
-                                "<i class='fa fa-eye'></i> Details</button>" +
+                                "<button class='btn btn-default js-details' " +
+                                "data-url='/admin/orders/" + row.id + "' data-id='" + row.id + "'> Details</button>" +
                                 "</div>";
                         }
                     }
@@ -160,7 +151,8 @@
                 // modal spinner
                 $('.modal-loading').removeClass('div-hide');
                 // modal result
-                $('.edit-result').addClass('div-hide');
+                var editResultDiv = $('.edit-result');
+                editResultDiv.addClass('div-hide');
                 //modal footer
                 var footer = $(".editFooter");
                 footer.addClass('div-hide');
@@ -172,10 +164,10 @@
                     // modal spinner
                     $('.modal-loading').addClass('div-hide');
                     // modal result
-                    $('.edit-result').removeClass('div-hide');
+                    editResultDiv.removeClass('div-hide');
                     //modal footer
                     footer.removeClass('div-hide');
-                    $('.edit-result').html(response);
+                    editResultDiv.html(response);
                 }).fail(function (error) {
                     alert("Error getting data");
                 });
@@ -208,8 +200,7 @@
                     //resetting form
                     form[0].reset();
                     // reload the manage member table
-                    table.destroy();
-                    myFunc();
+                    table.ajax.reload();
                     $('#add-messages').html('<div class="alert alert-success">' +
                         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                         '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> '
@@ -250,8 +241,7 @@
                     $("#editBtn").button('reset');
                     form[0].reset();
                     // reload the manage member table
-                    table.destroy();
-                    myFunc();
+                    table.ajax.reload();
 
                     $('#edit-messages').html('<div class="alert alert-success">' +
                         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +

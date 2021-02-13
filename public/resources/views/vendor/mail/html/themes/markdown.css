@@ -291,32 +291,4 @@ img {
     word-break: break-all;
 }
 
-.label {
-    padding: 0.2em 0.6em 0.3em !important;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25em !important;
-}
-.label-info {
-    background-color: #5bc0de;
-}
-.label-success {
-    background-color: #5cb85c;
-}
-.rounded-pill {
-    border-radius: 50rem !important;
-}
-.label-primary {
-    background-color: #337ab7;
-}
-.label-danger {
-    background-color: #d9534f;
-}
-.label{
-    display: inline-block !important;
-}
+

@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="{{ asset('vendor/parsleyjs/css/parsley.css') }}">
 
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('vendor/datatables.net-bs/css/dataTables.bootstrap.min.css') }}"/>
 
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/sweetalert/sweetalert.css') }}"/>
     <!-- MAIN CSS -->
@@ -28,19 +29,17 @@
 
     @yield('styles')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-
-
     <!-- jQuery Plugins -->
-<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-<!-- jQuery library -->
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <!-- jQuery library -->
     {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}
-<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-<!-- Latest compiled JavaScript -->
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!-- Latest compiled JavaScript -->
     {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
 
     <script type="text/javascript" src="{{ asset('vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('vendor/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('vendor/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 
 
     <!-- Javascript -->
@@ -50,18 +49,18 @@
     <script src="{{ asset('vendor/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('js/common.js') }}"></script>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/master.js') }}"></script>
 </head>
 <body>
 
 <!-- WRAPPER -->
 <div id="wrapper">
     <!-- NAVBAR -->
-    @include('shared.header')
-    <!-- END NAVBAR -->
-        <!-- LEFT SIDEBAR -->
-    @include('shared.left')
-    <!-- END LEFT SIDEBAR -->
+@include('shared.header')
+<!-- END NAVBAR -->
+    <!-- LEFT SIDEBAR -->
+@include('shared.left')
+<!-- END LEFT SIDEBAR -->
     <!-- MAIN CONTENT -->
     <div id="main-content">
         <div class="container-fluid">

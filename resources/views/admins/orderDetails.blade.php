@@ -145,19 +145,17 @@
     </p>
 </div>
 @if(auth()->user()->role=='Admin' || auth()->user()->role=='Super admin')
-
-    {{ csrf_field() }}
+    @csrf
     <input type="hidden" value="{{ $order->id }}" name="id">
     <div class="form-group">
-        <label for="status" class="control-label col-sm-1">Status</label>
+        <label for="status" class="control-label col-sm-4">Status</label>
         <label for="status" class="control-label col-sm-1">:</label>
-        <div class="col-sm-10">
-            <select required class="form-control" name="status" id="status">
-                <option value="">--mark order as--</option>
-                <option value="Pending" {{ $order->status=="Pending"? 'selected':'' }}>Pending</option>
-                <option value="Processing" {{ $order->status=="Processing"? 'selected':'' }}>Processing</option>
-                <option value="Delivered" {{ $order->status=="Delivered"? 'selected':'' }}>Delivered</option>
-                <option value="Cancelled" {{ $order->status=="Cancelled"? 'selected':'' }}>Cancelled</option>
+        <div class="col-sm-7">
+            <select required class="form-control rounded-sm shadow-sm" name="status" id="status">
+                <option value="">--Mark Order As--</option>
+                @foreach(\App\Order::getStatuses() as $status)
+                    <option value="{{ $status }}" {{ $order->status==$status? 'selected':'' }}>{{ $status }}</option>
+                @endforeach
             </select>
         </div>
     </div>

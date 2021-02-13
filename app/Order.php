@@ -17,10 +17,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property double shipping_amount
  * @property array|null|string email
  * @property string notes
+ * @property mixed order_no
  */
 class Order extends Model
 {
-    public static $shippingCharge=1000;
+    public static $shippingCharge = 1000;
+    const PENDING = 'Pending';
+    const PROCESSING = 'Processing';
+    const SHIPPED = 'Shipped';
+    const DELIVERED = 'Delivered';
+    const CANCELLED = 'Cancelled';
+
     public function orderItems()
     {
         return $this->hasMany('App\OrderItem');
@@ -30,7 +37,22 @@ class Order extends Model
     {
         return $this->belongsTo('App\User');
     }
-    public function getTotalAmountToPay(){
-        return $this->orderItems->sum('sub_total')+$this->shipping_amount;
+
+    public function getTotalAmountToPay()
+    {
+        return $this->orderItems->sum('sub_total') + $this->shipping_amount;
+    }
+
+    public static function getStatuses(): array
+    {
+
+        return [self::PENDING, self::PROCESSING, self::SHIPPED, self::DELIVERED, self::CANCELLED];
+    }
+
+    public function setOrderNo(string $prefix, $pad_string = '0', int $len = 8)
+    {
+        $orderNo = $prefix . str_pad($this->id, $len, $pad_string, STR_PAD_LEFT);
+        $this->order_no = $orderNo;
+        $this->update();
     }
 }
