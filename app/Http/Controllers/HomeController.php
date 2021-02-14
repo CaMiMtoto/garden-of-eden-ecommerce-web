@@ -29,8 +29,8 @@ class HomeController extends Controller
             ->join('products', "products.id", "=", "order_items.product_id")
             ->where('orders.status', '=', Order::DELIVERED)
             ->orderByDesc('year')
-            ->groupBy("year")->limit(5)->get();
-//return $revenues->pluck('amount');
+            ->groupBy("year")->limit(5)->get()->sortBy('year')->values();
+//        return $revenues->sortBy('year')->values();
 
         return view('admins.dashboard', compact('revenues'));
     }

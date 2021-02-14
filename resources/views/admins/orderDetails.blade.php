@@ -5,7 +5,8 @@
 
 </style>
 
-@if(\Illuminate\Support\Facades\Auth::user()->role==='Admin')
+{{--@if(\Illuminate\Support\Facades\Auth::user()->role==='Admin')--}}
+@if(auth()->user()->role=='Admin' || auth()->user()->role=='Super admin')
     <div class="">
         <a target="_blank" href="{{ route('orders.printOrder',['id'=>$order->id]) }}"
            class="btn btn-primary btn-sm pull-right">

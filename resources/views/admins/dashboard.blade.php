@@ -311,36 +311,36 @@
     <!-- Orders -->
     <div class="dashboard-section no-margin">
         <div class="panel panel-default rounded-sm shadow-sm">
-          <div class="panel-heading bg-white">
-              <h3 class="panel-title"><i class="fa fa-square"></i> Summary</h3>
-          </div>
-          <div class="panel-body">
-              <div class="row">
-                  <div class="col-md-3 col-sm-6">
-                      <p class="metric-inline">
-                          <i class="fa fa-money"></i> {{ number_format(\App\MyFunc::toMoneyIncome()) }}
-                          <span>Total revenue</span></p>
-                  </div>
-                  <div class="col-md-3 col-sm-6">
-                      <p class="metric-inline">
-                          <i class="fa fa-product-hunt"></i> {{ number_format(\App\MyFunc::counts("products")) }}
-                          <span>Products</span>
-                      </p>
-                  </div>
-                  <div class="col-md-3 col-sm-6">
-                      <p class="metric-inline">
-                          <i class="fa fa-list-ul"></i> {{ number_format(\App\MyFunc::counts("categories")) }}
-                          <span>Categories</span>
-                      </p>
-                  </div>
-                  <div class="col-md-3 col-sm-6">
-                      <p class="metric-inline">
-                          <i class="fa fa-users"></i> {{ number_format(\App\MyFunc::totalClients()) }}
-                          <span>Clients</span>
-                      </p>
-                  </div>
-              </div>
-          </div>
+            <div class="panel-heading bg-white">
+                <h3 class="panel-title"><i class="fa fa-square"></i> Summary</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <p class="metric-inline">
+                            <i class="fa fa-money"></i> {{ number_format(\App\MyFunc::toMoneyIncome()) }}
+                            <span>Total revenue</span></p>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <p class="metric-inline">
+                            <i class="fa fa-product-hunt"></i> {{ number_format(\App\MyFunc::counts("products")) }}
+                            <span>Products</span>
+                        </p>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <p class="metric-inline">
+                            <i class="fa fa-list-ul"></i> {{ number_format(\App\MyFunc::counts("categories")) }}
+                            <span>Categories</span>
+                        </p>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <p class="metric-inline">
+                            <i class="fa fa-users"></i> {{ number_format(\App\MyFunc::totalClients()) }}
+                            <span>Clients</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- END  -->
@@ -427,19 +427,31 @@
                 showPoint: true,
                 showArea: true,
                 axisX: {
-                    showGrid: false
+                    showGrid: true
                 },
-                lineSmooth: false,
+                axisY: {
+                    labelInterpolationFnc: function (value, idx) {
+                        return Math.ceil(value).toLocaleString();
+                    },
+                    showGrid: true
+                },
+                lineSmooth: true,
                 chartPadding: {
-                    top: 0,
-                    right: 0,
+                    top: 30,
+                    right: 30,
                     bottom: 30,
-                    left: 30
+                    left: 50
                 },
+
                 plugins: [
                     Chartist.plugins.tooltip({
-                        appendToBody: true
+                        appendToBody: false,
+                        // currency: ' ',
+                        transformTooltipTextFnc: function(tooltip) {
+                           return Math.ceil(tooltip).toLocaleString();
+                        }
                     }),
+
                     Chartist.plugins.ctAxisTitle({
                         axisX: {
                             type: Chartist.AutoScaleAxis,
@@ -458,6 +470,7 @@
                                 x: 0,
                                 y: -10
                             },
+
                         }
                     })
                 ]
