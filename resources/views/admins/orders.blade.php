@@ -4,29 +4,26 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="panel  rounded-sm shadow-sm panel-default">
+            <div class="panel rounded-sm shadow-sm panel-default">
                 <div class="panel-heading bg-white">
                     <h4 class="panel-title">
                         <i class="fa fa-square"></i> Manage Orders
                     </h4>
                 </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-condensed  table-hover table-border rounded-sm"
-                               id="manageTable">
-                            <thead>
-                            <tr>
-                                <th>Oder Date</th>
-                                <th>Client Name</th>
-                                <th>Client Phone</th>
-                                <th>Order status</th>
-                                <th>Options</th>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-
+                <div class="panel-body table-responsive">
+                    <table class="table table-condensed table-hover table-border rounded"
+                           id="manageTable">
+                        <thead>
+                        <tr>
+                            <th>Oder Date</th>
+                            <th>Client Name</th>
+                            <th>Client Phone</th>
+                            <th>Order status</th>
+                            <th>Options</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
 
@@ -74,7 +71,9 @@
     <!-- /  -->
 
 
+@endsection
 
+@section('scripts')
     <script>
 
         var defaultUrl = "{{ route('orders.all')  }}";
@@ -260,4 +259,4 @@
             });
         });
     </script>
-@endsection
+@stop

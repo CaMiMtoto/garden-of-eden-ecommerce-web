@@ -1,13 +1,19 @@
-/*
 try {
-    let jquery = require('jquery');
-    window.$ = jquery;
-    window.jQuery = jquery;
-    require('bootstrap/dist/js/bootstrap.min');
+    let $ = require('jquery');
+    window.$ = $;
+    window.jQuery = $;
+    require('bootstrap');
+    require('../../public/vendor/datatables.net/js/jquery.dataTables.min.js');
+    require('../../public/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js');
+
+    require('../../public/vendor/metisMenu/metisMenu.js');
+    require('../../public/vendor/parsleyjs/js/parsley.min.js');
+    require('../../public/vendor/jquery-slimscroll/jquery.slimscroll.min.js');
+    require('../../public/vendor/sweetalert/sweetalert.min.js');
+    require('../../public/js/common.js');
 } catch (e) {
     console.log(e);
 }
-*/
 
 
 function printDoc() {
@@ -46,7 +52,7 @@ $(function () {
             button.button('reset');
             // reload the manage member table
             form[0].reset();
-            
+
             table.ajax.reload(null);
 
             $('#add-messages').html('<div class="alert alert-success">' +

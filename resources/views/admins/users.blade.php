@@ -7,31 +7,32 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="panel flat">
-                <div class="panel-heading flat">
+            <div class="panel panel-default rounded-sm shadow-sm">
+                <div class="panel-heading bg-white">
                     <h4 class="panel-title">
                         <i class="fa fa-square"></i> Manage users
-
-                        <button  data-toggle="modal" data-target="#addModal" type="button" class="btn btn-default pull-right btn-sm flat">
+                        <button data-toggle="modal" data-target="#addModal" type="button"
+                                class="btn btn-primary pull-right btn-sm rounded-sm">
                             <i class="fa fa-user-plus"></i>
                             Add New User
                         </button>
                         <span class="clearfix"></span>
                     </h4>
-                    <hr>
                 </div>
-                <div class="panel-body panel-content">
-                    <table class="table table-condensed table-bordered table-striped table-responsive table-hover" id="manageTable">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Options</th>
-                        </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-condensed table-hover table-border" id="manageTable">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Options</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -43,7 +44,8 @@
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form novalidate class="form-horizontal" id="submitForm" action="{{ route('users.store') }}" method="POST">
+                <form novalidate class="form-horizontal" autocomplete="off" id="submitForm"
+                      action="{{ route('users.store') }}" method="POST">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
@@ -58,14 +60,16 @@
                             <label for="name" class="col-sm-4 control-label">Name</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <input type="text"  required class="form-control" id="name" placeholder="User full Name" name="name" autocomplete="off">
+                                <input type="text" required class="form-control" id="name" placeholder="User full Name"
+                                       name="name" autocomplete="off">
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
                             <label for="email" class="col-sm-4 control-label">Email</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <input type="email"  required class="form-control" id="name" placeholder="Email address" name="email" autocomplete="off">
+                                <input type="email" required class="form-control" id="name" placeholder="Email address"
+                                       name="email" autocomplete="off">
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
@@ -83,14 +87,21 @@
                             <label for="password" class="col-sm-4 control-label">Password</label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7">
-                                <input type="password"  required class="form-control" id="password" placeholder="Password" name="password" autocomplete="off">
+                                <input type="password" required class="form-control" id="password"
+                                       placeholder="Password" name="password" autocomplete="off">
                             </div>
                         </div> <!-- /form-group-->
                     </div> <!-- /modal-body -->
                     <div class="modal-footer">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
-                            <button type="submit" class="btn btn-primary" id="createBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
+                        <div>
+                            <button type="submit" class="btn btn-primary" id="createBtn" data-loading-text="Loading...">
+                                <i class="glyphicon glyphicon-ok-sign"></i>
+                                Save Changes
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                <i class="glyphicon glyphicon-remove-sign"></i>
+                                Close
+                            </button>
                         </div>
                     </div> <!-- /modal-footer -->
                 </form> <!-- /.form -->
@@ -103,15 +114,18 @@
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form novalidate class="form-horizontal" id="editForm" action="{{ route('users.update') }}">
+                <form novalidate class="form-horizontal" id="editForm" action="{{ route('users.update') }}"
+                      autocomplete="off">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-pencil"></i> Edit user</h4>
                     </div>
                     <div class="modal-body">
                         <div id="edit-messages"></div>
 
-                        <div class="modal-loading div-hide" style="width:50px; margin:auto;padding-top:50px; padding-bottom:50px;">
+                        <div class="modal-loading div-hide"
+                             style="width:50px; margin:auto;padding-top:50px; padding-bottom:50px;">
                             <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -122,14 +136,16 @@
                                 <label for="edit_name" class="col-sm-4 control-label">Name</label>
                                 <label class="col-sm-1 control-label">: </label>
                                 <div class="col-sm-7">
-                                    <input type="text"  required class="form-control" id="edit_name" placeholder="User full Name" name="name" autocomplete="off">
+                                    <input type="text" required class="form-control" id="edit_name"
+                                           placeholder="User full Name" name="name" autocomplete="off">
                                 </div>
                             </div> <!-- /form-group-->
                             <div class="form-group">
                                 <label for="edit_email" class="col-sm-4 control-label">Email</label>
                                 <label class="col-sm-1 control-label">: </label>
                                 <div class="col-sm-7">
-                                    <input type="email"  required class="form-control" id="edit_email" placeholder="Email address" name="email" autocomplete="off">
+                                    <input type="email" required class="form-control" id="edit_email"
+                                           placeholder="Email address" name="email" autocomplete="off">
                                 </div>
                             </div> <!-- /form-group-->
                             <div class="form-group">
@@ -147,7 +163,8 @@
                                 <label for="password" class="col-sm-4 control-label">Password</label>
                                 <label class="col-sm-1 control-label">: </label>
                                 <div class="col-sm-7">
-                                    <input type="password"  class="form-control" id="password" placeholder="Password" name="password" autocomplete="off">
+                                    <input type="password" class="form-control" id="password" placeholder="Password"
+                                           name="password" autocomplete="off">
                                 </div>
                             </div> <!-- /form-group-->
                         </div>
@@ -156,10 +173,15 @@
                     </div> <!-- /modal-body -->
 
                     <div class="modal-footer editFooter">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
-
-                            <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes</button>
+                        <div>
+                            <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading...">
+                                <i class="glyphicon glyphicon-ok-sign"></i>
+                                Save Changes
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                <i class="glyphicon glyphicon-remove-sign"></i>
+                                Close
+                            </button>
                         </div>
                     </div>
                     <!-- /modal-footer -->
@@ -172,9 +194,8 @@
     </div>
     <!-- /categories  -->
 
-
-
-
+@endsection
+@section('scripts')
     <script>
 
         var defaultUrl = "{{ route('users.all')  }}";
@@ -200,10 +221,10 @@
                         'sortable': false,
                         render: function (data, type, row) {
                             return "<div class='btn-group btn-group-sm'>" +
-                                "<button class='btn btn-default btn-sm flat js-edit' " +
+                                "<button class='btn btn-default btn-sm js-edit' " +
                                 "data-url='/admin/users/show/" + row.id + "' data-id='" + row.id + "'> " +
                                 "<i class='glyphicon glyphicon-edit'></i></button>" +
-                                "<button class='btn btn-warning  btn-sm flat js-delete' data-id='" + data +
+                                "<button class='btn btn-warning  btn-sm js-delete' data-id='" + data +
                                 "' data-url='/admin/users/destroy/" + row.id + "'> " +
                                 "<i class='glyphicon glyphicon-trash'></i>" +
                                 "</button>" +
@@ -260,4 +281,4 @@
             });
         });
     </script>
-@endsection
+@stop

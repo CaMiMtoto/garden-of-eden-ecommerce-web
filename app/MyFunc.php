@@ -9,6 +9,7 @@
 namespace App;
 
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class MyFunc
@@ -16,55 +17,55 @@ class MyFunc
     public static function format_phone_us($phone)
     {
         // note: making sure we have something
-        if (!isset($phone)) {
+        if (!isset($phone))
+        {
             return '';
         }
         // note: strip out everything but numbers
         $phone = preg_replace("/[^0-9]/", "", $phone);
         $length = strlen($phone);
-        switch ($length) {
+        switch ($length)
+        {
             case 7:
                 return preg_replace("/([0-9]{3})([0-9]{4})/", "$1-$2", $phone);
-                break;
             case 10:
                 return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "($1) $2-$3", $phone);
-                break;
             case 11:
-                return preg_replace("/([0-9]{1})([0-9]{3})([0-9]{3})([0-9]{4})/", "$1($2) $3-$4", $phone);
-                break;
+                return preg_replace("/([0-9])([0-9]{3})([0-9]{3})([0-9]{4})/", "$1($2) $3-$4", $phone);
             default:
                 return $phone;
                 break;
         }
     }
 
-    static function counts($table)
+    static function counts($table): int
     {
         return DB::table($table)->count();
     }
 
-    static function countOrdersByStatus($status)
+    static function countOrdersByStatus($status): int
     {
         return DB::table('orders')
+            ->whereDate('created_at', date('Y-m-d'))
             ->where('status', $status)->count();
     }
 
     static function countOrdersByStatusPercentage($status)
     {
         $totalByStatus = self::countOrdersByStatus($status);
-        $totalOrders = self::counts("orders");
-        return ($totalByStatus * 100) /( $totalOrders > 0 ? $totalOrders : 1);
+        $totalOrders = Order::query()->whereDate('created_at', date('Y-m-d'))->count();
+        return ($totalByStatus * 100) / ($totalOrders > 0 ? $totalOrders : 1);
     }
 
     static function recentOrders()
     {
         return Order::with('orderItems')
-            ->orderBy('id', 'desc')
+            ->latest()
             ->limit(6)
             ->get();
     }
 
-    static function topSellingProducts()
+    static function topSellingProducts(): Collection
     {
         return DB::table('order_items')
             ->join('products', 'order_items.product_id', '=', 'products.id')
@@ -79,7 +80,7 @@ class MyFunc
 
     }
 
-    static function totalClients()
+    static function totalClients(): int
     {
         return count(
             DB::table('orders')
@@ -90,7 +91,7 @@ class MyFunc
         );
     }
 
-    static function toMoneyIncome()
+    static function toMoneyIncome(): int
     {
         return DB::table('order_items')
             ->join('orders', 'order_items.order_id', '=', 'orders.id')
@@ -98,7 +99,9 @@ class MyFunc
             ->sum("order_items.sub_total");
 
     }
-    static function getDefaultSetting(){
+
+    static function getDefaultSetting()
+    {
         return Setting::orderBy('id', 'asc')->limit(1)->first();
     }
 }

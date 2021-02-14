@@ -28,6 +28,7 @@ class Order extends Model
     const DELIVERED = 'Delivered';
     const CANCELLED = 'Cancelled';
 
+
     public function orderItems()
     {
         return $this->hasMany('App\OrderItem');

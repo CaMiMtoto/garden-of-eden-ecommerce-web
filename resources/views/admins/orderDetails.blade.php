@@ -6,14 +6,14 @@
 </style>
 
 @if(\Illuminate\Support\Facades\Auth::user()->role==='Admin')
-    <div>
+    <div class="">
         <a target="_blank" href="{{ route('orders.printOrder',['id'=>$order->id]) }}"
            class="btn btn-primary btn-sm pull-right">
             <i class="fa fa-print"></i>
             Print order
         </a>
     </div>
-
+    <div class="clearfix"></div>
 @endif
 
 <h5>Client information</h5>
