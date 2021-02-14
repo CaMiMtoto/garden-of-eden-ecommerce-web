@@ -32,9 +32,9 @@
                         wire:loading.attr="disabled"
                         class="btn btn-default btn-cart text-capitalize"
                         title="Click here to update Quantity."
-                        wire:click="update"
+{{--                        wire:click="update"--}}
                         data-toggle="tooltip" data-placement="right"
-                        type="button">
+                        type="submit">
                     <i class="fa fa-plus"></i>
                 </button>
               </span>
