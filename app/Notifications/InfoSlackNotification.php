@@ -16,7 +16,7 @@ class InfoSlackNotification extends Notification
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param $message
      */
     public function __construct($message)
     {

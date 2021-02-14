@@ -1,12 +1,11 @@
-<div id="left-sidebar" class="sidebar">
+<div id="left-sidebar" class="sidebar shadow-sm">
     <button type="button" class="btn btn-xs btn-link btn-toggle-fullwidth">
         <span class="sr-only">Toggle Fullwidth</span>
         <i class="fa fa-angle-left"></i>
     </button>
     <div class="sidebar-scroll">
         <div class="user-account">
-            {{--        <img src="{{ asset('img/user.png') }}"  alt="User Profile Picture">--}}
-            <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive  user-photo"
+            <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive  user-photo img-circle shadow-sm"
                  alt="Garden Of Eden Produce" style="width: 100px;height: 100px">
             <div class="dropdown">
                 <a href="#" class="dropdown-toggle user-name" data-toggle="dropdown">

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\OrderStatusUpdated;
+use App\Jobs\ProcessOrder;
 use App\Order;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -27,17 +30,18 @@ class OrderController extends Controller
 
         $limit = $request->input('length');
         $start = $request->input('start');
-        /*$order = $columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');*/
-        $order='created_at';
-        $dir='desc';
-        if (empty($request->input('search.value'))) {
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+        if (empty($request->input('search.value')))
+        {
             $orders = Order::with('user')
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
-        } else {
+        }
+        else
+        {
             $search = $request->input('search.value');
             $orders = Order::with('user')
                 ->where('clientName', 'LIKE', "%{$search}%")
@@ -58,8 +62,10 @@ class OrderController extends Controller
         }
 
         $data = array();
-        if (!empty($orders)) {
-            foreach ($orders as $order) {
+        if (!empty($orders))
+        {
+            foreach ($orders as $order)
+            {
                 $nestedData['id'] = $order->id;
                 $nestedData['clientName'] = $order->clientName;
                 $nestedData['clientPhone'] = $order->clientPhone;
@@ -84,7 +90,8 @@ class OrderController extends Controller
     {
         //
         $obj = Order::with("orderItems.product")->find($id);
-        if (!$obj) {
+        if (!$obj)
+        {
             return \response()->json(["message" => "Not found"], 404);
         }
         return view("admins.orderDetails", ['order' => $obj]);
@@ -94,22 +101,29 @@ class OrderController extends Controller
     {
         //
         $obj = Order::with("orderItems.product")->find($id);
-        if (!$obj) {
+        if (!$obj)
+        {
             return \response()->json(["message" => "Not found"], 404);
         }
         return view("admins.printOrder", ['order' => $obj]);
     }
 
 
-    public function mark(Request $request)
+    public function mark(Request $request): JsonResponse
     {
-        $obj = Order::find($request->input('id'));
-        if (!$obj) {
+        $order = Order::query()->find($request->input('id'));
+        $prevStatus = $order->status;
+        if (!$order)
+        {
             return \response()->json(["message" => "Not found"], 404);
         }
-        $obj->status = $request->input('status');
-        $obj->update();
-        return \response()->json(["data" => $obj], 204);
+        $order->status = $request->input('status');
+        $order->update();
+
+        if ($order->status != $prevStatus)
+            OrderStatusUpdated::dispatch($order, auth()->user());
+
+        return \response()->json(["data" => $order], 204);
     }
 
     public function orderSuccess($id)

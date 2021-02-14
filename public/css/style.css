@@ -790,7 +790,7 @@ textarea.input {
   padding: 60px 0px;
   margin: 30px 0px;
   background-color: transparent;
-  background-image: url('../img/uploaded-file.jpg');
+  /*background-image: url('../../img/uploaded-file.jpg');*/
   background-position: center;
   background-repeat: no-repeat;
 }

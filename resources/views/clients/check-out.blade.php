@@ -186,7 +186,7 @@
 
                                 <div class="form-group">
                                     <div>
-                                        <button type="submit" class="btn btn-danger btn-lg btn-block">
+                                        <button type="submit" class="btn btn-success btn-lg btn-block">
                                             <i class="fa fa-check-square"></i>
                                             Confirm your order
                                         </button>

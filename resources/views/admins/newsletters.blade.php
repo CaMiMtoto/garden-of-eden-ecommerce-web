@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="container">
-        <div class="panel">
-            <div class="panel-heading"
+    <div class="container-fluid">
+        <div class="panel panel-default rounded-sm shadow-sm">
+            <div class="panel-heading bg-white"
                  style="display: flex;align-items: center;justify-content: space-between;border-bottom: 1px solid #F8F8F8">
                 <h4>
                     <i class="fa fa-square"></i>
@@ -16,7 +16,7 @@
             </div>
 
             <div class="panel-body">
-                <table class="table table-hover" id="manageTable">
+                <table class="table table-hover table-border rounded-sm" id="manageTable">
                     <thead>
                     <tr>
                         <th>Date</th>

@@ -2,26 +2,23 @@
 @section('title','Products')
 
 @section('content')
-    <div class="section-heading">
-        <h1 class="page-title">Products</h1>
-    </div>
+
     <div class="row">
         <div class="col-md-12">
-            <div class="panel  flat">
-                <div class="panel-heading flat">
+            <div class="panel rounded-sm shadow-sm panel-default">
+                <div class="panel-heading bg-white">
                     <h4 class="panel-title">
                         <i class="fa fa-square"></i> Manage products
                         <button data-toggle="modal" data-target="#addModal" type="button"
-                                class="btn btn-default pull-right btn-sm flat">
+                                class="btn btn-primary pull-right btn-sm">
                             <i class="fa fa-plus icon-collapsed"></i>
                             Add New
                         </button>
                         <span class="clearfix"></span>
                     </h4>
-
                 </div>
-                <div class="panel-body panel-content table-responsive ">
-                    <table class="table table-condensed  table-hover"
+                <div class="panel-body panel-content table-responsive">
+                    <table class="table table-condensed  table-hover table-border rounded-sm table-hover"
                            id="manageTable">
                         <thead>
                         <tr>
@@ -49,7 +46,7 @@
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form enctype="multipart/form-data" novalidate class="form-horizontal" id="submitProductForm"
+                <form enctype="multipart/form-data" novalidate class="" id="submitProductForm"
                       action="{{ route('products.store') }}"
                       method="POST">
                     <div class="modal-header">
@@ -63,9 +60,8 @@
                         <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
 
                         <div class="form-group">
-                            <label for="productImage" class="col-sm-4 control-label">Product Image </label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <label for="productImage" class="control-label">Product Image </label>
+                            <div class="">
                                 <button type="button" class="btn btn-info btn-sm btn-block btn-upload-photo">
                                     <i class="fa fa-folder"></i>
                                     Choose Photo
@@ -74,17 +70,17 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="addname" class="col-sm-4 control-label">Product Name</label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <label for="addname" class="control-label">Product Name</label>
+
+                            <div class="">
                                 <input type="text" class="form-control" id="addname" placeholder="Product Name"
                                        name="name" autocomplete="off" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="addcategory" class="col-sm-4 control-label">Category Name</label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <label for="addcategory" class="control-label">Category Name</label>
+
+                            <div class="">
                                 <select name="category" class="form-control" id="addcategory" required>
                                     <option value="">--select--</option>
                                     @foreach($categories as $category)
@@ -93,80 +89,100 @@
                                 </select>
                             </div>
                         </div> <!-- /form-group-->
-                        <div class="form-group">
-                            <label for="addcatgory" class="col-sm-4 control-label">Price</label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="addprice" placeholder="Price" name="price"
-                                       autocomplete="off" required>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="addcatgory" class="control-label">Price</label>
+
+                                    <div class="">
+                                        <input type="text" class="form-control" id="addprice" placeholder="Price"
+                                               name="price"
+                                               autocomplete="off" required>
+                                    </div>
+                                </div> <!-- /form-group-->
                             </div>
-                        </div> <!-- /form-group-->
-                        <div class="form-group">
-                            <label for="adddiscount" class="col-sm-4 control-label">Discount</label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control"
-                                       id="adddiscount" placeholder="Discount" value="0"
-                                       name="discount" autocomplete="off" required>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="adddiscount" class="control-label">Discount</label>
+
+                                    <div class="">
+                                        <input type="text" class="form-control"
+                                               id="adddiscount" placeholder="Discount" value="0"
+                                               name="discount" autocomplete="off" required>
+                                    </div>
+                                </div> <!-- /form-group-->
                             </div>
-                        </div> <!-- /form-group-->
-                        <div class="form-group">
-                            <label for="addquantity" class="col-sm-4 control-label">Quantity #</label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
-                                <input type="number" min="1" max="100" class="form-control" id="addquantity"
-                                       placeholder="Quantity" name="qty" autocomplete="off" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="addquantity" class="control-label">Quantity #</label>
+
+                                    <div class="">
+                                        <input type="number" min="1" max="100" class="form-control" id="addquantity"
+                                               placeholder="Quantity" name="qty" autocomplete="off" required>
+                                    </div>
+                                </div> <!-- /form-group-->
                             </div>
-                        </div> <!-- /form-group-->
-                        <div class="form-group">
-                            <label for="addmeasure" class="col-sm-4 control-label">Unit measure</label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="addmeasure"
-                                       placeholder="Unit measure" name="measure" autocomplete="off" required>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="addmeasure" class="control-label">Unit measure</label>
+
+                                    <div class="">
+                                        <input type="text" class="form-control" id="addmeasure"
+                                               placeholder="Unit measure" name="measure" autocomplete="off" required>
+                                    </div>
+                                </div> <!-- /form-group-->
                             </div>
-                        </div> <!-- /form-group-->
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="addminStock" class="control-label">Min stock</label>
+
+                                    <div class="">
+                                        <input type="number" min="1" max="100" class="form-control" id="addminStock"
+                                               placeholder="Minimum stock alert" name="minStock" autocomplete="off"
+                                               required>
+                                    </div>
+                                </div> <!-- /form-group-->
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="addstatus" class="control-label">Status</label>
+
+                                    <div class="">
+                                        <select name="status" class="form-control" id="addstatus" required>
+                                            <option value="">--select--</option>
+                                            <option value="Available">Available</option>
+                                            <option value="Not Available">Not Available</option>
+                                            <option value="Not Active">Not Active</option>
+                                        </select>
+                                    </div>
+                                </div> <!-- /form-group-->
+                            </div>
+                        </div>
 
                         <div class="form-group">
-                            <label for="addminStock" class="col-sm-4 control-label">Min stock</label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
-                                <input type="number" min="1" max="100" class="form-control" id="addminStock"
-                                       placeholder="Minimum stock alert" name="minStock" autocomplete="off" required>
-                            </div>
-                        </div> <!-- /form-group-->
-                        <div class="form-group">
-                            <label for="addescription" class="col-sm-4 control-label">Description</label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <label for="addescription" class="control-label">Description</label>
+
+                            <div class="">
                                 <textarea name="description" placeholder="Description" id="addescription"
                                           class="form-control"></textarea>
                             </div>
                         </div> <!-- /form-group-->
-                        <div class="form-group">
-                            <label for="addstatus" class="col-sm-4 control-label">Status</label>
-                            <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
-                                <select name="status" class="form-control" id="addstatus" required>
-                                    <option value="">--select--</option>
-                                    <option value="Available">Available</option>
-                                    <option value="Not Available">Not Available</option>
-                                    <option value="Not Active">Not Active</option>
-                                </select>
-                            </div>
-                        </div> <!-- /form-group-->
-
                     </div> <!-- /modal-body -->
                     <div class="modal-footer">
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-default flat" data-dismiss="modal"><i
-                                        class="glyphicon glyphicon-remove-sign"></i> Close
-                            </button>
-                            <button type="submit" class="btn btn-primary flat" id="createBtn"
-                                    data-loading-text="Loading...">
-                                <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary" id="createBtn"
+                                data-loading-text="Loading...">
+                            <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                                    class="glyphicon glyphicon-remove-sign"></i> Close
+                        </button>
                     </div> <!-- /modal-footer -->
                 </form> <!-- /.form -->
             </div> <!-- /modal-content -->
@@ -178,7 +194,7 @@
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form class="form-horizontal validate-form" method="post" id="editProductForm"
+                <form class="validate-form" method="post" id="editProductForm"
                       action="{{ route('products.update') }}" enctype="multipart/form-data" novalidate>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -195,28 +211,34 @@
                         <div class="edit-result">
                             <!-- TABS PILL STYLE -->
                             <ul class="nav nav-pills" role="tablist">
-                                <li class="active"><a href="#profile" role="tab" data-toggle="tab" aria-expanded="true">
+                                <li class="">
+                                    <a href="#profile" role="tab" data-toggle="tab" aria-expanded="true">
                                         <i class="fa fa-folder"></i>
-                                        Image</a></li>
-                                <li class=""><a href="#productInfo" role="tab" data-toggle="tab" aria-expanded="false">
+                                        Image
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="#productInfo" role="tab" data-toggle="tab" aria-expanded="false">
                                         <i class="fa fa-info-circle"></i>
-                                        Info</a></li>
+                                        Info
+                                    </a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div id="edit-messages" class="text-success text-center center-block"></div>
-                                <div class="tab-pane fade active in" id="profile">
+                                <div class="tab-pane fade " id="profile">
                                     <div class="form-group">
-                                        <label for="productImage" class="col-sm-4 control-label">Product Image</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7" style="max-height: 300px;">
-                                            <img src="" alt="Image " class="img-thumbnail img-responsive product-img"
+                                        <label for="productImage" class="control-label">Product Image</label>
+
+                                        <div class="" style="max-height: 300px;">
+                                            <img src="" alt="Image " class="img-thumbnail img-responsive product-image"
                                                  style="overflow: scroll">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="productImage" class="col-sm-4 control-label">Select Image</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7">
+                                        <label for="productImage" class="control-label">Select Image</label>
+
+                                        <div class="">
                                             <button type="button"
                                                     class="btn btn-info btn-sm btn-block btn-upload-photo"><i
                                                         class="fa fa-folder"></i>
@@ -227,21 +249,21 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="productInfo">
-                                    {{ csrf_field() }}
+                                <div class="tab-pane fade active in" id="productInfo">
+                                    @csrf
                                     <div class="form-group">
-                                        <label for="editName" class="col-sm-4 control-label">Product Name</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7">
+                                        <label for="editName" class="control-label">Product Name</label>
+
+                                        <div class="">
                                             <input type="text" class="form-control" id="editName"
                                                    placeholder="Product Name"
                                                    name="name" autocomplete="off" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="editCategory" class="col-sm-4 control-label">Category Name</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7">
+                                        <label for="editCategory" class="control-label">Category Name</label>
+
+                                        <div class="">
                                             <select name="category" class="form-control" id="editCategory" required>
                                                 <option value="">--select--</option>
                                                 @foreach($categories as $category)
@@ -250,70 +272,99 @@
                                             </select>
                                         </div>
                                     </div> <!-- /form-group-->
-                                    <div class="form-group">
-                                        <label for="editPrice" class="col-sm-4 control-label">Price</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7">
-                                            <input type="text" class="form-control" id="editPrice" placeholder="Price"
-                                                   name="price" autocomplete="off" required>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="editPrice" class="control-label">Price</label>
+
+                                                <div class="">
+                                                    <input type="text" class="form-control" id="editPrice"
+                                                           placeholder="Price"
+                                                           name="price" autocomplete="off" required>
+                                                </div>
+                                            </div> <!-- /form-group-->
                                         </div>
-                                    </div> <!-- /form-group-->
-                                    <div class="form-group">
-                                        <label for="editDiscount" class="col-sm-4 control-label">Discount</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7">
-                                            <input type="text" class="form-control"
-                                                   id="editDiscount" placeholder="Discount" value="0"
-                                                   name="discount" autocomplete="off" required>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="editDiscount" class="control-label">Discount</label>
+
+                                                <div class="">
+                                                    <input type="text" class="form-control"
+                                                           id="editDiscount" placeholder="Discount" value="0"
+                                                           name="discount" autocomplete="off" required>
+                                                </div>
+                                            </div> <!-- /form-group-->
                                         </div>
-                                    </div> <!-- /form-group-->
-                                    <div class="form-group">
-                                        <label for="editQty" class="col-sm-4 control-label">Quantity #</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7">
-                                            <input type="number" min="1" max="100" class="form-control" id="editQty"
-                                                   placeholder="Quantity" name="qty" autocomplete="off" required>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="editQty" class="control-label">Quantity #</label>
+
+                                                <div class="">
+                                                    <input type="number" min="1" max="100" class="form-control"
+                                                           id="editQty"
+                                                           placeholder="Quantity" name="qty" autocomplete="off"
+                                                           required>
+                                                </div>
+                                            </div> <!-- /form-group-->
                                         </div>
-                                    </div> <!-- /form-group-->
-                                    <div class="form-group">
-                                        <label for="editMeasure" class="col-sm-4 control-label">Unit measure</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7">
-                                            <input type="text" class="form-control" id="editMeasure"
-                                                   placeholder="Unit measure" name="measure" autocomplete="off"
-                                                   required>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="editMeasure" class="control-label">Unit measure</label>
+
+                                                <div class="">
+                                                    <input type="text" class="form-control" id="editMeasure"
+                                                           placeholder="Unit measure" name="measure" autocomplete="off"
+                                                           required>
+                                                </div>
+                                            </div> <!-- /form-group-->
                                         </div>
-                                    </div> <!-- /form-group-->
-                                    <div class="form-group">
-                                        <label for="editMinStock" class="col-sm-4 control-label">Min stock</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7">
-                                            <input type="number" min="1" max="100" class="form-control"
-                                                   id="editMinStock"
-                                                   placeholder="Minimum stock alert" name="minStock" autocomplete="off"
-                                                   required>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="editMinStock" class="control-label">Min stock</label>
+
+                                                <div class="">
+                                                    <input type="number" min="1" max="100" class="form-control"
+                                                           id="editMinStock"
+                                                           placeholder="Minimum stock alert" name="minStock"
+                                                           autocomplete="off"
+                                                           required>
+                                                </div>
+                                            </div> <!-- /form-group-->
                                         </div>
-                                    </div> <!-- /form-group-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="editStatus" class="control-label">Status</label>
+
+                                                <div class="">
+                                                    <select name="status" class="form-control" id="editStatus" required>
+                                                        <option value="">--select--</option>
+                                                        <option value="Available">Available</option>
+                                                        <option value="Not Available">Not Available</option>
+                                                        <option value="Not Active">Not Active</option>
+                                                    </select>
+                                                </div>
+                                            </div> <!-- /form-group-->
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group">
-                                        <label for="editDescription" class="col-sm-4 control-label">Description</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7">
+                                        <label for="editDescription" class="control-label">Description</label>
+
+                                        <div class="">
                                             <textarea name="description" placeholder="Description"
                                                       id="editDescription" class="form-control"></textarea>
                                         </div>
                                     </div> <!-- /form-group-->
-                                    <div class="form-group">
-                                        <label for="editStatus" class="col-sm-4 control-label">Status</label>
-                                        <label class="col-sm-1 control-label">: </label>
-                                        <div class="col-sm-7">
-                                            <select name="status" class="form-control" id="editStatus" required>
-                                                <option value="">--select--</option>
-                                                <option value="Available">Available</option>
-                                                <option value="Not Available">Not Available</option>
-                                                <option value="Not Active">Not Active</option>
-                                            </select>
-                                        </div>
-                                    </div> <!-- /form-group-->
+
                                 </div>
                             </div>
                         </div>
@@ -321,14 +372,12 @@
                     </div> <!-- /modal-body -->
 
                     <div class="modal-footer  editFooter">
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                <i class="glyphicon glyphicon-remove-sign"></i>Close
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading...">
-                                <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading...">
+                            <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <i class="glyphicon glyphicon-remove-sign"></i>Close
+                        </button>
                     </div> <!-- /modal-footer -->
                 </form> <!-- /.form -->
             </div> <!-- /modal-content -->
@@ -336,7 +385,9 @@
     </div>
     <!-- /  -->
 
+@endsection
 
+@section('scripts')
     <script>
 
         var defaultUrl = "{{ route('products.all')  }}";
@@ -344,7 +395,7 @@
         var manageTable = $("#manageTable");
 
         function myFunc() {
-            table = manageTable.DataTable({
+            window.table = manageTable.DataTable({
                 "bProcessing": true,
                 "serverSide": true,
                 ajax: {
@@ -357,7 +408,7 @@
                     {
                         data: 'image', 'sortable': false,
                         render: function (data, type, row) {
-                            return "<img src='" + data + "' class='img-responsive product_image img-thumbnail'/>"
+                            return "<img src='" + data + "' class='img-responsive img-circle prod-img img-thumbnail' />"
                         }
                     },
                     {data: 'name', 'sortable': false},
@@ -381,11 +432,11 @@
                         data: 'id',
                         'sortable': false,
                         render: function (data, type, row) {
-                            return "<div class='btn-group btn-group-xs flat'>" +
-                                "<button class='btn btn-default btn-xs flat js-edit' " +
+                            return "<div class='btn-group btn-group-sm'>" +
+                                "<button class='btn btn-default js-edit' " +
                                 "data-url='/admin/products/show/" + row.id + "' data-id='" + row.id + "'> " +
                                 "<i class='glyphicon glyphicon-edit'></i></button>" +
-                                "<button class='btn btn-danger  btn-xs flat js-delete' data-id='" + data +
+                                "<button class='btn btn-danger  js-delete' data-id='" + data +
                                 "' data-url='/admin/products/destroy/" + row.id + "'> " +
                                 "<i class='glyphicon glyphicon-trash'></i>" +
                                 "</button>" +
@@ -444,7 +495,7 @@
                     $("#editDiscount").val(response.discount);
                     // set the form value to be updated
                     var src = '/uploads/products/' + response.image;
-                    $('.product-img').attr("src", src);
+                    $('.product-image').attr("src", src);
                     // add the products id
                     footer.after('<input type="hidden" name="id" id="id" value="' + response.id + '" />');
                 }).fail(function (error) {
@@ -477,8 +528,7 @@
                     //resetting form
                     form[0].reset();
                     // reload the manage member table
-                    table.destroy();
-                    myFunc();
+                    table.ajax.reload();
                     $('#add-messages').html('<div class="alert alert-success">' +
                         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                         '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> '
@@ -519,8 +569,7 @@
                     $("#editBtn").button('reset');
                     form[0].reset();
                     // reload the manage member table
-                    table.destroy();
-                    myFunc();
+                    table.ajax.reload();
 
                     $('#edit-messages').html('<div class="alert alert-success">' +
                         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -574,8 +623,7 @@
                             confirmButtonText: "Close"
                         });
                         // reload the manage member table
-                        table.destroy();
-                        myFunc();
+                        table.ajax.reload();
                     }).fail(function (error) {
                         confirmButton.button('reset');
                         swal({
@@ -591,4 +639,4 @@
             }
         });
     </script>
-@endsection
+@stop

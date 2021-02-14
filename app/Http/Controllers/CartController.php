@@ -40,9 +40,7 @@ class CartController extends Controller
 
     public function getShoppingCart()
     {
-        $cart = Cart::getContent();
-
-        return view('clients.carts', ['cart' => $cart]);
+        return view('clients.carts');
     }
 
     public function getIncrement(Request $request, $id)
@@ -115,8 +113,7 @@ class CartController extends Controller
         {
             return redirect()->back();
         }
-
-        $cart = Cart::getContent();
+        \DB::beginTransaction();
         $order = new Order();
         $order->clientPhone = $request->input('phoneNumber');
         $order->email = $request->input('email');
@@ -127,6 +124,7 @@ class CartController extends Controller
         $order->status = "Pending";
         $order->save();
 
+        $cart = Cart::getContent();
         foreach ($cart as $cartItem)
         {
             $orderItem = new OrderItem();
@@ -137,7 +135,9 @@ class CartController extends Controller
             $order->orderItems()->save($orderItem);
         }
 
-        //Send email to all users in background
+        $order->setOrderNo('ORD');
+        \DB::commit();
+
         ProcessOrder::dispatch($order);
 
         Cart::clear();

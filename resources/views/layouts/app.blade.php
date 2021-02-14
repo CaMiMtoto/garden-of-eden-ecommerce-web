@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-16x16.png') }}">
@@ -13,35 +12,12 @@
     <link rel="mask-icon" href="{{ asset('favicons/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#b91d47">
     <meta name="theme-color" content="#ffffff">
-
     <title>Garden of eden</title>
-
+    @livewireStyles
     <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,600&display=swap"
-          rel="stylesheet">
-    <!-- Bootstrap -->
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- Slick -->
-    {{--<link type="text/css" rel="stylesheet" href="{{ asset('css/slick.css') }}"/>--}}
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/slick-theme.css') }}"/>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-    <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/nouislider.min.css') }}"/>
-
-    <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="{{ asset('vendor/themify/themify-icons.css') }}">
-    {{--<link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">--}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Custom stylesheet -->
     @yield('styles')
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/custom.css') }}"/>
-    @yield('styles')
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 @if(\App\Event::where('active',true)->count()>0)
@@ -56,11 +32,11 @@
                     </span>
                 </button>
                 <div class="container" style="font-weight: lighter !important;">
-                   <div class="row">
-                       <div class="col-md-12">
-                           {!! $event->description !!}
-                       </div>
-                   </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {!! $event->description !!}
+                        </div>
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -81,44 +57,9 @@
 @include('partials.footer')
 <!-- /FOOTER -->
 
-{{--<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>--}}
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-{{--<script src="{{ asset('js/slick.min.js') }}"></script>--}}
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script src="{{ asset('js/nouislider.min.js') }}"></script>
-<script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
+@livewireScripts
+<script src="{{ asset('js/app.js') }}" ></script>
 @yield('scripts')
-<script>
-    $(function () {
 
-
-        $('')
-
-        $('[data-toggle="tooltip"]').tooltip();
-
-        const observer = lozad(); // lazy loads elements with default selector as '.lozad'
-        observer.observe();
-
-
-        $('.scroll').click(function (e) {
-            // prevent default action
-            e.preventDefault();
-
-            // get id of target div (placed in href attribute of anchor element)
-            // and pass it to the scrollToElement function
-            // also, use 2000 as an argument for the scroll speed (2 seconds, 2000 milliseconds)
-            scrollToElement($(this).attr('href'), 2000);
-        });
-    });
-
-    var scrollToElement = function (el, ms) {
-        var speed = (ms) ? ms : 600;
-        $('html,body').animate({
-            scrollTop: $(el).offset().top
-        }, speed);
-    }
-</script>
 </body>
 </html>

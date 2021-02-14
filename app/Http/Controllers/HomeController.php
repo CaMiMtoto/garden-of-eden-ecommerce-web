@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\HomeSlide;
 use App\MyFunc;
+use App\Order;
 use App\Setting;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -21,7 +22,17 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        return view('admins.dashboard');
+
+        $revenues = \DB::table("orders")
+            ->select(\DB::raw("YEAR(orders.created_at) as year"), \DB::raw("sum(order_items.sub_total) + orders.shipping_amount as amount"))
+            ->join('order_items', "order_items.order_id", "=", "orders.id")
+            ->join('products', "products.id", "=", "order_items.product_id")
+            ->where('orders.status', '=', Order::DELIVERED)
+            ->orderByDesc('year')
+            ->groupBy("year")->limit(5)->get();
+//return $revenues->pluck('amount');
+
+        return view('admins.dashboard', compact('revenues'));
     }
 
 
@@ -44,7 +55,8 @@ class HomeController extends Controller
         ]);
 
         $setting = MyFunc::getDefaultSetting();
-        if (!$setting) {
+        if (!$setting)
+        {
             $setting = new Setting();
         }
         $setting->company_name = $request->input('company_name');

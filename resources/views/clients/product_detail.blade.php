@@ -45,11 +45,8 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
-                        <div class="panel panel-body" style="padding: 0">
-                            <img class="img-responsive"
-                                 src="{{ $product->image_url }}" alt="">
-                        </div>
-
+                        <img class="img-responsive img-thumbnail rounded-sm shadow-sm"
+                             src="{{ $product->image_url }}" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -107,7 +104,7 @@
                 </div>
                 @foreach($alsoBoughtProducts as $item)
                     <div class="col-md-3 col-sm-6">
-                        @include('partials.product_card')
+                        <livewire:card-product :product="$item" label=""/>
                     </div>
                 @endforeach
             </div>

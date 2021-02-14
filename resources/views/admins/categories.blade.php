@@ -2,27 +2,23 @@
 @section('title','Categories')
 
 @section('content')
-    <div class="section-heading">
-        <h1 class="page-title">Product categories</h1>
-    </div>
+
     <div class="row">
         <div class="col-md-12">
-            <div class="panel flat">
-                <div class="panel-heading flat">
+            <div class="panel panel-default rounded-sm shadow-sm">
+                <div class="panel-heading bg-white">
                     <h4 class="panel-title">
                         <i class="fa fa-square"></i> Categories
-
                         <button data-toggle="modal" data-target="#addModal" type="button"
-                                class="btn btn-default pull-right btn-sm flat">
+                                class="btn btn-primary pull-right btn-sm">
                             <i class="fa fa-plus icon-collapsed"></i>
                             Add New
                         </button>
                         <span class="clearfix"></span>
                     </h4>
-                    <hr>
                 </div>
-                <div class="panel-body panel-content">
-                    <table class="table table-condensed table-striped table-responsive table-hover"
+                <div class="panel-body">
+                    <table class="table table-condensed table-responsive table-hover table-border rounded-sm"
                            id="manageTable">
                         <thead>
                         <tr>
@@ -44,7 +40,7 @@
     <!-- add categories -->
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content rounded-sm">
                 <form novalidate class="form-horizontal" id="submitForm" action="{{ route('category.store') }}"
                       method="POST">
                     <div class="modal-header">
@@ -77,14 +73,12 @@
                         </div> <!-- /form-group-->
                     </div> <!-- /modal-body -->
                     <div class="modal-footer">
-                        <div class="btn-group">
-                            <button type="submit" class="btn btn-primary" id="createBtn" data-loading-text="Loading...">
-                                <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
-                            </button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i
-                                        class="glyphicon glyphicon-remove-sign"></i> Close
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary rounded-sm" id="createBtn" data-loading-text="Loading...">
+                            <i class="glyphicon glyphicon-ok-sign"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-default rounded-sm" data-dismiss="modal"><i
+                                    class="glyphicon glyphicon-remove-sign"></i> Close
+                        </button>
                     </div> <!-- /modal-footer -->
                 </form> <!-- /.form -->
             </div> <!-- /modal-content -->
@@ -138,15 +132,12 @@
                     </div> <!-- /modal-body -->
 
                     <div class="modal-footer editFooter">
-                        <div class="btn-group">
-                            <button type="submit" class="btn btn-primary" id="editBtn" data-loading-text="Loading..."><i
-                                        class="glyphicon glyphicon-ok-sign"></i> Save Changes
-                            </button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i
-                                        class="glyphicon glyphicon-remove-sign"></i> Close
-                            </button>
-
-                        </div>
+                        <button type="submit" class="btn btn-primary rounded-sm" id="editBtn" data-loading-text="Loading..."><i
+                                    class="glyphicon glyphicon-ok-sign"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-default rounded-sm" data-dismiss="modal"><i
+                                    class="glyphicon glyphicon-remove-sign"></i> Close
+                        </button>
                     </div>
                     <!-- /modal-footer -->
                 </form>
@@ -161,6 +152,10 @@
 
 
 
+
+@endsection
+
+@section('scripts')
     <script>
 
         var defaultUrl = "{{ route('category.all')  }}";
@@ -168,7 +163,7 @@
         var manageTable = $("#manageTable");
 
         function myFunc() {
-            table = manageTable.DataTable({
+            window.table = manageTable.DataTable({
                 "bProcessing": true,
                 "serverSide": true,
                 ajax: {
@@ -180,11 +175,11 @@
                 columns: [
                     {data: 'name', 'sortable': true},
                     {
-                        data: 'status', 'sortable': true, render(data, type,row) {
-                            if(data==='Active'){
-                                return "<span class='label label-success'>"+data+"</span>"
+                        data: 'status', 'sortable': true, render(data, type, row) {
+                            if (data === 'Active') {
+                                return "<span class='label label-success'>" + data + "</span>"
                             }
-                            return "<span class='label label-danger'>"+data+"</span>"
+                            return "<span class='label label-danger'>" + data + "</span>"
                         }
                     },
                     {data: 'created_at', 'sortable': true},
@@ -193,10 +188,10 @@
                         'sortable': false,
                         render: function (data, type, row) {
                             return "<div class='btn-group btn-group-sm'>" +
-                                "<button class='btn btn-default btn-sm flat js-edit' " +
+                                "<button class='btn btn-default btn-sm js-edit' " +
                                 "data-url='/admin/categories/show/" + row.id + "' data-id='" + row.id + "'> " +
                                 "<i class='glyphicon glyphicon-edit'></i></button>" +
-                                "<button class='btn btn-warning  btn-sm flat js-delete' data-id='" + data +
+                                "<button class='btn btn-warning  btn-sm js-delete' data-id='" + data +
                                 "' data-url='/admin/categories/destroy/" + row.id + "'> " +
                                 "<i class='glyphicon glyphicon-trash'></i>" +
                                 "</button>" +
@@ -233,7 +228,7 @@
                     method: "get",
                     dataType: "json"
                 }).done(function (response) {
-                    console.log(response);
+
                     // modal spinner
                     $('.modal-loading').addClass('div-hide');
                     // modal result

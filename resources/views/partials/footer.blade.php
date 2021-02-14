@@ -132,10 +132,6 @@ $about = $defaultSetting->about;
 							Copyright &copy; {{ now()->format('Y') }} All rights reserved  | This website made by
                         <a style="color: whitesmoke"
                            href="mailto:jeanpaulbyiringiro9764@gmail.com">Jean Paul Byiringiro</a>,
-                        Tel:
-                        <a href="tel:0780661813">
-                          {{ format_phone_us('0780661813') }}
-                        </a>
                     </span>
                 </div>
             </div>
