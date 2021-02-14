@@ -33,12 +33,15 @@ class UsersController extends Controller
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-        if (empty($request->input('search.value'))) {
+        if (empty($request->input('search.value')))
+        {
             $users = User::whereNotIn('role', ['Client', Role::SUPER_ADMIN])->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
-        } else {
+        }
+        else
+        {
             $search = $request->input('search.value');
 
             $users = User::whereNotIn('role', ['Client', Role::SUPER_ADMIN])
@@ -57,8 +60,10 @@ class UsersController extends Controller
         }
 
         $data = array();
-        if (!empty($users)) {
-            foreach ($users as $user) {
+        if (!empty($users))
+        {
+            foreach ($users as $user)
+            {
                 $nestedData['id'] = $user->id;
                 $nestedData['name'] = $user->name;
                 $nestedData['email'] = $user->email;
@@ -104,7 +109,8 @@ class UsersController extends Controller
     {
         //
         $obj = User::find($id);
-        if (!$obj) {
+        if (!$obj)
+        {
             return \response()->json(["message" => "Not found"], 404);
         }
         return \response()->json($obj, 200);
@@ -135,7 +141,8 @@ class UsersController extends Controller
         $obj->user_name = $email;
         $obj->email = $email;
 
-        if (!empty($password)) {
+        if (!empty($password))
+        {
             $obj->password = bcrypt($password);
         }
 
@@ -147,7 +154,8 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $obj = User::find($id);
-        if (!$obj) {
+        if (!$obj)
+        {
             return \response()->json(["message" => "Not found"], 404);
         }
         $obj->delete();
@@ -170,14 +178,16 @@ class UsersController extends Controller
         $credentials = $request->only('user_name', 'password');
 
         $attempt = \auth()->attempt($credentials, \request('remember') ? true : false);
-        if ($attempt) {
+        if ($attempt)
+        {
             $user = \auth()->user();
 
-            Notification::route('slack', env('LOG_SLACK_WEBHOOK_URL'))
+            Notification::route('slack', config('app.LOG_SLACK_WEBHOOK_URL'))
                 ->notify(new InfoSlackNotification($user->name . " Logged in on " . $request->userAgent() . " ,with IP=" . $request->ip()));
 
 
-            if (in_array($user->role, Role::roles())) {
+            if (in_array($user->role, Role::roles()))
+            {
                 return redirect()->route('dashboard');
             }
             return redirect()->home();
@@ -191,11 +201,12 @@ class UsersController extends Controller
     public function logOut()
     {
         $user = Auth::user();
-        if ($user->role === 'Client') {
+        if ($user->role === 'Client')
+        {
             Auth::logout();
             return redirect()->route('home');
         }
-        Notification::route('slack', env('LOG_SLACK_WEBHOOK_URL'))
+        Notification::route('slack', config('app.LOG_SLACK_WEBHOOK_URL'))
             ->notify(new InfoSlackNotification($user->name . " Logged out"));
         Auth::logout();
         return view('auth.login');

@@ -112,13 +112,17 @@
                         data: 'status', 'sortable': true,
                         render: function (data) {
                             if (data === "Pending") {
-                                return "<a class='label label-warning rounded-pill'>" + data + "</a>";
+                                return "<a class='label label-warning'>" + data + "</a>";
                             } else if (data === "Processing") {
-                                return "<a class='label label-info rounded-pill'><i class='fa fa-spinner'></i> " + data + "</a>";
+                                return "<a class='label label-info'><i class='fa fa-spinner'></i> " + data + "</a>";
                             } else if (data === "Cancelled") {
-                                return "<a class='label label-danger rounded-pill'><i class='fa fa-close'></i> " + data + "</a>";
+                                return "<a class='label label-danger '><i class='fa fa-close'></i> " + data + "</a>";
+                            } else if (data === "{{\App\Order::SHIPPED}}") {
+                                return "<a class='label label-primary '><i class='fa fa-check-circle-o'></i> " + data + "</a>";
+                            } else if (data === "{{\App\Order::DELIVERED}}") {
+                                return "<a class='label label-success'><i class='fa fa-check-circle-o'></i> " + data + "</a>";
                             }
-                            return "<a class='label label-success rounded-pill'><i class='fa fa-check-circle-o'></i> " + data + "</a>";
+                            return "<a class='label label-default '><i class='fa fa-check-circle-o'></i> " + data + "</a>";
                         }
                     },
                     {

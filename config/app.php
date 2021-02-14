@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Garden Of Eden Produce'),
+    'LOG_SLACK_WEBHOOK_URL' => env('LOG_SLACK_WEBHOOK_URL', 'https://hooks.slack.com/services/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'),
 
     /*
     |--------------------------------------------------------------------------
