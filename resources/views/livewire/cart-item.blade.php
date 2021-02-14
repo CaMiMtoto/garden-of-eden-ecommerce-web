@@ -45,7 +45,7 @@
 
     <td>
         <p>
-            {{ number_format($cartItem->quantity*$cartItem->price) }}
+            {{ number_format($cartItem->getPriceSum()) }}
             <small>Rwf</small>
         </p>
     </td>

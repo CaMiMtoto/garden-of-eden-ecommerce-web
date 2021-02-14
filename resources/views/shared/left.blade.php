@@ -14,7 +14,7 @@
                 <ul class="dropdown-menu dropdown-menu-right account">
                     <li><a href="{{ route('users.index') }}">Users</a></li>
                     <li class="divider"></li>
-                    <li><a href="{{ route('logout') }}">Logout</a></li>
+                    <li><a href="{{ route('admin.logout') }}">Logout</a></li>
                 </ul>
             </div>
         </div>

@@ -90,7 +90,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::post('/orders/all', 'OrderController@all')->name('orders.all');
     Route::put('/orders/mark', 'OrderController@mark')->name('orders.mark');
 
-    Route::get('/logOut', 'UsersController@logOut')->name('logout');
+    Route::get('/logOut', 'UsersController@logOut')->name('admin.logout');
 
     //users routes
     Route::get('/users', 'UsersController@index')->name('users.index');

@@ -111,7 +111,7 @@
                             <li><a href="#"><i class="fa fa-fw fa-lock"></i> <span>Privacy</span></a></li>
                             <li class="divider"></li>
                             <li>
-                                <a href="{{ route('logout') }}">
+                                <a href="{{ route('admin.logout') }}">
                                     <i class="fa fa-sign-out"></i>
                                     Logo Out
                                 </a>
