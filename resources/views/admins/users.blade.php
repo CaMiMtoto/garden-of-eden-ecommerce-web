@@ -19,20 +19,18 @@
                         <span class="clearfix"></span>
                     </h4>
                 </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-condensed table-hover table-border" id="manageTable">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Options</th>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+                <div class="panel-body table-responsive">
+                    <table class="table table-condensed table-hover table-border" id="manageTable">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Options</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
 

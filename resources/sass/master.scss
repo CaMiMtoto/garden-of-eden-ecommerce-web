@@ -16,9 +16,9 @@
 // Variables
 @import "variables";
 
-html, body {
-  //font-family: Montserrat, sans-serif!important;
-  //font-size: 13px!important;
+body {
+  font-family: Montserrat, sans-serif !important;
+  font-size: small !important;
 }
 
 $rem: 1.5rem;
@@ -40,6 +40,11 @@ $rem: 1.5rem;
   background-color: $blue !important;
   border-color: $blue !important;
   color: white !important;
+}
+
+.ct-label {
+  font-size: small !important;
+  color: #5A5A5A;
 }
 
 
@@ -357,7 +362,7 @@ td {
   stroke: $green;
 }
 
-.ct-axis-title{
+.ct-axis-title {
   opacity: 0.2;
 }
 

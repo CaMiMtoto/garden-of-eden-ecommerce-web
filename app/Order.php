@@ -50,7 +50,7 @@ class Order extends Model
         return [self::PENDING, self::PROCESSING, self::SHIPPED, self::DELIVERED, self::CANCELLED];
     }
 
-    public function setOrderNo(string $prefix, $pad_string = '0', int $len = 8)
+    public function setOrderNo(string $prefix='ORD', $pad_string = '0', int $len = 8)
     {
         $orderNo = $prefix . str_pad($this->id, $len, $pad_string, STR_PAD_LEFT);
         $this->order_no = $orderNo;
