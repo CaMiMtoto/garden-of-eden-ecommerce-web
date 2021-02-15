@@ -10,7 +10,7 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/master.css') }}" rel="stylesheet">
     <style>
         html, body {
             font-family: 'Raleway', sans-serif !important;
@@ -19,9 +19,9 @@
     </style>
 </head>
 <body>
-<div class="container-fluid" style="display: flex;width: 100vw;height: 100vh;">
+<div class="container-fluid" style="height: 100vh!important;">
     <div class="row flex-center">
-        <div class="col-md-3 col-sm-6 col-xs-11">
+        <div class="col-md-4 col-lg-3 col-sm-6 col-xs-11">
             <div class="shadow-sm rounded-sm panel panel-default">
                 <div class="panel-heading bg-white no-border">
                     <div class="logo text-center">

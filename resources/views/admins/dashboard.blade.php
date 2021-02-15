@@ -132,7 +132,7 @@
                     <div class="panel-heading bg-white">
                         <h2 class="panel-title">
                             <i class="fa fa-pie-chart"></i>
-                            Orders analytics
+                            Orders status
                             <small class="text-muted">{{ date('M d Y') }}</small>
                         </h2>
                     </div>
@@ -141,46 +141,46 @@
                         <ul class="list-unstyled">
                             <li>
                                 <p>
-                                    <span class="value"> {{ number_format(\App\MyFunc::countOrdersByStatus("Pending")) }} </span>
+                                    <span class="value"> {{ number_format(\App\MyFunc::countOrdersByStatus(\App\Order::PENDING)) }} </span>
                                     <span class="text-muted">Pending orders</span>
                                 </p>
                                 <div class="progress progress-xs progress-transparent custom-color-yellow">
                                     <div class="progress-bar" id="pending_status"
-                                         data-transitiongoal="{{ \App\MyFunc::countOrdersByStatusPercentage('Pending') }}"></div>
+                                         data-transitiongoal="{{ \App\MyFunc::countOrdersByStatusPercentage(\App\Order::PENDING) }}"></div>
                                 </div>
                             </li>
                             <li>
                                 <p>
-                                    <span class="value">  {{ number_format(\App\MyFunc::countOrdersByStatus("Processing")) }}</span>
+                                    <span class="value">  {{ number_format(\App\MyFunc::countOrdersByStatus(\App\Order::PROCESSING)) }}</span>
                                     <span class="text-muted">
                                     Processing orders
                                 </span>
                                 </p>
                                 <div class="progress progress-xs progress-transparent custom-color-purple">
                                     <div id="processing_status" class="progress-bar"
-                                         data-transitiongoal="{{ \App\MyFunc::countOrdersByStatusPercentage('Processing') }}"></div>
+                                         data-transitiongoal="{{ \App\MyFunc::countOrdersByStatusPercentage(\App\Order::PROCESSING) }}"></div>
                                 </div>
                             </li>
                             <li>
                                 <p>
-                                    <span class="value"> {{ number_format(\App\MyFunc::countOrdersByStatus(\App\Order::SHIPPED)) }} </span>
-                                    <span class="text-muted">Shipped orders</span>
+                                    <span class="value"> {{ number_format(\App\MyFunc::countOrdersByStatus(\App\Order::ON_WAY)) }} </span>
+                                    <span class="text-muted">On the way orders</span>
                                 </p>
                                 <div class="progress progress-xs progress-transparent custom-color-lightseagreen"
                                      style="color: #5CB85C">
                                     <div class="progress-bar" id="shipped_status"
-                                         data-transitiongoal="{{ \App\MyFunc::countOrdersByStatusPercentage(\App\Order::SHIPPED) }}"></div>
+                                         data-transitiongoal="{{ \App\MyFunc::countOrdersByStatusPercentage(\App\Order::ON_WAY) }}"></div>
                                 </div>
                             </li>
                             <li>
                                 <p>
-                                    <span class="value"> {{ number_format(\App\MyFunc::countOrdersByStatus("Delivered")) }} </span>
+                                    <span class="value"> {{ number_format(\App\MyFunc::countOrdersByStatus(\App\Order::DELIVERED)) }} </span>
                                     <span class="text-muted">Delivered orders</span>
                                 </p>
                                 <div class="progress progress-xs progress-transparent custom-color-green"
                                      style="color: #5CB85C">
                                     <div class="progress-bar" id="delivered_status"
-                                         data-transitiongoal="{{ \App\MyFunc::countOrdersByStatusPercentage('Delivered') }}"></div>
+                                         data-transitiongoal="{{ \App\MyFunc::countOrdersByStatusPercentage(\App\Order::DELIVERED) }}"></div>
                                 </div>
                             </li>
                             <li>
@@ -231,12 +231,12 @@
                                     <td>{{ $order->clientName }}</td>
                                     <td>{{ number_format($order->orderItems()->sum('sub_total')+$order->shipping_amount) }}</td>
                                     <td>
-                                        @if( $order->status=="Pending")
+                                        @if( $order->status==\App\Order::PENDING)
                                             <span class="label label-primary rounded-pill">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 {{ $order->status }}
                                             </span>
-                                        @elseif( $order->status=="Processing")
+                                        @elseif( $order->status==\App\Order::PROCESSING)
                                             <span class="label label-info rounded-pill"
                                                   style="background-color: #AB7DF6">
                                                 <i class="fa fa-spinner"></i>
@@ -245,11 +245,11 @@
                                             <span class="label label-danger rounded-pill">
                                                 <i class="fa fa-times"></i>
                                                 {{ $order->status }}</span>
-                                        @elseif( $order->status=="Delivered")
+                                        @elseif( $order->status==\App\Order::DELIVERED)
                                             <span class="label label-success rounded-pill">
                                                 <i class="fa fa-check-circle-o"></i>
                                                 {{ $order->status }}</span>
-                                        @elseif( $order->status==\App\Order::SHIPPED)
+                                        @elseif( $order->status==\App\Order::ON_WAY)
                                             <span class="label label-primary rounded-pill">
                                                 <i class="fa fa-bicycle"></i>
                                                 {{ $order->status }}
@@ -447,8 +447,8 @@
                     Chartist.plugins.tooltip({
                         appendToBody: false,
                         // currency: ' ',
-                        transformTooltipTextFnc: function(tooltip) {
-                           return Math.ceil(tooltip).toLocaleString();
+                        transformTooltipTextFnc: function (tooltip) {
+                            return Math.ceil(tooltip).toLocaleString();
                         }
                     }),
 

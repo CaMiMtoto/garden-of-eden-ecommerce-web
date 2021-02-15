@@ -25,7 +25,7 @@
 
             <div class="input-group">
                 <input wire:model.defer="quantity" type="text" class="form-control" name="qty"
-                       placeholder="Quantity" min="0.5" wire:loading.attr="disabled"
+                       placeholder="Quantity" min="0.5" wire:loading.attr="disabled" style="width: 70px;"
                        value="">
                 <span class="input-group-btn">
                 <button

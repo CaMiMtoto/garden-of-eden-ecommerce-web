@@ -271,7 +271,8 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: -webkit-fill-available;
+  width: 100vw !important;
+  height: 100vh !important;
 }
 
 .p-0 {

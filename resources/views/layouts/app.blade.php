@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicons/favicon-32x32.png') }}">
@@ -15,7 +16,7 @@
     <title>Garden of eden</title>
     @livewireStyles
     <!-- Google font -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
     @yield('styles')
 </head>
@@ -58,7 +59,7 @@
 <!-- /FOOTER -->
 
 @livewireScripts
-<script src="{{ asset('js/app.js') }}" ></script>
+<script src="{{ mix('js/app.js') }}" ></script>
 @yield('scripts')
 
 </body>

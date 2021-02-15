@@ -6,24 +6,20 @@
 @section('content')
 
     <br>
-    <div class="section" style="padding: 5px">
+    <div class="section">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12">
-                    <h3 class="text-success">
-                        <i class="fa fa-check-square"></i>
-                        Check out
-                    </h3>
-                </div>
                 <section class="col-md-7">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <h4>
-                                Order summary
-                            </h4>
+
+                    <div class="panel panel-default rounded-sm shadow-sm">
+                        <div class="panel-heading bg-white">
+                            <h3 class="text-success panel-title">
+                                <i class="fa fa-check-square"></i>
+                                Check out
+                            </h3>
                         </div>
-                        <div class="total_area">
-                            <table class="table table-condensed">
+                        <div class="panel-body p-0 table-responsive">
+                            <table class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th>Name</th>
@@ -89,6 +85,7 @@
 
                             </table>
                         </div>
+
                     </div>
                 </section>
                 <section class="col-md-5">
@@ -101,17 +98,17 @@
                         </div>
                     @endif
 
-                    <div class="panel panel-default">
+                    <div class="panel panel-default rounded-sm shadow-sm">
+                        <div class="panel-heading bg-white">
+                            <h3 class="panel-title">
+                                Delivery information
+                            </h3>
+                        </div>
                         <div class="panel-body">
-                            <div>
-                                <h3>
-                                    Shipping information
-                                </h3>
-                            </div>
 
                             <h4>
                                 Total amount to pay
-                                <span class="label label-primary pull-right">
+                                <span class="label label-info pull-right rounded-pill">
                                         {{ number_format(Cart::getSubTotal()+1000) }} Rwf
                                     </span>
                             </h4>
@@ -123,7 +120,7 @@
                                     <label for="clientName" class="control-label">Name</label>
                                     <input type="text" placeholder="Full name"
                                            value="{{Request::old('clientName')}}"
-                                           class="form-control" name="clientName"
+                                           class="form-control rounded-sm" name="clientName"
                                            id="clientName" maxlength="120">
                                     @if ($errors->has('clientName'))
                                         <span class="help-block">
@@ -136,7 +133,7 @@
                                     <div>
                                         <input type="email" placeholder="Email address"
                                                value="{{Request::old('email')}}"
-                                               class="form-control" name="email"
+                                               class="form-control rounded-sm" name="email"
                                                id="email" maxlength="120">
                                         @if ($errors->has('email'))
                                             <span class="help-block">
@@ -150,7 +147,7 @@
                                     <label for="shipping_address" class="control-label">Address</label>
                                     <input type="text" placeholder="Shipping address"
                                            value="{{Request::old('shipping_address')}}"
-                                           class="form-control" name="shipping_address"
+                                           class="form-control rounded-sm" name="shipping_address"
                                            id="shipping_address" maxlength="120">
                                     @if ($errors->has('shipping_address'))
                                         <span class="help-block">
@@ -163,7 +160,7 @@
                                     <input type="text"
                                            placeholder="Phone number"
                                            value="{{Request::old('phoneNumber')}}" maxlength="13"
-                                           class="form-control" name="phoneNumber" id="phoneNumber">
+                                           class="form-control rounded-sm" name="phoneNumber" id="phoneNumber">
                                     @if ($errors->has('phoneNumber'))
                                         <span class="help-block">
                                                   {{ $errors->first('phoneNumber') }}
@@ -173,10 +170,10 @@
                                 <div class="form-group  {{ $errors->has('notes')?'has-error':''}}">
                                     <label for="notes" class="control-label">Note</label>
                                     <textarea rows="5"
-                                            style="resize: vertical"
-                                            placeholder="Write something extra here.. like notes. (Optional)"
-                                            class="form-control " name="notes"
-                                            id="notes">{{Request::old('notes')}}</textarea>
+                                              style="resize: vertical"
+                                              placeholder="Write something extra here.. like notes. (Optional)"
+                                              class="form-control rounded-sm" name="notes"
+                                              id="notes">{{Request::old('notes')}}</textarea>
                                     @if ($errors->has('notes'))
                                         <span class="help-block">
                                                     <strong>{{ $errors->first('notes') }}</strong>
@@ -186,7 +183,7 @@
 
                                 <div class="form-group">
                                     <div>
-                                        <button type="submit" class="btn btn-success btn-lg btn-block">
+                                        <button type="submit" class="btn btn-success btn-lg btn-block rounded-sm">
                                             <i class="fa fa-check-square"></i>
                                             Confirm your order
                                         </button>

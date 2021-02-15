@@ -5,10 +5,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     @yield('styles')
-    <link href="{{ asset('css/master.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/master.css') }}" rel="stylesheet">
 </head>
 <body>
 
@@ -38,7 +39,7 @@
 </footer>
 
 <!-- jQuery Plugins -->
-<script src="{{ asset('js/master.js') }}"></script>
+<script src="{{ mix('js/master.js') }}"></script>
 @yield('scripts')
 </body>
 </html>

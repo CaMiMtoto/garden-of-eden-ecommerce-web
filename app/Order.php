@@ -24,7 +24,7 @@ class Order extends Model
     public static $shippingCharge = 1000;
     const PENDING = 'Pending';
     const PROCESSING = 'Processing';
-    const SHIPPED = 'Shipped';
+    const ON_WAY = 'On Way';
     const DELIVERED = 'Delivered';
     const CANCELLED = 'Cancelled';
 
@@ -39,7 +39,7 @@ class Order extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function getTotalAmountToPay()
+    public function getTotalAmountToPay(): float
     {
         return $this->orderItems->sum('sub_total') + $this->shipping_amount;
     }
@@ -47,7 +47,7 @@ class Order extends Model
     public static function getStatuses(): array
     {
 
-        return [self::PENDING, self::PROCESSING, self::SHIPPED, self::DELIVERED, self::CANCELLED];
+        return [self::PENDING, self::PROCESSING, self::ON_WAY, self::DELIVERED, self::CANCELLED];
     }
 
     public function setOrderNo(string $prefix='ORD', $pad_string = '0', int $len = 8)

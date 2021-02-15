@@ -1,19 +1,19 @@
 @component('mail::message')
-# Order status changed
+# Order status updated
 
 <br>
 @if($order->status==\App\Order::PENDING)
     <p>
-        <strong>{{ $user->name }}</strong> : changed your order status
+        <strong>{{ $user->name }}</strong> : updated your order status
     </p>
 @elseif($order->status==\App\Order::PROCESSING)
     <p>
         <strong>{{ $user->name }}</strong> is processing your order
     </p>
-@elseif($order->status==\App\Order::SHIPPED)
+@elseif($order->status==\App\Order::ON_WAY)
     <p>
         Order is on its way.
-        <strong>{{ $user->name }}</strong> shipped your order.
+        <strong>{{ ucfirst($user->name) }}</strong> is on his way to bring your purchased products.
     </p>
 @elseif($order->status==\App\Order::DELIVERED)
     <p>
@@ -38,7 +38,7 @@
                     <span class="label label-info rounded-pill">{{ $order->status }}</span>
                 @elseif($order->status==\App\Order::PROCESSING)
                     <span class="label label-info rounded-pill">{{ $order->status }}</span>
-                @elseif($order->status==\App\Order::SHIPPED)
+                @elseif($order->status==\App\Order::ON_WAY)
                     <span class="label label-primary rounded-pill">{{ $order->status }}</span>
                 @elseif($order->status==\App\Order::DELIVERED)
                     <span class="label label-success rounded-pill">{{ $order->status }}</span>

@@ -15,8 +15,9 @@
         .billing-history tbody > tr > td {
             padding: 10px;
         }
-        @media print{
-            .no-print{
+
+        @media print {
+            .no-print {
                 display: none;
             }
         }
@@ -46,10 +47,17 @@
             <div class="clearfix"></div>
 
             <h4>Order placed</h4>
-            <hr>
             <div id="printOrder">
                 <table class="table billing-history">
                     <tbody>
+                    <tr>
+                        <td>
+                            <span>
+                                <b>Oder No</b>
+                            </span>
+                        </td>
+                        <td> : {{ $order->order_no }}</td>
+                    </tr>
                     <tr>
                         <td>
                             <span>
@@ -85,7 +93,7 @@
                     <tr>
                         <td>
                             <span>
-                            <b>Shipping address</b>
+                            <b>Delivery address</b>
                             </span>
                         </td>
                         <td> : {{ $order->shipping_address}}</td>
@@ -152,7 +160,7 @@
                 </table>
                 <div>
                     <p>
-                       <strong>Note:</strong>
+                        <strong>Note:</strong>
                         <span> {{ $order->notes }}</span>
                     </p>
                 </div>
