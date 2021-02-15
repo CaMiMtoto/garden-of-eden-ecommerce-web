@@ -37,7 +37,10 @@ class ProductItem extends Component
         $quantity = $this->quantity;
 
         if ($product->status !== 'Available' || $quantity <= 0)
+        {
             session()->flash('error', "Product not available");
+            return back();
+        }
 
         $id = $product->id;
         Cart::remove($id);
@@ -53,5 +56,6 @@ class ProductItem extends Component
         $this->emit('productAdded');
 
         session()->flash('success', $product->name . " Successfully added to cart");
+        return back();
     }
 }
