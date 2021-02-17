@@ -71,7 +71,7 @@ class MyFunc
             ->join('products', 'order_items.product_id', '=', 'products.id')
             ->join('orders', 'order_items.order_id', '=', 'orders.id')
             ->select(DB::raw('products.name,count(products.id) AS total'))
-            ->where('orders.status', '=', "Delivered")
+            ->where('orders.status', '=', Order::PAID)
             ->groupBy('products.id')
             ->groupBy('products.name')
             ->orderByDesc("total")
@@ -95,7 +95,7 @@ class MyFunc
     {
         return DB::table('order_items')
             ->join('orders', 'order_items.order_id', '=', 'orders.id')
-            ->where('orders.status', '=', "Delivered")
+            ->where('orders.status', '=', Order::PAID)
             ->sum("order_items.sub_total");
 
     }

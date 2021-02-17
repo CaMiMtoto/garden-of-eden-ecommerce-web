@@ -247,8 +247,14 @@
                                                 {{ $order->status }}</span>
                                         @elseif( $order->status==\App\Order::DELIVERED)
                                             <span class="label label-success rounded-pill">
-                                                <i class="fa fa-check-circle-o"></i>
-                                                {{ $order->status }}</span>
+                                                <i class="fa fa-check></i>
+                                                {{ $order->status }}
+                                            </span>
+                                        @elseif( $order->status==\App\Order::PAID)
+                                            <span class="label bg-green rounded-pill">
+                                                <i class="fa fa-check-circle"></i>
+                                                {{ $order->status }}
+                                            </span>
                                         @elseif( $order->status==\App\Order::ON_WAY)
                                             <span class="label label-primary rounded-pill">
                                                 <i class="fa fa-bicycle"></i>
@@ -288,7 +294,7 @@
                             @foreach(\App\MyFunc::topSellingProducts() as $product)
                                 <tr>
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->total }}</td>
+                                    <td>{{ number_format($product->total) }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
