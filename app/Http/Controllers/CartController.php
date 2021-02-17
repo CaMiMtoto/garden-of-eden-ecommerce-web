@@ -16,14 +16,12 @@ class CartController extends Controller
     public function getAddToCart(Request $request, $id)
     {
         $product = Product::find($id);
-        if ($product->status !== 'Available' || !$product)
-        {
+        if (is_null($product) || $product->status !== 'Available') {
             return redirect()->back();
         }
 
         $qty = $request->input('qty');
-        if (!$qty)
-        {
+        if (!$qty) {
             $qty = 1;
         }
 
@@ -46,8 +44,7 @@ class CartController extends Controller
     public function getIncrement(Request $request, $id)
     {
         $qty = $request->input('qty');
-        if (!$qty)
-        {
+        if (!$qty) {
             $qty = 1;
         }
 
@@ -92,8 +89,7 @@ class CartController extends Controller
 
     public function checkOut()
     {
-        if (Cart::isEmpty())
-        {
+        if (Cart::isEmpty()) {
             return redirect()->route('cart.shoppingCart');
         }
         $cart = Cart::getContent();
@@ -109,8 +105,7 @@ class CartController extends Controller
             'phoneNumber' => 'required| min:10'
         ]);
 
-        if (Cart::isEmpty())
-        {
+        if (Cart::isEmpty()) {
             return redirect()->back();
         }
         \DB::beginTransaction();
@@ -125,8 +120,7 @@ class CartController extends Controller
         $order->save();
 
         $cart = Cart::getContent();
-        foreach ($cart as $cartItem)
-        {
+        foreach ($cart as $cartItem) {
             $orderItem = new OrderItem();
             $orderItem->product_id = $cartItem->id;
             $orderItem->price = $cartItem->price;
@@ -143,6 +137,4 @@ class CartController extends Controller
         Cart::clear();
         return redirect()->route('order.success', ['id' => $order->id]);
     }
-
-
 }

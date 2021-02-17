@@ -25,6 +25,10 @@
          Order cancelled.
         <strong>{{ $user->name }}</strong> cancels your order.
     </p>
+@elseif($order->status==\App\Order::PAID)
+    <p>
+         Payment have been processed.Thank you!
+    </p>
 @endif
 <span>{{ $order->updated_at->format('j M Y h:i a') }}</span>
 <br>
@@ -42,6 +46,8 @@
                     <span class="label label-primary rounded-pill">{{ $order->status }}</span>
                 @elseif($order->status==\App\Order::DELIVERED)
                     <span class="label label-success rounded-pill">{{ $order->status }}</span>
+                @elseif($order->status==\App\Order::PAID)
+                    <span class="label bg-green rounded-pill">{{ $order->status }}</span>
                 @elseif($order->status==\App\Order::CANCELLED)
                     <span class="label label-danger rounded-pill">{{ $order->status }}</span>
                 @endif

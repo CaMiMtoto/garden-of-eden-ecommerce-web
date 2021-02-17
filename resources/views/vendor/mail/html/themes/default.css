@@ -320,3 +320,7 @@ img {
 .label{
     display: inline-block !important;
 }
+
+.bg-green{
+    background-color: #31AF64 !important;
+}

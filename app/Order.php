@@ -27,6 +27,7 @@ class Order extends Model
     const ON_WAY = 'On Way';
     const DELIVERED = 'Delivered';
     const CANCELLED = 'Cancelled';
+    const PAID = 'Paid';
 
 
     public function orderItems()
@@ -47,10 +48,10 @@ class Order extends Model
     public static function getStatuses(): array
     {
 
-        return [self::PENDING, self::PROCESSING, self::ON_WAY, self::DELIVERED, self::CANCELLED];
+        return [self::PENDING, self::PROCESSING, self::ON_WAY, self::DELIVERED, self::PAID, self::CANCELLED];
     }
 
-    public function setOrderNo(string $prefix='ORD', $pad_string = '0', int $len = 8)
+    public function setOrderNo(string $prefix = 'ORD', $pad_string = '0', int $len = 8)
     {
         $orderNo = $prefix . str_pad($this->id, $len, $pad_string, STR_PAD_LEFT);
         $this->order_no = $orderNo;

@@ -118,9 +118,11 @@
                             } else if (data === "{{\App\Order::CANCELLED}}") {
                                 return "<a class='label label-danger '><i class='fa fa-close'></i> " + data + "</a>";
                             } else if (data === "{{\App\Order::ON_WAY}}") {
-                                return "<a class='label label-primary '><i class='fa fa-check-circle-o'></i> " + data + "</a>";
+                                return "<a class='label label-primary '><i class='fa fa-bicycle'></i> " + data + "</a>";
                             } else if (data === "{{\App\Order::DELIVERED}}") {
-                                return "<a class='label label-success'><i class='fa fa-check-circle-o'></i> " + data + "</a>";
+                                return "<a class='label label-success'><i class='fa fa-check'></i> " + data + "</a>";
+                            } else if (data === "{{\App\Order::PAID}}") {
+                                return "<a class='label bg-green'><i class='fa fa-check-circle'></i> " + data + "</a>";
                             }
                             return "<a class='label label-default '><i class='fa fa-check-circle-o'></i> " + data + "</a>";
                         }
