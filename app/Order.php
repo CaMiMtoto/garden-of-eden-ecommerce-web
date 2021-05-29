@@ -2,12 +2,19 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property \Carbon\Carbon $created_at
+ * App\Order
+ *
+ * @property Carbon $created_at
  * @property int $id
- * @property \Carbon\Carbon $updated_at
+ * @property Carbon $updated_at
  * @property mixed $order_items
  * @property mixed $user
  * @property array|null|string clientPhone
@@ -18,6 +25,25 @@ use Illuminate\Database\Eloquent\Model;
  * @property array|null|string email
  * @property string notes
  * @property mixed order_no
+ * @property int|null $user_id
+ * @property-read Collection|OrderItem[] $orderItems
+ * @property-read int|null $order_items_count
+ * @method static Builder|Order newModelQuery()
+ * @method static Builder|Order newQuery()
+ * @method static Builder|Order query()
+ * @method static Builder|Order whereClientName($value)
+ * @method static Builder|Order whereClientPhone($value)
+ * @method static Builder|Order whereCreatedAt($value)
+ * @method static Builder|Order whereEmail($value)
+ * @method static Builder|Order whereId($value)
+ * @method static Builder|Order whereNotes($value)
+ * @method static Builder|Order whereOrderNo($value)
+ * @method static Builder|Order whereShippingAddress($value)
+ * @method static Builder|Order whereShippingAmount($value)
+ * @method static Builder|Order whereStatus($value)
+ * @method static Builder|Order whereUpdatedAt($value)
+ * @method static Builder|Order whereUserId($value)
+ * @mixin Eloquent
  */
 class Order extends Model
 {
@@ -56,5 +82,10 @@ class Order extends Model
         $orderNo = $prefix . str_pad($this->id, $len, $pad_string, STR_PAD_LEFT);
         $this->order_no = $orderNo;
         $this->update();
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 }

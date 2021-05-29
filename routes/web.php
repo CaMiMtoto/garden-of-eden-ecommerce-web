@@ -62,7 +62,10 @@ Route::group(['prefix' => 'customer'], function () {
 
     Route::get('/order-success/{id}', 'OrderController@orderSuccess')
         ->name('order.success');
+
+    Route::post('/payment/save-transaction', [\App\Http\Controllers\PaymentsController::class, 'paymentSuccess'])->name('payment.success');
 });
+
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 

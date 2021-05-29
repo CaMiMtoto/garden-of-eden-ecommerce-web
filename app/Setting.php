@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * App\Setting
+ *
  * @property string logo
  * @property string address
  * @property string email2
@@ -18,6 +20,23 @@ use Illuminate\Database\Eloquent\Model;
  * @property string company_name
  * @property string whatsapp
  * @method static orderBy(string $string, string $string1)
+ * @property string $about
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereAbout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereCompanyName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereEmail1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereEmail2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereLogo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting wherePhoneNumber1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting wherePhoneNumber2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereWhatsapp($value)
+ * @mixin \Eloquent
  */
 class Setting extends Model
 {

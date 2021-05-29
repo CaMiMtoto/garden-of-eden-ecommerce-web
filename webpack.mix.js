@@ -11,9 +11,12 @@ mix.js('resources/js/master.js', 'public/js')
 
 if (mix.inProduction()) {
     mix.version();
-} else {
-    mix.browserSync('http://127.0.0.1:8000');
 }
+mix.browserSync('http://127.0.0.1:8000');
+
+
+mix.copy('vendor/proengsoft/laravel-jsvalidation/resources/views', 'resources/views/vendor/jsvalidation')
+    .copy('vendor/proengsoft/laravel-jsvalidation/public', 'public/vendor/jsvalidation');
 
 
 

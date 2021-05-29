@@ -152,7 +152,8 @@ class ClientController extends Controller
                 })->inRandomOrder()->limit(8)->get();
         }
         if ($alsoBoughtProducts->isEmpty()) {
-            $alsoBoughtProducts = Product::with('category')->where('category_id', $product->category_id)->inRandomOrder()
+            $alsoBoughtProducts = Product::with('category')
+                ->where('category_id', $product->category_id)->inRandomOrder()
                 ->limit(8)->get();
         }
 
