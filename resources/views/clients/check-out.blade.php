@@ -182,7 +182,7 @@
                                             </label>
                                             <label class="custom-input-container">
                                                 Pay By card or Mobile money
-                                                <input type="radio" name="payment_type" required disabled
+                                                <input type="radio" name="payment_type" required
                                                        value="Card mobile money">
                                                 <span class="checkmark"></span>
                                             </label>
@@ -296,6 +296,7 @@
                     data.customer.notes = notes;
                     data.customer.shipping_address = shipping_address;
                     data.customer.payment_type = payment_type;
+                    data.customer.phone_number = phone_number;
 
                     $.ajax({
                         url: "{{ route('payment.success') }}",
