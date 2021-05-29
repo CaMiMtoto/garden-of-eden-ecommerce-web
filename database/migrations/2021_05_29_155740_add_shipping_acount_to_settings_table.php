@@ -14,7 +14,7 @@ class AddShippingAcountToSettingsTable extends Migration
     public function up()
     {
         Schema::table('settings', function (Blueprint $table) {
-            $table->decimal('shipping_amount')->default(100)->unsigned();
+            $table->decimal('shipping_amount')->default(1000)->unsigned();
         });
     }
 

@@ -182,7 +182,7 @@
                                             </label>
                                             <label class="custom-input-container">
                                                 Pay By card or Mobile money
-                                                <input type="radio" name="payment_type" required
+                                                <input type="radio" name="payment_type" required disabled
                                                        value="Card mobile money">
                                                 <span class="checkmark"></span>
                                             </label>
