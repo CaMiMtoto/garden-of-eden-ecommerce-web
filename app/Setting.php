@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * App\Setting
@@ -40,5 +41,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Setting extends Model
 {
-    //
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function () {
+            Cache::forget('defaultSetting');
+        });
+    }
 }

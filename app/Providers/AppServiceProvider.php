@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Setting;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,11 +21,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191); //Solved by increasing StringLength
 
-      /*  if(env("REDIRECT_HTTPS")){
-            $url->formatScheme('https');
-        }*/
-
         Paginator::useBootstrap();
+
+        View::share('defaultSetting', Setting::first());
 
     }
 
@@ -34,9 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
-       /* if(env("REDIRECT_HTTPS")){
-            $this->app['request']->server->set('HTTPS',true);
-        }*/
+
     }
 }

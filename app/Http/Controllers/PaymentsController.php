@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessOrder;
+use App\MyFunc;
 use App\Order;
 use App\OrderItem;
 use App\Payment;
@@ -26,7 +27,7 @@ class PaymentsController extends Controller
         $order->email = $request->input('customer.email');
         $order->shipping_address = $request->input('customer.shipping_address');
         $order->clientName = $request->input('customer.name');
-        $order->shipping_amount = 1000;
+        $order->shipping_amount = MyFunc::getDefaultSetting()->shipping_amount;
         $order->status = "Pending";
         $order->payment_type = $request->input('customer.payment_type');
         $order->notes = $request->input('customer.notes');

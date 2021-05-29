@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessOrder;
+use App\MyFunc;
 use App\Order;
 use App\OrderItem;
 use App\Product;
@@ -115,7 +116,7 @@ class CartController extends Controller
         $order->clientName = $request->input('clientName');
         $order->shipping_address = $request->input('shipping_address');
         $order->notes = $request->input('notes');
-        $order->shipping_amount = 1000;
+        $order->shipping_amount =  MyFunc::getDefaultSetting()->shipping_amount;
         $order->status = "Pending";
         $order->save();
 

@@ -69,7 +69,7 @@
                                         Shipping:
                                     </th>
                                     <th colspan="3" class="text-success">
-                                        + {{ number_format(1000) }} Rwf
+                                        + {{ number_format($defaultSetting->shipping_amount) }} Rwf
                                     </th>
                                 </tr>
                                 <tr>
@@ -77,7 +77,7 @@
                                         Total:
                                     </th>
                                     <th colspan="3" class="text-success">
-                                        <span class="label label-success">{{ number_format(Cart::getSubTotal()+1000) }} Rwf</span>
+                                        <span class="label label-success">{{ number_format(Cart::getSubTotal()+$defaultSetting->shipping_amount) }} Rwf</span>
                                     </th>
                                 </tr>
                                 </tfoot>
@@ -281,7 +281,7 @@
             FlutterwaveCheckout({
                 public_key: "{{ config('app.FW_PUBLIC')  }}",
                 tx_ref: "{{  time() . rand(10*45, 100*98) }}",
-                amount: {{ Cart::getSubTotal()+1000 }},
+                amount: {{ Cart::getSubTotal()+$defaultSetting->shipping_amount }},
                 currency: "RWF",
                 country: "RWF",
                 payment_options: " ",

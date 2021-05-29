@@ -7,8 +7,11 @@ use App\HomeSlide;
 use App\MyFunc;
 use App\Order;
 use App\Setting;
+use DB;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class HomeController extends Controller
 {
@@ -23,8 +26,8 @@ class HomeController extends Controller
     public function dashboard()
     {
 
-        $revenues = \DB::table("orders")
-            ->select(\DB::raw("YEAR(orders.created_at) as year"), \DB::raw("sum(order_items.sub_total) + orders.shipping_amount as amount"))
+        $revenues = DB::table("orders")
+            ->select(DB::raw("YEAR(orders.created_at) as year"), DB::raw("sum(order_items.sub_total) + orders.shipping_amount as amount"))
             ->join('order_items', "order_items.order_id", "=", "orders.id")
             ->join('products', "products.id", "=", "order_items.product_id")
             ->where('orders.status', '=', Order::PAID)
@@ -44,14 +47,18 @@ class HomeController extends Controller
     }
 
 
-    public function saveSettings(Request $request)
+    /**
+     * @throws ValidationException
+     */
+    public function saveSettings(Request $request): JsonResponse
     {
         $this->validate($request, [
             'company_name' => 'required',
             'email1' => 'required|email',
             'phoneNumber1' => 'required|min:10|max:13',
             'address' => 'required',
-            'about' => 'required'
+            'about' => 'required',
+            'shipping_amount' => 'required|numeric|min:0',
         ]);
 
         $setting = MyFunc::getDefaultSetting();
@@ -67,7 +74,7 @@ class HomeController extends Controller
         $setting->whatsapp = $request->input('whatsapp');
         $setting->address = $request->input('address');
         $setting->about = $request->input('about');
-//        $setting->logo=$request->input('');
+        $setting->shipping_amount = $request->input('shipping_amount');
         $setting->save();
 
         return response()->json(['setting' => $setting], 200);

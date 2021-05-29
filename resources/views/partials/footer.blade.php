@@ -1,5 +1,4 @@
 <?php
-$defaultSetting = \App\MyFunc::getDefaultSetting();
 $mail = $defaultSetting->email1;
 $whatsapp = \App\MyFunc::format_phone_us($defaultSetting->whatsapp);
 $phone = \App\MyFunc::format_phone_us($defaultSetting->phoneNumber1);

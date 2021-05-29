@@ -1,5 +1,6 @@
 <?php
-use App\MyFunc;$defaultSetting = MyFunc::getDefaultSetting();$mail = $defaultSetting->email1;
+use App\MyFunc;
+$mail = $defaultSetting->email1;
 $whatsapp = MyFunc::format_phone_us($defaultSetting->whatsapp);
 $email2 = $defaultSetting->email2;
 $phone = MyFunc::format_phone_us($defaultSetting->phoneNumber1);
@@ -79,7 +80,8 @@ $address = $defaultSetting->address;
                             <div class="input-group input-group-lg w-100">
                                 <input type="text"
                                        value="{{ request('search') }}"
-                                       class="form-control font-small" name="search" placeholder="What are your looking for?">
+                                       class="form-control font-small" name="search"
+                                       placeholder="What are your looking for?">
                                 <span class="input-group-btn">
                                 <button class="btn btn-danger" type="submit">
                                     &nbsp;

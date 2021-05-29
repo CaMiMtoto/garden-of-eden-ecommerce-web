@@ -89,13 +89,13 @@
                                 <li class="list-group-item">
                                     Shipping amount
                                     <span class="pull-right" style=" background: white">
-                                        {{ number_format(1000) }} RWF
+                                        {{ number_format($defaultSetting->shipping_amount) }} RWF
                                     </span>
                                 </li>
                                 <li class="list-group-item">
                                     Total
                                     <span class="pull-right" style=" background: white">
-                                        {{ number_format(Cart::getSubTotal()+1000) }} RWF
+                                        {{ number_format(Cart::getSubTotal()+$defaultSetting->shipping_amount) }} RWF
                                     </span>
                                 </li>
 
