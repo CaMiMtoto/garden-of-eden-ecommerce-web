@@ -31,14 +31,13 @@
             <br>
             <br>
             <a href="{{ route('home') }}" class="no-print">
-                <span>
-                      <i class="glyphicon glyphicon-home"></i>
-                Back to Home
-                <br>
-                </span>
+                <div>
+                    Back to Home
+                </div>
+                <img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="" style="max-height: 100px">
             </a>
 
-            <img src="{{ asset('img/GARDEN_LOGO.png') }}" alt="" style="max-height: 100px">
+
             <buton class="btn btn-primary pull-right btn-sm no-print"
                    onclick="window.print();">
                 <i class="glyphicon glyphicon-print"></i>

@@ -38,8 +38,8 @@
             <br>
         @endif
         <div class="ratings margin-left-sm">
-            {{--<div class="">{{ $product->qty }} in stock</div>--}}
-            {{--<br>--}}
+            <div class="">{{ $product->qty }} in stock</div>
+            <br>
             <div class="my-2">
                 <a href="/getProduct?cat={{ $product->category->id }}">
                     {{ $product->category->name }}
@@ -60,12 +60,12 @@
                                 <input min="0.5" size="10"
                                        value="1" type="text" wire:model="quantity"
                                        max="{{ $product->qty }}" name="qty"
-                                       class="form-control"
+                                       class="form-control flat"
                                        placeholder="Qty"
                                        id="qty{{$product->id}}">
                                 <span class="input-group-btn">
                                     <button wire:loading.attr="disabled" type="button" wire:click="add"
-                                            class="btn  btn-success" {{ $product->qty <=0 ? 'disabled':'' }}>
+                                            class="btn  btn-success flat" {{ $product->qty <=0 ? 'disabled':'' }}>
                                         <i class="fa fa-plus"></i>
                                         Add
                                     </button>
@@ -85,10 +85,11 @@
         </div>
 
         <a href="{{ route('products.details-view',$product->id) }}"
-           class="btn btn-outline-danger btn-sm text-uppercase">
+           class="btn btn-danger btn-sm flat text-uppercase">
             More Detail
             <i class="fa fa-chevron-right"></i>
         </a>
     </div>
     <div class="clearfix"></div>
 </div>
+

@@ -6,7 +6,6 @@ use App\Order;
 use App\OrderItem;
 use App\Product;
 use App\User;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,32 +13,28 @@ use Illuminate\Support\Facades\Auth;
 class ClientController extends Controller
 {
 
-    public function getProductPage(Request $request)
+    public function shopProducts(Request $request)
     {
+        $cat = $request->input('cat');
+        $search = $request->input('search');
 
-        if (isset($_GET['cat'])) {
-            $cat = $_GET['cat'];
-            $products = Product::with('category')
-                ->orWhere('category_id', '=', $cat)
-                ->orderBy("id", "desc")
-                ->paginate(10);
-            $products->appends(['cat' => $cat]);
-        } else {
-            if (empty($request->input('search'))) {
-                $products = Product::orderBy("id", "desc")->paginate(10);
-            } else {
-                $search = $request->input('search');
-                $products = Product::with('category')
+        $products = Product::with('category')
+            ->when($cat, function (Builder $builder, $cat) {
+                $builder->whereHas('category', function (Builder $builder) use ($cat) {
+                    $builder->where('name', '=', $cat);
+                });
+            })
+            ->when($search, function (Builder $builder, $search) {
+                $builder
                     ->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('price', 'LIKE', "%{$search}%")
-                    ->orWhere('category_id', '=', $search)
-                    ->orderBy("id", "desc")
-                    ->paginate(10);
-                $products->appends(['search' => $search]);
-            }
-        }
+                    ->orWhere('price', 'LIKE', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(18);
 
-        return view('clients.products', ['products' => $products]);
+         $products->appends(['search' => $search]);
+
+        return view('clients.products', compact('products'));
     }
 
 
@@ -65,7 +60,8 @@ class ClientController extends Controller
         $user->save();
 
         $credentials = $request->only('user_name', 'password');
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials))
+        {
             // Authentication passed...
             return redirect()->route('home');
         }
@@ -95,14 +91,17 @@ class ClientController extends Controller
         $order = 'id';
         $dir = 'desc';
 
-        if (empty($request->input('search.value'))) {
+        if (empty($request->input('search.value')))
+        {
             $orders = Order::with('user')
                 ->where('user_id', Auth::user()->id)
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
-        } else {
+        }
+        else
+        {
             $search = $request->input('search.value');
 
             $orders = Order::with('user')
@@ -120,8 +119,10 @@ class ClientController extends Controller
         }
 
         $data = array();
-        if (!empty($orders)) {
-            foreach ($orders as $order) {
+        if (!empty($orders))
+        {
+            foreach ($orders as $order)
+            {
                 $nestedData['id'] = $order->id;
                 $nestedData['status'] = $order->status;
                 $nestedData['shipping_address'] = $order->shipping_address;
@@ -144,14 +145,16 @@ class ClientController extends Controller
     {
         $onOder = OrderItem::query()->where('product_id', $product->id)->limit(20)->get();
         $alsoBoughtProducts = collect([]);
-        if ($onOder) {
+        if ($onOder)
+        {
             $alsoBoughtProducts = Product::with('category')
                 ->whereHas('orderItems', function (Builder $builder) use ($onOder, $product) {
                     $builder->whereIn('order_id', $onOder->pluck('order_id'))
                         ->where('product_id', '!=', $product->id);
                 })->inRandomOrder()->limit(8)->get();
         }
-        if ($alsoBoughtProducts->isEmpty()) {
+        if ($alsoBoughtProducts->isEmpty())
+        {
             $alsoBoughtProducts = Product::with('category')
                 ->where('category_id', $product->category_id)->inRandomOrder()
                 ->limit(8)->get();

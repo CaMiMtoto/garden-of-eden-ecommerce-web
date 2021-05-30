@@ -6,10 +6,14 @@ use App\Jobs\ProcessOrder;
 use App\MyFunc;
 use App\Order;
 use App\OrderItem;
+use App\Payment;
 use App\Product;
+use DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use \Cart;
+use Cart;
+use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class CartController extends Controller
 {
@@ -17,12 +21,14 @@ class CartController extends Controller
     public function getAddToCart(Request $request, $id)
     {
         $product = Product::find($id);
-        if (is_null($product) || $product->status !== 'Available') {
+        if (is_null($product) || $product->status !== 'Available')
+        {
             return redirect()->back();
         }
 
         $qty = $request->input('qty');
-        if (!$qty) {
+        if (!$qty)
+        {
             $qty = 1;
         }
 
@@ -45,7 +51,8 @@ class CartController extends Controller
     public function getIncrement(Request $request, $id)
     {
         $qty = $request->input('qty');
-        if (!$qty) {
+        if (!$qty)
+        {
             $qty = 1;
         }
 
@@ -90,13 +97,18 @@ class CartController extends Controller
 
     public function checkOut()
     {
-        if (Cart::isEmpty()) {
+        if (Cart::isEmpty())
+        {
             return redirect()->route('cart.shoppingCart');
         }
         $cart = Cart::getContent();
         return view('clients.check-out', ['cart' => $cart]);
     }
 
+    /**
+     * @throws Throwable
+     * @throws ValidationException
+     */
     public function postCheckOut(Request $request)
     {
         $this->validate($request, [
@@ -106,22 +118,25 @@ class CartController extends Controller
             'phoneNumber' => 'required| min:10'
         ]);
 
-        if (Cart::isEmpty()) {
+        if (Cart::isEmpty())
+        {
             return redirect()->back();
         }
-        \DB::beginTransaction();
+        DB::beginTransaction();
         $order = new Order();
         $order->clientPhone = $request->input('phoneNumber');
         $order->email = $request->input('email');
         $order->clientName = $request->input('clientName');
         $order->shipping_address = $request->input('shipping_address');
+        $order->payment_type = $request->input('payment_type');
         $order->notes = $request->input('notes');
-        $order->shipping_amount =  MyFunc::getDefaultSetting()->shipping_amount;
+        $order->shipping_amount = MyFunc::getDefaultSetting()->shipping_amount;
         $order->status = "Pending";
         $order->save();
 
         $cart = Cart::getContent();
-        foreach ($cart as $cartItem) {
+        foreach ($cart as $cartItem)
+        {
             $orderItem = new OrderItem();
             $orderItem->product_id = $cartItem->id;
             $orderItem->price = $cartItem->price;
@@ -131,11 +146,17 @@ class CartController extends Controller
         }
 
         $order->setOrderNo('ORD');
-        \DB::commit();
+        DB::commit();
 
         ProcessOrder::dispatch($order);
-
         Cart::clear();
-        return redirect()->route('order.success', ['id' => $order->id]);
+        if ($order->payment_type == Payment::CardMobileMoney)
+        {
+            return redirect()->route('order.pay.card', ['id' => encryptId($order->id)]);
+        }
+        else
+        {
+            return redirect()->route('order.success', ['id' => encryptId($order->id)]);
+        }
     }
 }

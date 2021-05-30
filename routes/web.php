@@ -18,7 +18,7 @@ Route::get('/newsletters/{email}/unsubscribe', 'NewsletterController@unsubscribe
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 
-Route::get('/getProduct', 'ClientController@getProductPage')->name('getProduct');
+Route::get('/buy-products', 'ClientController@shopProducts')->name('buy.products');
 Route::get('/products/{product}/details-view', 'ClientController@productDetails')->name('products.details-view');
 
 Route::get('/login', 'UsersController@login')->name('login');
@@ -60,10 +60,9 @@ Route::group(['prefix' => 'customer'], function () {
         'as' => 'cart.checkOut'
     ]);
 
-    Route::get('/order-success/{id}', 'OrderController@orderSuccess')
-        ->name('order.success');
-
-    Route::post('/payment/save-transaction', [\App\Http\Controllers\PaymentsController::class, 'paymentSuccess'])->name('payment.success');
+    Route::get('/order-success/{id}', 'OrderController@orderSuccess')->name('order.success');
+    Route::get('/order-pay-online/{id}', [\App\Http\Controllers\PaymentsController::class, 'payWithCard'])->name('order.pay.card');
+    Route::post('/payment/{orderId}/save-transaction', [\App\Http\Controllers\PaymentsController::class, 'paymentSuccess'])->name('payment.success');
 });
 
 

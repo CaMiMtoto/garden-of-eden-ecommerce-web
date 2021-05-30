@@ -54,7 +54,6 @@ $address = $defaultSetting->address;
         </div>
     </div>
     <!-- /TOP HEADER -->
-
     <!-- MAIN HEADER -->
     <div id="header">
         <!-- container -->
@@ -65,7 +64,7 @@ $address = $defaultSetting->address;
                 <div class="col-sm-3 hidden-xs">
                     <div class="header-logo">
                         <a href="{{ route('home') }}" class="logo" style="color: #F0FFDF;">
-                            <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive img-circle"
+                            <img src="{{ asset('img/GARDEN_LOGO.png') }}" class="img-responsive flat"
                                  alt="Garden Of Eden Produce"
                                  style="width: 80px;background-color: whitesmoke">
                         </a>
@@ -76,19 +75,15 @@ $address = $defaultSetting->address;
                 <!-- SEARCH BAR -->
                 <div class="col-sm-6">
                     <div class="header-search">
-                        <form action="{{ route('getProduct') }}" class="form-inline">
+                        <form action="{{ route('buy.products') }}" class="form-inline" autocomplete="off">
                             <div class="input-group input-group-lg w-100">
-                                <input type="text"
+                                <input type="search" autocomplete="off"
                                        value="{{ request('search') }}"
-                                       class="form-control font-small" name="search"
+                                       class="form-control flat" name="search"
                                        placeholder="What are your looking for?">
                                 <span class="input-group-btn">
-                                <button class="btn btn-danger" type="submit">
-                                    &nbsp;
-                                    &nbsp;
+                                <button class="btn btn-danger flat" type="submit">
                                     <i class="fa fa-search"></i>
-                                     &nbsp;
-                                     &nbsp;
                                 </button>
                               </span>
                             </div><!-- /input-group -->

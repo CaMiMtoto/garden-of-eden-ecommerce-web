@@ -1,8 +1,5 @@
 @extends('layouts.app')
-
-@section('title')
-    My-orders
-@endsection
+@section('title',' My-orders')
 @section('content')
 
     <br>
@@ -210,12 +207,7 @@
 
 
                                 <div class="form-group">
-                                    <button type="button" onClick="makePayment()" id="btnCard"
-                                            class="btn btn-success btn-lg rounded-sm">
-                                        <i class="fa fa-check-circle"></i>
-                                        Place Your Order
-                                    </button>
-                                    <button type="submit" class="btn btn-success btn-lg rounded-sm hide" id="btnCash">
+                                    <button type="submit" class="btn btn-success btn-lg rounded-sm" id="btnSubmit">
                                         <i class="fa fa-check-circle"></i>
                                         Place Your Order
                                     </button>
@@ -236,87 +228,23 @@
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-    <script src="https://checkout.flutterwave.com/v3.js"></script>
 
     <script>
-        var $checkoutForm = $('#checkoutForm');
-        $checkoutForm.validate({
-            rules: {
-                payment_type: "required",
-            },
-            messages: {
-                payment_type: {
-                    required: "Please choose payment method",
-                    // minlength: jQuery.format("Enter at least {0} characters"),
-                    // remote: jQuery.format("{0} is already in use")
+        $(function () {
+            var $checkoutForm = $('#checkoutForm');
+            $checkoutForm.validate({
+                rules: {
+                    payment_type: "required",
+                },
+                messages: {
+                    payment_type: {
+                        required: "Please choose payment method",
+                        // minlength: jQuery.format("Enter at least {0} characters"),
+                        // remote: jQuery.format("{0} is already in use")
+                    }
                 }
-            }
-        });
-
-        $("input[type='radio'][name='payment_type']").on('change', function () {
-
-            if ($(this).val() === 'Cash') {
-                $('#btnCash').removeClass('hide');
-                $('#btnCard').addClass('hide');
-            } else {
-                $('#btnCash').addClass('hide');
-                $('#btnCard').removeClass('hide');
-            }
-        });
-
-        function makePayment() {
-
-            if (!$checkoutForm.valid()) {
-                return;
-            }
-
-            let name = document.querySelector('#clientName').value;
-            let email = document.querySelector('#client_email').value;
-            let phone_number = document.querySelector('#phoneNumber').value;
-            let notes = document.querySelector('#notes').value;
-            let shipping_address = document.querySelector('#shipping_address').value;
-            let payment_type = $("input[type='radio'][name='payment_type']:checked").val();
-
-
-            FlutterwaveCheckout({
-                public_key: "{{ config('app.FW_PUBLIC')  }}",
-                tx_ref: "{{  time() . rand(10*45, 100*98) }}",
-                amount: {{ Cart::getSubTotal()+$defaultSetting->shipping_amount }},
-                currency: "RWF",
-                country: "RWF",
-                payment_options: " ",
-                customer: {
-                    email: email,
-                    phone_number: phone_number,
-                    name: name,
-                    notes: notes
-                },
-                callback: function (data) {
-                    data['_token'] = "{{ csrf_token() }}";
-                    data.customer.notes = notes;
-                    data.customer.shipping_address = shipping_address;
-                    data.customer.payment_type = payment_type;
-                    data.customer.phone_number = phone_number;
-
-                    $.ajax({
-                        url: "{{ route('payment.success') }}",
-                        data: data,
-                        method: 'POST',
-                        type: 'json',
-                        success: function (response) {
-                            window.location = response.url;
-                        }
-                    });
-                },
-                onclose: function () {
-                    // close modal
-                },
-                customizations: {
-                    title: "{{config('app.name')}}",
-                    description: "Pay your items",
-                    logo: "{{ asset('img/GARDEN_LOGO.png') }}",
-                },
             });
-        }
+
+        });
     </script>
 @stop

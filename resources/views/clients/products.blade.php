@@ -11,19 +11,12 @@
                 <div class="col-md-3">
                     <h4>Categories</h4>
                     <div>
-                        <?php
-                        $cat = 0;
-                        if (isset($_GET['cat']))
-                        {
-                            $cat = $_GET['cat'];
-                        }
-                        ?>
                         <ul class="list-group rounded-sm shadow-sm">
-                            @foreach(\App\Category::all() as $category)
-                                <li class="list-group-item {{ $category->id===(int)$cat? 'active1':'' }}">
-                                    <a href="/getProduct?cat={{ $category->id }}">
-                                        {{ $category->name }}
-                                        <span class="badge badge-primary pull-right">{{$category->products()->count()}}</span>
+                            @foreach($categories as $category)
+                                <li class="list-group-item {{ $category->name==request('cat')? 'active1':'' }}">
+                                    <a href="{{ route('buy.products',['cat'=>$category->name]) }}">
+                                        {{ucfirst(strtolower( $category->name)) }}
+                                        <span class="badge badge-default pull-right">{{$category->products_count}}</span>
                                     </a>
                                 </li>
                             @endforeach
@@ -33,13 +26,15 @@
                 <section class="col-md-9">
                     <div>
                         <h4>
-                            Showing result of {{ $products->total() }} product(s)
-                            <small> currently showing {{ $products->count() }} product(s)</small>
+                            Showing result of {{ $products->total() }}
+                            {{ str_plural('product',$products->total()) }}
+                            <small> currently
+                                showing {{ $products->count() }} {{ str_plural('product',$products->count()) }}</small>
                         </h4>
                         <ul class="list-group">
                             @forelse($products as $product)
                                 <li class="item list-group-item rounded-sm shadow-xs">
-                                   <livewire:product-item :product="$product" />
+                                    <livewire:product-item :product="$product"/>
                                 </li>
                             @empty
                                 <li>

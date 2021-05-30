@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Category;
 use App\Setting;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\UrlGenerator;
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         View::share('defaultSetting', Setting::first());
+        View::share('categories', Category::withCount('products')->latest()->get());
 
     }
 

@@ -13,7 +13,8 @@
     <link rel="mask-icon" href="{{ asset('favicons/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#b91d47">
     <meta name="theme-color" content="#ffffff">
-    <title>Garden of eden</title>
+    <title>Garden of eden @yield('title')</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
     @livewireStyles
     <!-- Google font -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
@@ -28,9 +29,7 @@
                  style="margin-bottom: 0!important;background-color: #0067B8;color: white!important;border-color: #0067B8!important;padding:0 20px;">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"
                         style="color: white!important;margin-right: 20px;">
-                    <span aria-hidden="true" style="color: white!important;">
-                        &times;
-                    </span>
+                    <span aria-hidden="true" style="color: white!important;">&times;</span>
                 </button>
                 <div class="container" style="font-weight: lighter !important;">
                     <div class="row">

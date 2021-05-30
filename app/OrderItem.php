@@ -33,10 +33,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class OrderItem extends Model
 {
-    public function order(){
+    public function order()
+    {
         return $this->belongsTo('App\Order');
     }
-    public function product(){
+
+    public function product()
+    {
         return $this->belongsTo('App\Product');
     }
 
@@ -46,5 +49,10 @@ class OrderItem extends Model
         static::addGlobalScope('product', function (Builder $builder) {
             $builder->whereHas('product');
         });
+    }
+
+    public function getTotalAttribute()
+    {
+        return $this->qty * $this->price;
     }
 }

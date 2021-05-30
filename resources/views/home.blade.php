@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('styles')
 @endsection
+
+@section('title','|Home')
+
 @section('content')
  <livewire:home-page :slides="$slides" :categories="$categories" />
 @endsection

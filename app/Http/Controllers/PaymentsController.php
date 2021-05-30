@@ -18,33 +18,9 @@ class PaymentsController extends Controller
     /**
      * @throws Throwable
      */
-    public function paymentSuccess(Request $request): JsonResponse
+    public function paymentSuccess(Request $request, $orderId): JsonResponse
     {
-        DB::beginTransaction();
-        $order = new Order();
-        $order->clientPhone = $request->input('customer.phone_number');
-        $order->email = $request->input('customer.email');
-        $order->shipping_address = $request->input('customer.shipping_address');
-        $order->clientName = $request->input('customer.name');
-        $order->shipping_amount = optional(MyFunc::getDefaultSetting())->shipping_amount ?? 1000;
-        $order->status = "Pending";
-        $order->payment_type = $request->input('customer.payment_type');
-        $order->notes = $request->input('customer.notes');
-        $order->save();
-
-        $cart = Cart::getContent();
-        foreach ($cart as $cartItem)
-        {
-            $orderItem = new OrderItem();
-            $orderItem->product_id = $cartItem->id;
-            $orderItem->price = $cartItem->price;
-            $orderItem->qty = $cartItem->quantity;
-            $orderItem->sub_total = $cartItem->getPriceSum();
-            $order->orderItems()->save($orderItem);
-        }
-
-        $order->setOrderNo('ORD');
-
+        $order = Order::find(decryptId($orderId));
         $payment = new Payment();
         $payment->transaction_id = $request->input('transaction_id');
         $payment->tx_ref = $request->input('tx_ref');
@@ -54,12 +30,14 @@ class PaymentsController extends Controller
         $payment->status = $request->input('status');
         $order->payments()->save($payment);
 
-        DB::commit();
+        return response()->json(['url' => route('order.success', ['id' => encryptId($order->id)])]);
+    }
 
-        ProcessOrder::dispatch($order);
+    public function payWithCard($id)
+    {
+        $order = Order::find(decryptId($id));
 
-        Cart::clear();
-        return response()->json(['url' => route('order.success', ['id' => $order->id])]);
+        return view('clients.pay_card', compact('order'));
 
     }
 }

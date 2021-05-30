@@ -38,4 +38,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
+
+    const Cash='Cash';
+    const CardMobileMoney='Card mobile money';
 }
