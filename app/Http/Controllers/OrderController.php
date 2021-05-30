@@ -43,7 +43,7 @@ class OrderController extends Controller
         else
         {
             $search = $request->input('search.value');
-            $orders = Order::with('user')
+            $orders = Order::with(['user', 'payment'])
                 ->where('clientName', 'LIKE', "%{$search}%")
                 ->orWhere('clientPhone', 'LIKE', "%{$search}%")
                 ->orWhere('created_at', 'LIKE', "%{$search}%")
@@ -71,6 +71,8 @@ class OrderController extends Controller
                 $nestedData['clientPhone'] = $order->clientPhone;
                 $nestedData['status'] = $order->status;
                 $nestedData['user'] = $order->user;
+                $nestedData['payment_type'] = $order->payment_type;
+                $nestedData['payment'] = $order->payment;
                 $nestedData['created_at'] = date('j M Y h:i a', strtotime($order->created_at));
                 $data[] = $nestedData;
 

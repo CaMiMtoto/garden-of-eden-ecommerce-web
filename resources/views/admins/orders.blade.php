@@ -18,6 +18,7 @@
                             <th>Oder Date</th>
                             <th>Client Name</th>
                             <th>Client Phone</th>
+                            <th>Payment Type</th>
                             <th>Order status</th>
                             <th>Options</th>
                         </tr>
@@ -106,6 +107,16 @@
                         data: 'clientPhone', 'sortable': true,
                         render: function (data) {
                             return "<a href='tel:'" + data + "'>" + data + "</a>";
+                        }
+                    },
+                    {
+                        data: 'payment_type', 'sortable': true,
+                        render: function (data) {
+                            let color = "primary";
+                            if (data === "{{ \App\Payment::CardMobileMoney }}") {
+                                color = "success";
+                            }
+                            return `<span class='label label-${color} rounded-pill'>${data}</span>`;
                         }
                     },
                     {
