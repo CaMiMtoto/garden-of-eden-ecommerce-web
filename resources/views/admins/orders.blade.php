@@ -19,6 +19,7 @@
                             <th>Client Name</th>
                             <th>Client Phone</th>
                             <th>Payment Type</th>
+                            <th>Amount</th>
                             <th>Order status</th>
                             <th>Options</th>
                         </tr>
@@ -77,86 +78,45 @@
 @section('scripts')
     <script>
 
-        var defaultUrl = "{{ route('orders.all')  }}";
+        var defaultUrl = "{{ route('orders.index')  }}";
         var table;
         var manageTable = $("#manageTable");
-
-        function myFunc() {
-            window.table = manageTable.DataTable({
-                "bProcessing": true,
-                "serverSide": true,
-                "order": [[0, "desc"]],
-                ajax: {
-                    url: defaultUrl,
-                    method: 'POST',
-                    dataSrc: 'data',
-                    data: {_token: "{{csrf_token()}}"}
-                },
-                columns: [
-                    {data: 'created_at', 'sortable': true},
-                    {
-                        data: 'clientName', 'sortable': true,
-                        render: function (data, type, row) {
-                            if (row.user) {
-                                return row.user.name;
-                            }
-                            return data;
-                        }
-                    },
-                    {
-                        data: 'clientPhone', 'sortable': true,
-                        render: function (data) {
-                            return "<a href='tel:'" + data + "'>" + data + "</a>";
-                        }
-                    },
-                    {
-                        data: 'payment_type', 'sortable': true,
-                        render: function (data) {
-                            let color = "primary";
-                            if (data === "{{ \App\Payment::CardMobileMoney }}") {
-                                color = "success";
-                            }
-                            return `<span class='label label-${color} rounded-pill'>${data}</span>`;
-                        }
-                    },
-                    {
-                        data: 'status', 'sortable': true,
-                        render: function (data) {
-                            if (data === "{{\App\Order::PENDING}}") {
-                                return "<a class='label label-warning'>" + data + "</a>";
-                            } else if (data === "{{\App\Order::PROCESSING}}") {
-                                return "<a class='label label-info'><i class='fa fa-spinner'></i> " + data + "</a>";
-                            } else if (data === "{{\App\Order::CANCELLED}}") {
-                                return "<a class='label label-danger '><i class='fa fa-close'></i> " + data + "</a>";
-                            } else if (data === "{{\App\Order::ON_WAY}}") {
-                                return "<a class='label label-primary '><i class='fa fa-bicycle'></i> " + data + "</a>";
-                            } else if (data === "{{\App\Order::DELIVERED}}") {
-                                return "<a class='label label-success'><i class='fa fa-check'></i> " + data + "</a>";
-                            } else if (data === "{{\App\Order::PAID}}") {
-                                return "<a class='label bg-green'><i class='fa fa-check-circle'></i> " + data + "</a>";
-                            }
-                            return "<a class='label label-default '><i class='fa fa-check-circle-o'></i> " + data + "</a>";
-                        }
-                    },
-                    {
-                        data: 'id',
-                        'sortable': false,
-                        render: function (data, type, row) {
-                            return "<div class='btn-group btn-group-sm'>" +
-                                "<button class='btn btn-default js-details' " +
-                                "data-url='/admin/orders/" + row.id + "' data-id='" + row.id + "'> Details</button>" +
-                                "</div>";
-                        }
-                    }
-                ]
-            });
-        }
-
 
         $(document).ready(function () {
 
             $('.nav-orders').addClass('active');
-            myFunc();
+
+            window.dataTable = manageTable.DataTable({
+                ajax: "{{ route('orders.index')  }}",
+                serverSide: true,
+                processing: true,
+                "order": [[0, "desc"]],
+                columns: [
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'clientName', name: 'clientName'},
+                    {data: 'clientPhone', name: 'clientPhone'},
+                    {data: 'payment_type', name: 'payment_type'},
+                    {data: 'amount_to_pay', name: 'amount_to_pay'},
+                    {data: 'status', name: 'status'},
+                    {data: 'action', name: 'action', sortable: false}
+                ]
+            });
+
+            manageTable.on("click", ".js-verify", function () {
+
+                $.ajax({
+                    url: $(this).data('url'),
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer {{ config('app.FW_SECRET') }}'
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                    }
+                })
+            });
 
             manageTable.on("click", ".js-details", function () {
                 var findUrl = $(this).attr("data-url");
@@ -190,90 +150,6 @@
                 return false;
             });
 
-
-            //submit add new  form
-            $("#submitProductForm").submit(function (e) {
-                e.preventDefault();
-                var form = $(this);
-                form.parsley().validate();
-                if (!form.parsley().isValid()) {
-                    return false;
-                }
-
-
-                var formData = new FormData(this);
-                $("#createBtn").button('loading');
-                $.ajax({
-                    url: form.attr('action'),
-                    type: form.attr('method'),
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                }).done(function (response) {
-                    // button loading
-                    $("#createBtn").button('reset');
-                    //resetting form
-                    form[0].reset();
-                    // reload the manage member table
-                    table.ajax.reload();
-                    $('#add-messages').html('<div class="alert alert-success">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> '
-                        + " Product added successfully" + '</div>');
-                    $(".alert-success").delay(500).show(10, function () {
-                        $(this).delay(3000).hide(10, function () {
-                            $(this).remove();
-                            $("#addModal").modal('hide');
-                        });
-                    }); // /.alert
-                }).fail(function () {
-                    alert("Some errors");
-                    $("#createBtn").button('reset');
-                });
-            });
-
-            // submit of edit  form
-            $("#editProductForm").submit(function (e) {
-                e.preventDefault();
-                var form = $(this);
-                form.parsley().validate();
-                if (!form.parsley().isValid()) {
-                    return false;
-                }
-
-                var formData = new FormData(this);
-                // button loading
-                $("#editBtn").button('loading');
-                $.ajax({
-                    url: form.attr('action'),
-                    type: form.attr('method'),
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                }).done(function (response) {
-                    // button loading
-                    $("#editBtn").button('reset');
-                    form[0].reset();
-                    // reload the manage member table
-                    table.ajax.reload();
-
-                    $('#edit-messages').html('<div class="alert alert-success">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> ' + "Product successfully updated" + '</div>');
-
-                    $(".alert-success").delay(500).show(10, function () {
-                        $(this).delay(3000).hide(10, function () {
-                            $(this).remove();
-                            $("#editModal").modal('hide');
-                        });
-                    }); // /.alert
-                }).fail(function (error) {
-                    alert("Some errors occurred");
-                    $("#editBtn").button('reset');
-                });
-            });
         });
     </script>
 @stop

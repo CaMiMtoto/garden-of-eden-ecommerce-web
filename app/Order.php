@@ -57,6 +57,8 @@ class Order extends Model
     const CANCELLED = 'Cancelled';
     const PAID = 'Paid';
 
+    protected $appends = ['amount_to_pay'];
+
 
     public function orderItems()
     {
@@ -71,6 +73,11 @@ class Order extends Model
     public function getTotalAmountToPay(): float
     {
         return $this->orderItems->sum('sub_total') + $this->shipping_amount;
+    }
+
+    public function getAmountToPayAttribute(): float
+    {
+        return $this->getTotalAmountToPay();
     }
 
     public static function getStatuses(): array

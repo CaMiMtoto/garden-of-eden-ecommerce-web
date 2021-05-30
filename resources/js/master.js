@@ -53,7 +53,10 @@ $(function () {
             // reload the manage member table
             form[0].reset();
 
-            table.ajax.reload(null);
+            if (dataTable)
+                dataTable.ajax.reload(null);
+            else
+                table.ajax.reload(null);
 
             $('#add-messages').html('<div class="alert alert-success">' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -99,8 +102,12 @@ $(function () {
             // button loading
             btn.button('reset');
             // reload the manage member table
-            table.destroy();
-            myFunc();
+            if (dataTable) {
+                dataTable.ajax.reload(null);
+            } else {
+                table.destroy();
+                myFunc();
+            }
 
             $('#edit-messages').html('<div class="alert alert-success">' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>' +

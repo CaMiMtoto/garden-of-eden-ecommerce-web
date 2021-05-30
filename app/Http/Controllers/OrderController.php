@@ -3,99 +3,93 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\OrderStatusUpdated;
-use App\Jobs\ProcessOrder;
 use App\Order;
+use App\Payment;
+use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Yajra\DataTables\Facades\DataTables;
+use function response;
 
 class OrderController extends Controller
 {
-    public function index()
+    /**
+     * @throws Exception
+     */
+    public function index(Request $request)
     {
+        if ($request->ajax())
+        {
+            $query = Order::with('payment');
+            return $this->formatData($query);
+        }
         return view('admins.orders');
     }
 
-
-    public function all(Request $request)
+    /**
+     * @throws Exception
+     */
+    protected function formatData(Builder $builder)
     {
-        $columns = array(
-            0 => 'created_at',
-            1 => 'clientName',
-            2 => 'clientPhone',
-            3 => 'status'
-        );
-
-        $totalData = Order::count();
-        $totalFiltered = $totalData;
-
-        $limit = $request->input('length');
-        $start = $request->input('start');
-        $order = $columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
-        if (empty($request->input('search.value')))
-        {
-            $orders = Order::with('user')
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->get();
-        }
-        else
-        {
-            $search = $request->input('search.value');
-            $orders = Order::with(['user', 'payment'])
-                ->where('clientName', 'LIKE', "%{$search}%")
-                ->orWhere('clientPhone', 'LIKE', "%{$search}%")
-                ->orWhere('created_at', 'LIKE', "%{$search}%")
-                ->orWhere('status', 'LIKE', "%{$search}%")
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->get();
-
-            $totalFiltered = Order::with('orderItems')
-                ->where('clientName', 'LIKE', "%{$search}%")
-                ->orWhere('clientPhone', 'LIKE', "%{$search}%")
-                ->orWhere('created_at', 'LIKE', "%{$search}%")
-                ->orWhere('status', 'LIKE', "%{$search}%")
-                ->count();
-        }
-
-        $data = array();
-        if (!empty($orders))
-        {
-            foreach ($orders as $order)
-            {
-                $nestedData['id'] = $order->id;
-                $nestedData['clientName'] = $order->clientName;
-                $nestedData['clientPhone'] = $order->clientPhone;
-                $nestedData['status'] = $order->status;
-                $nestedData['user'] = $order->user;
-                $nestedData['payment_type'] = $order->payment_type;
-                $nestedData['payment'] = $order->payment;
-                $nestedData['created_at'] = date('j M Y h:i a', strtotime($order->created_at));
-                $data[] = $nestedData;
-
-            }
-        }
-
-        $json_data = array(
-            "draw" => intval($request->input('draw')),
-            "recordsTotal" => intval($totalData),
-            "recordsFiltered" => intval($totalFiltered),
-            "data" => $data
-        );
-        echo json_encode($json_data);
+        return DataTables::of($builder)
+            ->addIndexColumn()
+            ->editColumn('created_at', function ($item) {
+                return optional($item->created_at)->format('d M Y - H:i:s');
+            })
+            ->editColumn('amount_to_pay', function ($item) {
+                return number_format($item->amount_to_pay);
+            })
+            ->addColumn('payment_type', function (Order $item) {
+                $color = "primary";
+                if ($item->payment_type === \App\Payment::CardMobileMoney)
+                {
+                    $color = "success";
+                }
+                return "<span class='label label-$color rounded-pill'>$item->payment_type</span>";
+            })
+            ->editColumn('status', function (Order $item) {
+                $status = $item->status;
+                if ($status === Order::PENDING)
+                    return "<a class='label label-warning'>$status</a>";
+                else if ($status === Order::PROCESSING)
+                    return "<a class='label label-info'><i class='fa fa-spinner'></i> $status</a>";
+                else if ($status === Order::CANCELLED)
+                    return "<a class='label label-danger '><i class='fa fa-close'></i> $status</a>";
+                else if ($status === Order::ON_WAY)
+                    return "<a class='label label-primary '><i class='fa fa-bicycle'></i> $status</a>";
+                else if ($status === Order::DELIVERED)
+                    return "<a class='label label-success'><i class='fa fa-check'></i> $status</a>";
+                else if ($status === Order::PAID)
+                    return "<a class='label bg-green'><i class='fa fa-check-circle'></i> $status</a>";
+                return "<a class='label label-default '><i class='fa fa-check-circle-o'></i> $status</a>";
+            })
+            ->editColumn('description', function ($item) {
+                return Str::of($item->description)->limit(50);
+            })
+            ->addColumn('action', function (Order $item) {
+                $verify = '';
+                if ($item->payment_type == Payment::CardMobileMoney)
+                {
+                    $txId = optional($item->payment)->transaction_id ?? 0;
+                    $verify = "<button data-url='" . route('verify.payment', $txId) . "' class='btn btn-danger btn-sm  js-verify'>Verify</button>";
+                }
+                return "<div class='btn-group btn-group-sm'>
+                           <button data-url='" . route('orders.show', $item->id) . "' class='btn btn-primary btn-sm js-details'>Details</button>
+                           $verify
+                        </div>";
+            })
+            ->rawColumns(['action', 'status', 'payment_type'])
+            ->make(true);
     }
+
 
     public function show($id)
     {
-        //
         $obj = Order::with("orderItems.product")->find($id);
         if (!$obj)
-        {
-            return \response()->json(["message" => "Not found"], 404);
-        }
+            return response()->json(["message" => "Not found"], 404);
         return view("admins.orderDetails", ['order' => $obj]);
     }
 
@@ -104,9 +98,7 @@ class OrderController extends Controller
         //
         $obj = Order::with("orderItems.product")->find($id);
         if (!$obj)
-        {
-            return \response()->json(["message" => "Not found"], 404);
-        }
+            return response()->json(["message" => "Not found"], 404);
         return view("admins.printOrder", ['order' => $obj]);
     }
 
@@ -116,16 +108,14 @@ class OrderController extends Controller
         $order = Order::query()->find($request->input('id'));
         $prevStatus = $order->status;
         if (!$order)
-        {
-            return \response()->json(["message" => "Not found"], 404);
-        }
+            return response()->json(["message" => "Not found"], 404);
         $order->status = $request->input('status');
         $order->update();
 
         if ($order->status != $prevStatus)
             OrderStatusUpdated::dispatch($order, auth()->user());
 
-        return \response()->json(["data" => $order], 204);
+        return response()->json(["data" => $order], 204);
     }
 
     public function orderSuccess($id)
@@ -134,6 +124,32 @@ class OrderController extends Controller
         if (!$order) abort(404);
         return view('clients.order-success', ['order' => $order])
             ->with('message', " You successfully placed orders");
+    }
+
+    public function verifyPayment($transction_id)
+    {
+        $SEC_KEY = config('app.FW_SECRET');
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.flutterwave.com/v3/transactions/$transction_id/verify",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "Content-Type: application/json",
+                "Authorization: Bearer $SEC_KEY"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
     }
 
 }
