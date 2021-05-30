@@ -22,7 +22,7 @@ class OrderController extends Controller
     {
         if ($request->ajax())
         {
-            $query = Order::with('payment');
+            $query = Order::with(['payment', 'orderItems.product']);
             return $this->formatData($query);
         }
         return view('admins.orders');
@@ -43,7 +43,7 @@ class OrderController extends Controller
             })
             ->addColumn('payment_type', function (Order $item) {
                 $color = "primary";
-                if ($item->payment_type === \App\Payment::CardMobileMoney)
+                if ($item->payment_type === Payment::CardMobileMoney)
                 {
                     $color = "success";
                 }
