@@ -96,17 +96,21 @@
                     name: "{{ $order->clientName }}"
                 },
                 callback: function (data) {
-                    data['_token'] = "{{ csrf_token() }}";
+                    if (data.transaction_id) {
+                        data['_token'] = "{{ csrf_token() }}";
+                        $.ajax({
+                            url: "{{ route('payment.success',['orderId'=>encryptId($order->id)]) }}",
+                            data: data,
+                            method: 'POST',
+                            type: 'json',
+                            success: function (response) {
+                                window.location = response.url;
+                            }
+                        });
+                    } else {
+                        alert("Transaction failed . try again")
+                    }
 
-                    $.ajax({
-                        url: "{{ route('payment.success',['orderId'=>encryptId($order->id)]) }}",
-                        data: data,
-                        method: 'POST',
-                        type: 'json',
-                        success: function (response) {
-                            window.location = response.url;
-                        }
-                    });
                 },
                 onclose: function () {
                     // close modal
