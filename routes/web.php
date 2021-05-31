@@ -92,7 +92,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::post('/orders/all', 'OrderController@all')->name('orders.all');
     Route::put('/orders/mark', 'OrderController@mark')->name('orders.mark');
 
-    Route::get('/transaction/{transction_id}/verify-payment', [\App\Http\Controllers\OrderController::class, 'verifyPayment'])->name('verify.payment');
+    Route::get('/transaction/{transaction_id}/verify-payment', [\App\Http\Controllers\OrderController::class, 'verifyPayment'])->name('verify.payment');
 
     Route::get('/logOut', 'UsersController@logOut')->name('admin.logout');
 

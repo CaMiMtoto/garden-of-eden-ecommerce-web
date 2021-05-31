@@ -89,7 +89,7 @@
                 amount: {{ $order->getTotalAmountToPay() }},
                 currency: "RWF",
                 country: "RWF",
-                payment_options: " ",
+                payment_options: "mobilemoneyrwanda,card",
                 customer: {
                     email: "{{ $order->email }}",
                     phone_number: "{{ $order->clientPhone }}",

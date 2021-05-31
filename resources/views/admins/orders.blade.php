@@ -74,6 +74,43 @@
     <!-- /  -->
 
 
+
+    <!-- edit product  -->
+    <div class="modal fade" id="verifyModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class="glyphicon glyphicon-pencil"></i>
+                        Transaction details
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="modal-loading div-hide"
+                         style="width: 50px;margin: auto;padding-top: 50px;padding-bottom: 50px;">
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="verify-result"></div>
+                    <!-- END TABS PILL STYLE -->
+                </div> <!-- /modal-body -->
+
+                <div class="modal-footer  editFooter">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <i class="glyphicon glyphicon-remove-sign"></i>Close
+                    </button>
+                </div> <!-- /modal-footer -->
+
+            </div> <!-- /modal-content -->
+        </div> <!-- /modal-dailog -->
+    </div>
+    <!-- /  -->
+
+
 @endsection
 
 @section('scripts')
@@ -97,25 +134,32 @@
                     {data: 'clientName', name: 'clientName'},
                     {data: 'clientPhone', name: 'clientPhone'},
                     {data: 'payment_type', name: 'payment_type'},
-                    {data: 'amount_to_pay', name: 'amount_to_pay'},
+                    {data: 'amount_to_pay', name: 'amount_to_pay', sortable: false, searchable: false},
                     {data: 'status', name: 'status'},
-                    {data: 'payment_status', name: 'payment_status'},
-                    {data: 'action', name: 'action', sortable: false}
+                    {data: 'payment_status', name: 'payment_status', sortable: false, searchable: false},
+                    {data: 'action', name: 'action', sortable: false, searchable: false}
                 ]
             });
 
             manageTable.on("click", ".js-verify", function () {
 
+                $("#verifyModal").modal();
+                $('.modal-loading').removeClass('div-hide');
+                var editResultDiv = $('.verify-result');
+                editResultDiv.addClass('div-hide');
+
+                var footer = $(".editFooter");
+                footer.addClass('div-hide');
                 $.ajax({
                     url: $(this).data('url'),
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer {{ config('app.FW_SECRET') }}'
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        console.log(data);
+                    success: function (response) {
+                        $('.modal-loading').addClass('div-hide');
+                        // modal result
+                        editResultDiv.removeClass('div-hide');
+                        //modal footer
+                        footer.removeClass('div-hide');
+                        editResultDiv.html(response);
                     }
                 })
             });

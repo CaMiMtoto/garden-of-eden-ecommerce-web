@@ -154,13 +154,12 @@ class OrderController extends Controller
             ->with('message', " You successfully placed orders");
     }
 
-    public function verifyPayment($transction_id)
+    public function verifyPayment($transaction_id)
     {
         $SEC_KEY = config('app.FW_SECRET');
         $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.flutterwave.com/v3/transactions/$transction_id/verify",
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://api.flutterwave.com/v3/transactions/$transaction_id/verify",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -168,16 +167,15 @@ class OrderController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
                 "Content-Type: application/json",
                 "Authorization: Bearer $SEC_KEY"
-            ),
-        ));
+            ],
+        ]);
 
-        $response = curl_exec($curl);
-
+        $response = json_decode(curl_exec($curl), true);
         curl_close($curl);
-        echo $response;
+        return view('admins._verify_transaction', compact('response'));
     }
 
 }
