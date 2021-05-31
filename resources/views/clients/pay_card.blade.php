@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title',' My-orders')
+@section('title', ' My-orders')
 @section('content')
 
     <div class="section">
@@ -26,10 +26,10 @@
                         Client Name : <strong>{{ $order->clientName }}</strong>
                     </p>
                     <p>
-                        Email address : <strong>{{ $order->email??'N/A' }}</strong>
+                        Email address : <strong>{{ $order->email ?? 'N/A' }}</strong>
                     </p>
                     <p>
-                        Address : <strong>{{ $order->shipping_address??'N/A' }}</strong>
+                        Address : <strong>{{ $order->shipping_address ?? 'N/A' }}</strong>
                     </p>
                     <p>
                         Phone : <strong>{{ $order->clientPhone }}</strong>
@@ -37,7 +37,7 @@
 
                     <p>
                         <strong>Notes:</strong>
-                        <span>{{ $order->notes??'N/A' }}</span>
+                        <span>{{ $order->notes ?? 'N/A' }}</span>
                     </p>
                 </div>
 
@@ -55,21 +55,20 @@
                         Products Ordered
                     </h5>
                     <ul class="list-group">
-                        @foreach($order->orderItems as $item)
+                        @foreach ($order->orderItems as $item)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 {{ $item->product->name }} ({{ $item->qty }})
                                 <span class="badge badge-success badge-pill">
-                              {{ number_format($item->total) }}
-                        </span>
+                                    {{ number_format($item->total) }}
+                                </span>
                             </li>
                         @endforeach
                     </ul>
 
-                    <button type="button" onClick="makePayment()" id="btnCard"
-                            class="btn btn-success btn-lg rounded-sm">
+                    <a href="" class="btn btn-success btn-lg rounded-sm">
                         <i class="fa fa-credit-card"></i>
-                        Pay <small>{{number_format($order->getTotalAmountToPay())}}</small> Now
-                    </button>
+                        Pay <small>{{ number_format($order->getTotalAmountToPay()) }}</small> Now
+                        </button>
                 </div>
             </div>
         </div>
@@ -84,8 +83,8 @@
     <script>
         function makePayment() {
             FlutterwaveCheckout({
-                public_key: "{{ config('app.FW_PUBLIC')  }}",
-                tx_ref: "{{  time() . rand(10*45, 100*98) }}",
+                public_key: "{{ config('app.FW_PUBLIC') }}",
+                tx_ref: "{{ time() . rand(10 * 45, 100 * 98) }}",
                 amount: {{ $order->getTotalAmountToPay() }},
                 currency: "RWF",
                 country: "RWF",
@@ -95,15 +94,15 @@
                     phone_number: "{{ $order->clientPhone }}",
                     name: "{{ $order->clientName }}"
                 },
-                callback: function (data) {
+                callback: function(data) {
                     if (data.transaction_id) {
                         data['_token'] = "{{ csrf_token() }}";
                         $.ajax({
-                            url: "{{ route('payment.success',['orderId'=>encryptId($order->id)]) }}",
+                            url: "{{ route('payment.success', ['orderId' => encryptId($order->id)]) }}",
                             data: data,
                             method: 'POST',
                             type: 'json',
-                            success: function (response) {
+                            success: function(response) {
                                 window.location = response.url;
                             }
                         });
@@ -112,11 +111,11 @@
                     }
 
                 },
-                onclose: function () {
+                onclose: function() {
                     // close modal
                 },
                 customizations: {
-                    title: "{{config('app.name')}}",
+                    title: "{{ config('app.name') }}",
                     description: "Pay to complete your order",
                     logo: "{{ asset('img/GARDEN_LOGO.png') }}",
                 },
@@ -126,5 +125,6 @@
         window.addEventListener('DOMContentLoaded', (event) => {
             makePayment();
         });
+
     </script>
 @stop
