@@ -41,13 +41,41 @@ class OrderController extends Controller
             ->editColumn('amount_to_pay', function ($item) {
                 return number_format($item->amount_to_pay);
             })
-            ->addColumn('payment_type', function (Order $item) {
+            ->editColumn('payment_type', function (Order $item) {
                 $color = "primary";
-                if ($item->payment_type === Payment::CardMobileMoney)
+                if ($item->payment_type == Payment::CardMobileMoney)
                 {
                     $color = "success";
                 }
                 return "<span class='label label-$color rounded-pill'>$item->payment_type</span>";
+            })
+            ->addColumn('payment_status', function (Order $item) {
+                $color = "danger";
+                $status = optional($item->payment)->status;
+                if ($item->payment_type == Payment::CardMobileMoney)
+                {
+                    if ($status == Payment::Successful)
+                    {
+                        $color = "success";
+                    }
+                    else
+                    {
+                        $status = 'failed';
+                    }
+                }
+                elseif ($item->status == Order::PAID)
+                {
+                    $status = 'Paid';
+                    $color = "success";
+                }
+                else
+                {
+                    $status = 'N/A';
+                    $color = "default";
+                }
+
+                $status = ucfirst($status);
+                return "<span class='label label-$color rounded-pill'>$status</span>";
             })
             ->editColumn('status', function (Order $item) {
                 $status = $item->status;
@@ -80,7 +108,7 @@ class OrderController extends Controller
                            $verify
                         </div>";
             })
-            ->rawColumns(['action', 'status', 'payment_type'])
+            ->rawColumns(['action', 'status', 'payment_type', 'payment_status'])
             ->make(true);
     }
 

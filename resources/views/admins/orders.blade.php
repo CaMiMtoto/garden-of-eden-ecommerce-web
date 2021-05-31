@@ -21,6 +21,7 @@
                             <th>Payment Type</th>
                             <th>Amount</th>
                             <th>Order status</th>
+                            <th>Payment status</th>
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -98,6 +99,7 @@
                     {data: 'payment_type', name: 'payment_type'},
                     {data: 'amount_to_pay', name: 'amount_to_pay'},
                     {data: 'status', name: 'status'},
+                    {data: 'payment_status', name: 'payment_status'},
                     {data: 'action', name: 'action', sortable: false}
                 ]
             });
