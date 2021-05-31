@@ -128,7 +128,7 @@ class CartController extends Controller
         $order->email = $request->input('email');
         $order->clientName = $request->input('clientName');
         $order->shipping_address = $request->input('shipping_address');
-        $order->payment_type = $request->input('payment_type');
+        $order->payment_type = Payment::Cash;
         $order->notes = $request->input('notes');
         $order->shipping_amount = MyFunc::getDefaultSetting()->shipping_amount;
         $order->status = "Pending";

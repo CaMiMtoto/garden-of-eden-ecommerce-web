@@ -9,6 +9,7 @@ use App\OrderItem;
 use App\Payment;
 use Cart;
 use DB;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Throwable;
@@ -20,7 +21,12 @@ class PaymentsController extends Controller
      */
     public function paymentSuccess(Request $request, $orderId): JsonResponse
     {
+        DB::beginTransaction();
+
         $order = Order::find(decryptId($orderId));
+        $order->payment_type = Payment::CardMobileMoney;
+        $order->save();
+
         $payment = new Payment();
         $payment->transaction_id = $request->input('transaction_id');
         $payment->tx_ref = $request->input('tx_ref');
@@ -30,6 +36,7 @@ class PaymentsController extends Controller
         $payment->status = $request->input('status');
         $order->payments()->save($payment);
 
+        DB::commit();
         return response()->json(['url' => route('order.success', ['id' => encryptId($order->id)])]);
     }
 
