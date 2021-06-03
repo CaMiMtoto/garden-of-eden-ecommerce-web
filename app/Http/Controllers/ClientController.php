@@ -25,14 +25,16 @@ class ClientController extends Controller
                 });
             })
             ->when($search, function (Builder $builder, $search) {
-                $builder
-                    ->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('price', 'LIKE', "%{$search}%");
+                $builder->where('name', 'LIKE', "%$search%")
+                    ->orWhere('price', 'LIKE', "%$search%")
+                    ->orWhereHas('category', function (Builder $builder) use ($search) {
+                        $builder->where('name', 'LIKE', "%$search%");
+                    });
             })
             ->latest()
             ->paginate(18);
 
-         $products->appends(['search' => $search]);
+        $products->appends(['search' => $search]);
 
         return view('clients.products', compact('products'));
     }

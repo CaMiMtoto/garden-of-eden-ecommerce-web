@@ -66,7 +66,7 @@ Route::group(['prefix' => 'customer'], function () {
 });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'logout']], function () {
 
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
     Route::get('/categories', 'CategoryController@index')->name('category.index');
