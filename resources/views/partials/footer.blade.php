@@ -92,12 +92,10 @@ $about = $defaultSetting->about;
                     <div class="footer">
                         <h3 class="footer-title">Categories</h3>
                         <ul class="footer-links">
-                            @foreach(\App\Category::query()->withCount('products')->limit(10)->get() as $item)
-                                @if($item->products_count > 0)
-                                    <li>
-                                        <a href="/getProduct?cat={{ $item->id }}">{{ $item->name }}</a>
-                                    </li>
-                                @endif
+                            @foreach(\App\Category::query()->whereHas('products')->limit(10)->get() as $item)
+                            <li>
+                                <a href="{{ route('buy.products',['cat'=>$item->name]) }}">{{ $item->name }}</a>
+                            </li>
                             @endforeach
                         </ul>
                     </div>
