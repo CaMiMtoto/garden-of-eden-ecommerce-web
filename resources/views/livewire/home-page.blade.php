@@ -201,7 +201,7 @@
                                 <div class="section-nav">
                                     <div id="slick-nav-3" class="products-slick-nav"></div>
                                     <span class="pull-right">
-                                        <a href="/getProduct?cat={{ $category->id }}">
+                                        <a href="{{ route('buy.products',['cat'=>$category->name]) }}">
                                             More
                                         <i class="fa fa-arrow-circle-o-right"></i>
                                         </a>
