@@ -32,9 +32,9 @@ class ClientController extends Controller
                     });
             })
             ->latest()
-            ->paginate(18);
+            ->paginate(10);
 
-        $products->appends(['search' => $search]);
+        $products->appends(['search' => $search, 'cat' => $cat]);
 
         return view('clients.products', compact('products'));
     }
@@ -62,8 +62,7 @@ class ClientController extends Controller
         $user->save();
 
         $credentials = $request->only('user_name', 'password');
-        if (Auth::attempt($credentials))
-        {
+        if (Auth::attempt($credentials)) {
             // Authentication passed...
             return redirect()->route('home');
         }
@@ -93,17 +92,14 @@ class ClientController extends Controller
         $order = 'id';
         $dir = 'desc';
 
-        if (empty($request->input('search.value')))
-        {
+        if (empty($request->input('search.value'))) {
             $orders = Order::with('user')
                 ->where('user_id', Auth::user()->id)
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
-        }
-        else
-        {
+        } else {
             $search = $request->input('search.value');
 
             $orders = Order::with('user')
@@ -121,16 +117,13 @@ class ClientController extends Controller
         }
 
         $data = array();
-        if (!empty($orders))
-        {
-            foreach ($orders as $order)
-            {
+        if (!empty($orders)) {
+            foreach ($orders as $order) {
                 $nestedData['id'] = $order->id;
                 $nestedData['status'] = $order->status;
                 $nestedData['shipping_address'] = $order->shipping_address;
                 $nestedData['created_at'] = date('j M Y h:i a', strtotime($order->created_at));
                 $data[] = $nestedData;
-
             }
         }
 
@@ -147,16 +140,14 @@ class ClientController extends Controller
     {
         $onOder = OrderItem::query()->where('product_id', $product->id)->limit(20)->get();
         $alsoBoughtProducts = collect([]);
-        if ($onOder)
-        {
+        if ($onOder) {
             $alsoBoughtProducts = Product::with('category')
                 ->whereHas('orderItems', function (Builder $builder) use ($onOder, $product) {
                     $builder->whereIn('order_id', $onOder->pluck('order_id'))
                         ->where('product_id', '!=', $product->id);
                 })->inRandomOrder()->limit(8)->get();
         }
-        if ($alsoBoughtProducts->isEmpty())
-        {
+        if ($alsoBoughtProducts->isEmpty()) {
             $alsoBoughtProducts = Product::with('category')
                 ->where('category_id', $product->category_id)->inRandomOrder()
                 ->limit(8)->get();
@@ -164,5 +155,4 @@ class ClientController extends Controller
 
         return view('clients.product_detail', compact('product', 'alsoBoughtProducts'));
     }
-
 }
