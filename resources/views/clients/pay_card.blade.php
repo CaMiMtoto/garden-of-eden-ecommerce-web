@@ -65,10 +65,10 @@
                         @endforeach
                     </ul>
 
-                    <a href="" class="btn btn-success btn-lg rounded-sm">
+                    <button class="btn btn-success btn-lg rounded-sm">
                         <i class="fa fa-credit-card"></i>
                         Pay <small>{{ number_format($order->getTotalAmountToPay()) }}</small> Now
-                        </button>
+                    </button>
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
                     phone_number: "{{ $order->clientPhone }}",
                     name: "{{ $order->clientName }}"
                 },
-                callback: function(data) {
+                callback: function (data) {
                     if (data.transaction_id) {
                         data['_token'] = "{{ csrf_token() }}";
                         $.ajax({
@@ -102,7 +102,7 @@
                             data: data,
                             method: 'POST',
                             type: 'json',
-                            success: function(response) {
+                            success: function (response) {
                                 window.location = response.url;
                             }
                         });
@@ -111,7 +111,7 @@
                     }
 
                 },
-                onclose: function() {
+                onclose: function () {
                     // close modal
                 },
                 customizations: {

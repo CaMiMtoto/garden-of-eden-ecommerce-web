@@ -21,14 +21,12 @@ class CartController extends Controller
     public function getAddToCart(Request $request, $id)
     {
         $product = Product::find($id);
-        if (is_null($product) || $product->status !== 'Available')
-        {
+        if (is_null($product) || $product->status !== 'Available') {
             return redirect()->back();
         }
 
         $qty = $request->input('qty');
-        if (!$qty)
-        {
+        if (!$qty) {
             $qty = 1;
         }
 
@@ -51,8 +49,7 @@ class CartController extends Controller
     public function getIncrement(Request $request, $id)
     {
         $qty = $request->input('qty');
-        if (!$qty)
-        {
+        if (!$qty) {
             $qty = 1;
         }
 
@@ -97,8 +94,7 @@ class CartController extends Controller
 
     public function checkOut()
     {
-        if (Cart::isEmpty())
-        {
+        if (Cart::isEmpty()) {
             return redirect()->route('cart.shoppingCart');
         }
         $cart = Cart::getContent();
@@ -118,8 +114,7 @@ class CartController extends Controller
             'phoneNumber' => 'required| min:10'
         ]);
 
-        if (Cart::isEmpty())
-        {
+        if (Cart::isEmpty()) {
             return redirect()->back();
         }
         DB::beginTransaction();
@@ -128,15 +123,14 @@ class CartController extends Controller
         $order->email = $request->input('email');
         $order->clientName = $request->input('clientName');
         $order->shipping_address = $request->input('shipping_address');
-        $order->payment_type = Payment::Cash;
+        $order->payment_type = $request->input('payment_type');
         $order->notes = $request->input('notes');
         $order->shipping_amount = MyFunc::getDefaultSetting()->shipping_amount;
         $order->status = "Pending";
         $order->save();
 
         $cart = Cart::getContent();
-        foreach ($cart as $cartItem)
-        {
+        foreach ($cart as $cartItem) {
             $orderItem = new OrderItem();
             $orderItem->product_id = $cartItem->id;
             $orderItem->price = $cartItem->price;
@@ -150,12 +144,9 @@ class CartController extends Controller
 
         ProcessOrder::dispatch($order);
         Cart::clear();
-        if ($order->payment_type == Payment::CardMobileMoney)
-        {
+        if ($order->payment_type == Payment::CardMobileMoney) {
             return redirect()->route('order.pay.card', ['id' => encryptId($order->id)]);
-        }
-        else
-        {
+        } else {
             return redirect()->route('order.success', ['id' => encryptId($order->id)]);
         }
     }
