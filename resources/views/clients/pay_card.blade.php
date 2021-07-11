@@ -65,10 +65,10 @@
                         @endforeach
                     </ul>
 
-                    <button class="btn btn-success btn-lg rounded-sm">
+                    <a href="" class="btn btn-success btn-lg rounded-sm">
                         <i class="fa fa-credit-card"></i>
                         Pay <small>{{ number_format($order->getTotalAmountToPay()) }}</small> Now
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
