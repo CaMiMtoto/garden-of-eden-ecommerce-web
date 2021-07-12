@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css2?family=Montserrat);@import url(https://fonts.googleapis.com/css2?family=Poppins);/*!
+@import url(https://fonts.googleapis.com/css2?family=Poppins);/*!
  * Bootstrap v3.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -10884,7 +10884,7 @@ td {
 html,
 body {
   height: 100%;
-  font-family: "Cairo", sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
 }

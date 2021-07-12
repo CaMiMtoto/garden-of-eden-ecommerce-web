@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat');
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins');
 // Variables
 @import "variables";
@@ -22,10 +22,9 @@
 }
 
 html, body {
-  //font-family: 'Montserrat', sans-serif !important;
   //font-size: 0.85rem !important;
   height: 100%;
-  font-family: "Cairo", sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
 }

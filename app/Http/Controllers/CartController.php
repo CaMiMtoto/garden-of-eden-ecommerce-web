@@ -144,7 +144,7 @@ class CartController extends Controller
 
         ProcessOrder::dispatch($order);
         Cart::clear();
-        if ($order->payment_type == Payment::CardMobileMoney) {
+        if ($request->input('payment_type') == Payment::CardMobileMoney) {
             return redirect()->route('order.pay.card', ['id' => encryptId($order->id)]);
         } else {
             return redirect()->route('order.success', ['id' => encryptId($order->id)]);
