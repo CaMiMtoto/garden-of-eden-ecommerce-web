@@ -12,6 +12,7 @@ use DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Cart;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -143,8 +144,8 @@ class CartController extends Controller
         DB::commit();
 
         ProcessOrder::dispatch($order);
-        Cart::clear();
-        if ($request->input('payment_type') == Payment::CardMobileMoney) {
+//        Cart::clear();
+        if ($request->input('payment_type') == Payment::CARD_MOBILE_MONEY) {
             return redirect()->route('order.pay.card', ['id' => encryptId($order->id)]);
         } else {
             return redirect()->route('order.success', ['id' => encryptId($order->id)]);

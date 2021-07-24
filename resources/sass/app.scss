@@ -1,6 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins');
-// Variables
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans');// Variables
 @import "variables";
 //@import "bootstrap-utilities.css";
 @import "custom_forms";
@@ -24,7 +23,7 @@
 html, body {
   //font-size: 0.85rem !important;
   height: 100%;
-  font-family: "Poppins", sans-serif;
+  font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
 }
@@ -95,4 +94,15 @@ html, body {
 
 .rounded-xl {
   border-radius: 0.5rem !important;
+}
+
+.svg-icon svg {
+  height: 2rem;
+  width: 2rem;
+}
+svg {
+  overflow: hidden;
+}
+img, svg {
+  vertical-align: middle;
 }

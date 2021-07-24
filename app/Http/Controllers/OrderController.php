@@ -43,7 +43,7 @@ class OrderController extends Controller
             })
             ->editColumn('payment_type', function (Order $item) {
                 $color = "primary";
-                if ($item->payment_type == Payment::CardMobileMoney)
+                if ($item->payment_type == Payment::CARD_MOBILE_MONEY)
                 {
                     $color = "success";
                 }
@@ -52,7 +52,7 @@ class OrderController extends Controller
             ->addColumn('payment_status', function (Order $item) {
                 $color = "danger";
                 $status = optional($item->payment)->status;
-                if ($item->payment_type == Payment::CardMobileMoney)
+                if ($item->payment_type == Payment::CARD_MOBILE_MONEY)
                 {
                     if ($status == Payment::Successful)
                     {
@@ -98,7 +98,7 @@ class OrderController extends Controller
             })
             ->addColumn('action', function (Order $item) {
                 $verify = '';
-                if ($item->payment_type == Payment::CardMobileMoney)
+                if ($item->payment_type == Payment::CARD_MOBILE_MONEY)
                 {
                     $txId = optional($item->payment)->transaction_id ?? 0;
                     $verify = "<button data-url='" . route('verify.payment', $txId) . "' class='btn btn-danger btn-sm  js-verify'>Verify</button>";

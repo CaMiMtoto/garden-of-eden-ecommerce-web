@@ -7,18 +7,31 @@
             <div class="row">
                 <div class="col-md-12">
                     <h4>Order Placed</h4>
-                    <div class="alert alert-info rounded-sm" role="alert">
+                    <div class="alert alert-success rounded-sm" role="alert">
                         <h4 class="alert-heading">
-                            <i class="icon icon-check-circle-o"></i>
+                            <span class="svg-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                     fill="currentColor">
+                                <path fill-rule="evenodd"
+                                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                            </span>
                             Thank you!
                         </h4>
                         <p>
-                            Thank you for placing your order , you will get it soon on provided address below
+                            Thank you for placing your order , please wait the dialog to pay.
                         </p>
                     </div>
                 </div>
 
-                <div class="col-md-8">
+
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6">
                     <h5 class="font-weight-light text-uppercase">
                         Shipping address
                     </h5>
@@ -40,12 +53,6 @@
                         <span>{{ $order->notes ?? 'N/A' }}</span>
                     </p>
                 </div>
-
-            </div>
-        </div>
-        <div class="container">
-
-            <div class="row">
                 <div class="col-md-6">
                     <h3 class="text-success panel-title">
                         Pay Now To Complete your Order
@@ -78,8 +85,81 @@
 @endsection
 
 @section('scripts')
-    <script src="https://checkout.flutterwave.com/v3.js"></script>
 
+    <script
+            src="https://ap-gateway.mastercard.com/checkout/version/56/checkout.js"
+            data-error="errorCallback"
+            data-cancel="cancelCallback"
+            data-complete="completeCallback"
+    ></script>
+    {{--    <script src="https://checkout.flutterwave.com/v3.js"></script>--}}
+
+    <script type="text/javascript">
+
+        function errorCallback(error) {
+            alert('Error!! try refreshing your page')
+            console.log(JSON.stringify(error));
+        }
+
+        function cancelCallback() {
+            console.log("Payment cancelled");
+        }
+
+        function completeCallback(resultIndicator, sessionVersion) {
+            /*  console.log("Comp:" + sessionVersion);
+              console.log(resultIndicator);
+  */
+            let data = {
+                'amount': {{ $order->getTotalAmountToPay() }},
+                '_token': "{{ csrf_token() }}",
+                'transaction_id': "{{ $txnReference }}",
+                'tx_ref': "{{ $txnReference }}",
+                'status': "successful",
+            };
+
+            $.ajax({
+                url: "{{ route('payment.success', ['orderId' => encryptId($order->id)]) }}",
+                data: data,
+                method: 'POST',
+                type: 'json',
+                success: function (response) {
+                    window.location = response.url;
+                }
+            });
+
+        }
+
+        Checkout.configure({
+            session: {
+                id: "{{ $sessionId }}"
+            },
+            merchant: "{{ config('app.MERCHANT_ID') }}",
+            order: {
+                amount: {{ $order->getTotalAmountToPay() }},
+                currency: "RWF",
+                description: "Products ordered",
+                id: "{{ $order->order_no }}",
+                reference: "{{ $order->order_no }}"
+            },
+            transaction: {
+                reference: "{{ $txnReference }}"
+            },
+            interaction: {
+                operation: "PURCHASE",
+                merchant: {
+                    name: "{{config('app.name')}}:",
+                    address: {
+                        line1: "{{ $order->shipping_address }}",
+                        // line2: "1234 Example Town",
+                    },
+                },
+            },
+        });
+
+
+        Checkout.showLightbox();
+    </script>
+    {{--
     <script>
         function makePayment() {
             FlutterwaveCheckout({
@@ -126,5 +206,5 @@
             makePayment();
         });
 
-    </script>
+    </script>--}}
 @stop

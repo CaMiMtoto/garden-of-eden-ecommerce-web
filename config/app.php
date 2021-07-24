@@ -18,6 +18,9 @@ return [
     'FW_PUBLIC' => env('FW_PUBLIC'),
     'FW_ENC_KEY' => env('FW_ENC_KEY'),
     'FW_SECRET' => env('FW_SECRET'),
+    'EQUITY_USERNAME' => env('EQUITY_USERNAME', "merchant.GARDENEDEN"),
+    'EQUITY_PASSWORD' => env('EQUITY_PASSWORD', "d28af3b0ceb5543be2d3b2e0d93bcaad"),
+    'MERCHANT_ID' => env('MERCHANT_ID', "TESTGARDENEDEN"),
 
     /*
     |--------------------------------------------------------------------------
