@@ -177,12 +177,12 @@
                                                 <input type="radio" name="payment_type" required value="Cash">
                                                 <span class="checkmark"></span>
                                             </label>
-                                            <label class="custom-input-container">
+                                          {{--  <label class="custom-input-container">
                                                 Pay By card or Mobile money
                                                 <input type="radio" name="payment_type" required
                                                        value="Card mobile money">
                                                 <span class="checkmark"></span>
-                                            </label>
+                                            </label>--}}
                                             <label id="payment_type-error" class="error d-block"
                                                    for="payment_type"></label>
                                         </div>
