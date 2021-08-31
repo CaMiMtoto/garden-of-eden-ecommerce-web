@@ -44,23 +44,6 @@ class PaymentsController extends Controller
     public function payWithCard($id)
     {
         $order = Order::find(decryptId($id));
-
-        $txnReference = time() . rand(10 * 45, 100 * 98);
-        $order_no = $order->order_no;
-
-        $username = config('app.EQUITY_USERNAME');
-        $password = config('app.EQUITY_PASSWORD');
-        $merchantId = config('app.MERCHANT_ID');
-        $response = Http::withBasicAuth($username, $password)
-            ->acceptJson()
-            ->asForm()
-            ->post("https://ap-gateway.mastercard.com/api/rest/version/56/merchant/$merchantId/session");
-
-        if ($response->successful()) {
-            $sessionId = $response['session']['id'];
-            return view('clients.pay_card', compact('order', 'txnReference', 'order_no', 'sessionId', 'txnReference'));
-        }
-
         return view('clients.pay_card', compact('order'));
 
     }

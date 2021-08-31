@@ -85,81 +85,8 @@
 @endsection
 
 @section('scripts')
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
 
-    <script
-            src="https://ap-gateway.mastercard.com/checkout/version/56/checkout.js"
-            data-error="errorCallback"
-            data-cancel="cancelCallback"
-            data-complete="completeCallback"
-    ></script>
-    {{--    <script src="https://checkout.flutterwave.com/v3.js"></script>--}}
-
-    <script type="text/javascript">
-
-        function errorCallback(error) {
-            alert('Error!! try refreshing your page')
-            console.log(JSON.stringify(error));
-        }
-
-        function cancelCallback() {
-            console.log("Payment cancelled");
-        }
-
-        function completeCallback(resultIndicator, sessionVersion) {
-            /*  console.log("Comp:" + sessionVersion);
-              console.log(resultIndicator);
-  */
-            let data = {
-                'amount': {{ $order->getTotalAmountToPay() }},
-                '_token': "{{ csrf_token() }}",
-                'transaction_id': "{{ $txnReference }}",
-                'tx_ref': "{{ $txnReference }}",
-                'status': "successful",
-            };
-
-            $.ajax({
-                url: "{{ route('payment.success', ['orderId' => encryptId($order->id)]) }}",
-                data: data,
-                method: 'POST',
-                type: 'json',
-                success: function (response) {
-                    window.location = response.url;
-                }
-            });
-
-        }
-
-        Checkout.configure({
-            session: {
-                id: "{{ $sessionId }}"
-            },
-            merchant: "{{ config('app.MERCHANT_ID') }}",
-            order: {
-                amount: {{ $order->getTotalAmountToPay() }},
-                currency: "RWF",
-                description: "Products ordered",
-                id: "{{ $order->order_no }}",
-                reference: "{{ $order->order_no }}"
-            },
-            transaction: {
-                reference: "{{ $txnReference }}"
-            },
-            interaction: {
-                operation: "PURCHASE",
-                merchant: {
-                    name: "{{config('app.name')}}:",
-                    address: {
-                        line1: "{{ $order->shipping_address }}",
-                        // line2: "1234 Example Town",
-                    },
-                },
-            },
-        });
-
-
-        Checkout.showLightbox();
-    </script>
-    {{--
     <script>
         function makePayment() {
             FlutterwaveCheckout({
@@ -206,5 +133,5 @@
             makePayment();
         });
 
-    </script>--}}
+    </script>
 @stop
