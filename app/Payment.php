@@ -40,7 +40,7 @@ class Payment extends Model
     use HasFactory;
 
     const Cash = 'Cash';
-    const CARD_MOBILE_MONEY = 'Mobile money';
+    const CARD_MOBILE_MONEY = 'Card mobile money';
 
     const Successful = 'successful';
     const Failed = 'failed';

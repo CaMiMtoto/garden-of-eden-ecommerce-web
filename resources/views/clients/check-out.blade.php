@@ -178,7 +178,7 @@
                                                 <span class="checkmark"></span>
                                             </label>
                                             <label class="custom-input-container">
-                                                Pay By card
+                                                Pay by mobile money
                                                 <input type="radio" name="payment_type" required
                                                        value="{{ \App\Payment::CARD_MOBILE_MONEY }}">
                                                 <span class="checkmark"></span>
